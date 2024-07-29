@@ -23,6 +23,8 @@
  <a href="https://github.com/310Team8/FinTrack/issues/new?labels=bug&template=bug_report.md">Report Bug</a>
 ·
 <a href="https://github.com/310Team8/FinTrack/issues/new?labels=enhancement&template=feature_request.md">Request Feature</a>
+·
+<a href="https://github.com/shyke0611/vfvf/issues/new?labels=documentation&template=documentation_request.md">Request Documention</a>
 
 </div>
 <br />
