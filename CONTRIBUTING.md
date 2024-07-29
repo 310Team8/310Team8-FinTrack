@@ -12,6 +12,7 @@ Thank you for considering contributing to FinTrack! Your contributions help make
     <li><a href="#how-to-suggest-a-new-feature">How to Suggest a New Feature</a></li>
     <li><a href="#how-to-submit-a-pull-request">How to Submit a Pull Request</a></li>
     <li><a href="#issue-approval-process">Issue Approval Process</a></li>
+    <li><a href="#pull-request-approval-process">Pull Request Approval Process</a></li>
     <li><a href="#setting-up-your-environment-and-running-tests">Setting Up Your Environment and Running Tests</a></li>
     <li><a href="#types-of-contributions-were-looking-for">Types of Contributions We're Looking For</a></li>
     <li><a href="#getting-started-for-newcomers">Getting Started for Newcomers</a></li>
@@ -32,7 +33,7 @@ By contributing, you agree that your contributions will be licensed under its [M
 ## How to File a Bug Report
 To file a bug report, please follow these steps:
 1. **Search for existing issues**: Before creating a new issue, please check if it already exists.
-2. **Open a new issue**: If the bug hasn't been reported, create a new issue and include the following information:
+2. **Open a new issue**: If the bug hasn't been reported, create a  <a href="https://github.com/shyke0611/dcd/issues/new?labels=bug&template=bug_report.md">Report Bug</a> and include the following information:
    - **Summary**: A clear and descriptive title with a brief summary of the bug.
    - **Steps to Reproduce**: Steps to reproduce the issue.
    - **Expected Behaviour**: What you expected to happen.
@@ -43,7 +44,7 @@ To file a bug report, please follow these steps:
 ## How to Suggest a New Feature
 To suggest a new feature, please follow these steps:
 1. **Search for existing feature requests**: Check if the feature has already been suggested.
-2. **Open a new issue**: If the feature hasn't been requested, create a new issue and include the following information:
+2. **Open a new issue**: If the feature hasn't been requested, create a <a href="https://github.com/shyke0611/dcd//issues/new?labels=enhancement&template=feature_request.md">Request Feature</a> and include the following information:
    - **Summary**: A clear and descriptive title and the summary of the feature.
    - **Description**: A detailed description of the feature.
    - **Problem**: The problem the feature solves.
@@ -59,11 +60,6 @@ To submit a pull request (PR), follow these steps:
    - **Title**: A clear and descriptive title.
    - **Description**: A detailed description of the changes.
    - **Related Issues**: Any related issue numbers (e.g., `Closes #123`).
-
-### Code Review Process
-- **Review**: Your pull request will be reviewed by project maintainers.
-- **Feedback**: Be ready to make any necessary changes based on feedback.
-- **Merge**: Once approved, your pull request will be merged into the main branch.
 
 
 ## Issue Approval Process
@@ -81,7 +77,39 @@ To ensure that all issues are valid, necessary, and not duplicates, we follow a 
    - An issue requires at least 2 team members to comment "approved" before work can begin.
    - Team members should review the issue details, check for duplicates, and ensure all necessary information is provided before commenting their approval.
 
-All approved issues will be documented in our project tracker and assigned to team members as appropriate.
+All approved issues will be documented in our project tracker via the wiki and assigned to team members as appropriate.
+
+## Pull Request Approval Process
+
+To ensure that all pull requests are properly reviewed, validated, and adhere to the project standards, we follow a structured approval process:
+
+1. **Group Meetings**:
+   - New pull requests will be discussed during our weekly group meetings and/or in our communication channels.
+   - Team members will provide feedback, suggest modifications, and collectively approve the pull requests.
+
+2. **Delegated Approval**:
+   - All team members are responsible for reviewing and approving pull requests.
+
+3. **Comment-Based Approval**:
+   - A pull request requires at least 2 team members to comment "approved" before it can be merged.
+   - Reviewers should:
+     - Check for code quality, readability, and adherence to coding standards.
+     - Run the test suite to ensure no existing functionality is broken.
+     - Verify that the code works as expected and meets the acceptance criteria.
+     - Ensure all feedback and required changes have been addressed before commenting their approval.
+
+4. **Final Approval and Merge**:
+   - After receiving the necessary approvals, the reviewer will:
+     - Squash commits into a single commit to maintain a clean commit history.
+     - Resolve any merge conflicts.
+     - Merge the pull request into the main branch.
+   - The reviewer will notify the team once the merge is complete.
+
+5. **Post-Merge**:
+   - After merging, the reviewer will delete the feature branch to keep the repository tidy.
+   - Verify that the changes have been successfully merged and that the main branch is stable.
+
+All approved pull requests will be documented in our project tracker via the wiki and any associated issues will be updated accordingly.
 
 ## Setting Up Your Environment and Running Tests
 link goes here
