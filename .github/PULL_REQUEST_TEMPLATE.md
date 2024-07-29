@@ -9,7 +9,8 @@ Closes # (issue)
 (delete this part: put an X on the box eg. [X])
 
 - [ ] Bug fix 
-- [ ] New feature 
+- [ ] New/Update feature 
+- [ ] New/Update Documentation
 
 
 ## Additional Information
