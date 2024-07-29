@@ -20,9 +20,6 @@ Please delete options that are not relevant.
 - [ ] Bug fix 
 - [ ] New feature 
 
-## How Has This Been Tested?
-
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
 
 ## Additional Information
 

@@ -91,7 +91,7 @@ To ensure that all pull requests are properly reviewed, validated, and adhere to
    - All team members are responsible for reviewing and approving pull requests.
 
 3. **Comment-Based Approval**:
-   - A pull request requires at least 2 team members to comment "approved" before it can be merged.
+   - A pull request requires at least 1 team member to comment "approved" before it can be merged.
    - Reviewers should:
      - Check for code quality, readability, and adherence to coding standards.
      - Run the test suite to ensure no existing functionality is broken.
