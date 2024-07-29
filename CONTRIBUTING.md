@@ -10,6 +10,7 @@ Thank you for considering contributing to FinTrack! Your contributions help make
     <li><a href="#license">License</a></li>
     <li><a href="#how-to-file-a-bug-report">How to File a Bug Report</a></li>
     <li><a href="#how-to-suggest-a-new-feature">How to Suggest a New Feature</a></li>
+    <li><a href="#how-to-submit-a-new-documentation">How to Submit a New Documentation</a></li>
     <li><a href="#how-to-submit-a-pull-request">How to Submit a Pull Request</a></li>
     <li><a href="#issue-approval-process">Issue Approval Process</a></li>
     <li><a href="#pull-request-approval-process">Pull Request Approval Process</a></li>
@@ -49,6 +50,15 @@ To suggest a new feature, please follow these steps:
    - **Description**: A detailed description of the feature.
    - **Problem**: The problem the feature solves.
    - **Examples/Use Cases**: Any relevant examples or use cases.
+
+## How to Submit a New Documentation
+To suggest new documentation, please follow these steps:
+1. **Search for existing documentation requests**: Check if the documentation has already been requested.
+2. **Open a new issue**: If the documentation hasn't been requested, create a <a href="https://github.com/shyke0611/dcd//issues/new?labels=documentation&template=documentation_request.md">Request Documentation</a> and include the following information:
+   - **Summary**: A clear and descriptive title and the summary of the documentation needed.
+   - **Description**: A detailed description of the documentation required.
+   - **Problem**: The problem the documentation addresses.
+   - **Examples/Use Cases**: Any relevant examples or use cases where the documentation would be useful.
 
 ## How to Submit a Pull Request
 To submit a pull request (PR), follow these steps:
