@@ -100,34 +100,43 @@ Write here
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+You will need the following software installed:
+* [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-downloads.html)
+* [Git](https://git-scm.com/downloads)
+* [Maven](https://maven.apache.org/download.cgi)
+
+To set up Maven:
+* [Set up Maven Environment for Windows](https://www.qamadness.com/knowledge-base/how-to-install-maven-and-configure-environment-variables/)
+* [Set up Maven Environment for Mac/Linux](https://www.baeldung.com/install-maven-on-windows-linux-mac)
+
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+1. **Clone the repo using Terminal/Command Prompt**:
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+     ```sh
+     git clone https://github.com/310Team8/FinTrack.git
+     ```
+
+2. **Navigate to the project directory**:
+     ```sh
+     cd FinTrack
+     ```
+
+3. **Install Maven dependencies**:
+     ```sh
+     mvn clean install
+     ```
+
+4. **Run the Project**:
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   mvn spring-boot:run
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+   Alternatively, you can open Application.java in your IDE (such as IntelliJ IDEA or VS Code) and press the "Run" button to start the application.
+
+   Once the application is running, your web browser should open automatically. If not, open a new browser window and type `http://localhost:8080` to access the application.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
