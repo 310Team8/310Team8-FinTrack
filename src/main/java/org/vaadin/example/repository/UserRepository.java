@@ -20,5 +20,4 @@ Can include custom query methods based on method naming conventions or JPQL (Jav
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
 }
