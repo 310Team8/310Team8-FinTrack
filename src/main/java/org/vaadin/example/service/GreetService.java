@@ -1,4 +1,4 @@
-package org.vaadin.example;
+package org.vaadin.example.service;
 
 import java.io.Serializable;
 

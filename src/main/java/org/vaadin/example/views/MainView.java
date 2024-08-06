@@ -1,6 +1,7 @@
-package org.vaadin.example;
+package org.vaadin.example.views;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.example.service.GreetService;
 
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -13,15 +14,15 @@ import com.vaadin.flow.router.Route;
 
 /**
  * A sample Vaadin view class.
- * <p>
- * To implement a Vaadin view just extend any Vaadin component and use @Route
- * annotation to announce it in a URL as a Spring managed bean.
- * <p>
- * A new instance of this class is created for every new user and every browser
- * tab/window.
- * <p>
- * The main view contains a text field for getting the user name and a button
- * that shows a greeting message in a notification.
+ * 
+Purpose: Views in a Vaadin application represent 
+the UI components and layouts that are rendered in the web browser. 
+They are responsible for displaying data to the user and handling user interactions on the client side.
+
+Functionality: Views are defined using Vaadin components and layouts. 
+They contain the visual elements of the application, such as forms, buttons, 
+tables, etc. Views can interact with backend services directly or through 
+controllers to fetch and display data.
  */
 @Route
 public class MainView extends VerticalLayout {
