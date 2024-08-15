@@ -1,3 +1,10 @@
-/Users/andrewshin/Downloads/FinTrack/src/main/java/org/vaadin/example/Application.java
-/Users/andrewshin/Downloads/FinTrack/src/main/java/org/vaadin/example/GreetService.java
-/Users/andrewshin/Downloads/FinTrack/src/main/java/org/vaadin/example/MainView.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/controllers/MainController.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/utility/tempUtil.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/controllers/UserController.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/repository/UserRepository.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/Application.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/GreetService.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/UserService.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/User.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/views/MainView.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/views/PlaceholderView.java
