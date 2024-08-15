@@ -16,7 +16,7 @@ public class BudgetController {
     @GetMapping
     public String listBudgets(Model model) {
         model.addAttribute("budgets", budgetService.getAllBudgets());
-        return "budgets";
+        return "budgetsList";
     }
 
     @GetMapping("/add")
