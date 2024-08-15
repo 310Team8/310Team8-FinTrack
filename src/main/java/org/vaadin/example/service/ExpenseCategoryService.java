@@ -9,22 +9,23 @@ import java.util.List;
 
 @Service
 public class ExpenseCategoryService {
+
     @Autowired
     private ExpenseCategoryRepository expenseCategoryRepository;
 
-    public List<ExpenseCategory> getAllCategories() {
-        return expenseCategoryRepository.findAll();
+    public List<ExpenseCategory> getExpenseCategoriesByUserId(Long userId) {
+        return expenseCategoryRepository.findByUserId(userId);
     }
 
-    public ExpenseCategory getCategoryById(Long id) {
+    public ExpenseCategory addExpenseCategory(ExpenseCategory expenseCategory) {
+        return expenseCategoryRepository.save(expenseCategory);
+    }
+
+    public ExpenseCategory findExpenseCategoryById(Long id) {
         return expenseCategoryRepository.findById(id).orElse(null);
     }
 
-    public ExpenseCategory saveCategory(ExpenseCategory category) {
-        return expenseCategoryRepository.save(category);
-    }
-
-    public void deleteCategory(Long id) {
+    public void deleteExpenseCategory(Long id) {
         expenseCategoryRepository.deleteById(id);
     }
 }

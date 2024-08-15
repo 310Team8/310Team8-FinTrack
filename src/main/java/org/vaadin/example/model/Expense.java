@@ -1,15 +1,13 @@
 package org.vaadin.example.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
+@Table(name = "expense")
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +17,22 @@ public class Expense {
     private String description;
 
     @NotNull
+    @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal amount;
 
     @NotNull
-    private LocalDate date;
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private ExpenseCategory category;
 
-    // Getters and setters
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -52,11 +57,11 @@ public class Expense {
         this.amount = amount;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -66,5 +71,13 @@ public class Expense {
 
     public void setCategory(ExpenseCategory category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

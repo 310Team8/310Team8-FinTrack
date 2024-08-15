@@ -3,68 +3,73 @@ package org.vaadin.example.views;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.vaadin.example.MainLayout;
 import org.vaadin.example.model.FinancialGoal;
 import org.vaadin.example.service.FinancialGoalService;
-import org.vaadin.example.MainLayout;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.example.service.SessionService;
+import org.vaadin.example.service.UserService;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-@Route(value = "goals", layout = MainLayout.class)
-@PageTitle("Manage Goals")
+@Route(value = "goal", layout = MainLayout.class)
 public class FinancialGoalView extends VerticalLayout {
 
-    private final FinancialGoalService goalService;
     private final Grid<FinancialGoal> grid = new Grid<>(FinancialGoal.class);
     private final TextField descriptionField = new TextField("Goal Description");
-    private final NumberField targetAmountField = new NumberField("Target Amount");
-    private final Button saveButton = new Button("Save");
+    private final TextField targetAmountField = new TextField("Target Amount");
 
-    @Autowired
-    public FinancialGoalView(FinancialGoalService goalService) {
-        this.goalService = goalService;
-        setUpForm();
-        setUpGrid();
-        loadData();
+    private final FinancialGoalService financialGoalService;
+    private final SessionService sessionService;
+    private final UserService userService;
+
+    public FinancialGoalView(FinancialGoalService financialGoalService, SessionService sessionService, UserService userService) {
+        this.financialGoalService = financialGoalService;
+        this.sessionService = sessionService;
+        this.userService = userService;
+
+        Button addButton = new Button("Add Goal", event -> addGoal());
+        Button deleteButton = new Button("Delete Goal", event -> deleteGoal());
+
+        HorizontalLayout formLayout = new HorizontalLayout(descriptionField, targetAmountField, addButton, deleteButton);
+        add(formLayout, grid);
+
+        listGoals();
     }
 
-    private void setUpForm() {
-        saveButton.addClickListener(e -> saveGoal());
-        add(descriptionField, targetAmountField, saveButton);
+    private void listGoals() {
+        Long userId = sessionService.getLoggedInUserId();
+        List<FinancialGoal> goals = financialGoalService.getFinancialGoalsByUserId(userId);
+        grid.setItems(goals);
     }
 
-    private void setUpGrid() {
-        grid.setColumns("id", "description", "targetAmount");
-        grid.asSingleSelect().addValueChangeListener(e -> populateForm(e.getValue()));
-        add(grid);
-    }
+    private void addGoal() {
+        String description = descriptionField.getValue();
+        String targetAmountText = targetAmountField.getValue();
+        BigDecimal targetAmount = new BigDecimal(targetAmountText);
 
-    private void loadData() {
-        grid.setItems(goalService.getAllGoals());
-    }
-
-    private void saveGoal() {
         FinancialGoal goal = new FinancialGoal();
-        goal.setDescription(descriptionField.getValue());
-
-        BigDecimal targetAmount = BigDecimal.valueOf(targetAmountField.getValue());
+        goal.setDescription(description);
         goal.setTargetAmount(targetAmount);
+        goal.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
 
-        goalService.saveGoal(goal);
-        loadData();
-        Notification.show("Goal saved");
+        financialGoalService.addFinancialGoal(goal);
+        Notification.show("Goal added successfully");
+        listGoals();
     }
 
-    private void populateForm(FinancialGoal goal) {
-        if (goal != null) {
-            descriptionField.setValue(goal.getDescription());
-
-            targetAmountField.setValue(goal.getTargetAmount().doubleValue());
+    private void deleteGoal() {
+        FinancialGoal selectedGoal = grid.asSingleSelect().getValue();
+        if (selectedGoal != null) {
+            financialGoalService.deleteFinancialGoal(selectedGoal.getId());
+            Notification.show("Goal deleted successfully");
+            listGoals();
+        } else {
+            Notification.show("Please select a goal to delete");
         }
     }
 }

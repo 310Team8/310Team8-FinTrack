@@ -1,14 +1,13 @@
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/ExpenseCategory.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/controllers/UserController.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/MainLayout.java
-/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/GreetService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/BudgetService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/UserService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/User.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/IncomeService.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/views/LoginView.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/repository/ExpenseCategoryRepository.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/FinancialGoalService.java
-/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/controllers/MainController.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/repository/FinancialGoalRepository.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/ExpenseService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/controllers/BudgetController.java
@@ -16,7 +15,9 @@
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/Budget.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/Application.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/FinancialGoal.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/views/RegistrationView.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/Income.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/SessionService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/utility/tempUtil.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/views/ExpenseView.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/repository/UserRepository.java

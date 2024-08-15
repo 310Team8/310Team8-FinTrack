@@ -1,35 +1,55 @@
 package org.vaadin.example.controllers;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.vaadin.example.model.User;
+import org.vaadin.example.service.SessionService;
 import org.vaadin.example.service.UserService;
 
-/*Purpose: Controllers in a Spring Boot application handle HTTP requests 
-and map them to the appropriate business logic. They serve as the intermediaries 
-between the client and the backend services.
-
-Functionality: They process incoming requests, handle input validation, a
-nd return responses. Controllers often interact with services to perform business 
-operations and then return the results to the client, typically in the form of JSON or XML. */
-
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/user")
 public class UserController {
 
-  private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
+    @Autowired
+    private SessionService sessionService;
 
-  @GetMapping
-  public List<User> getAllUsers() {
-    return userService.findAllUsers();
-  }
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestParam String name, @RequestParam String password) {
+        User existingUser = userService.findUserByName(name);
+        if (existingUser != null) {
+            return new ResponseEntity<>("Username already taken.", HttpStatus.CONFLICT);
+        }
+        userService.registerUser(name, password);
+        return new ResponseEntity<>("User registered successfully.", HttpStatus.CREATED);
+    }
 
-  @PostMapping
-  public User createUser(@RequestBody User user) {
-    return userService.saveUser(user);
-  }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String name, @RequestParam String password) {
+        User user = userService.loginUser(name, password);
+        if (user != null) {
+            sessionService.setLoggedInUserId(user.getId());
+            return new ResponseEntity<>("Login successful.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Invalid username or password.", HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout() {
+        sessionService.invalidateSession();
+        return new ResponseEntity<>("Logout successful.", HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.findUserById(id);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

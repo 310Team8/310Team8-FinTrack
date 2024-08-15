@@ -9,22 +9,23 @@ import java.util.List;
 
 @Service
 public class FinancialGoalService {
+
     @Autowired
     private FinancialGoalRepository financialGoalRepository;
 
-    public List<FinancialGoal> getAllGoals() {
-        return financialGoalRepository.findAll();
+    public List<FinancialGoal> getFinancialGoalsByUserId(Long userId) {
+        return financialGoalRepository.findByUserId(userId);
     }
 
-    public FinancialGoal getGoalById(Long id) {
+    public FinancialGoal addFinancialGoal(FinancialGoal financialGoal) {
+        return financialGoalRepository.save(financialGoal);
+    }
+
+    public FinancialGoal findFinancialGoalById(Long id) {
         return financialGoalRepository.findById(id).orElse(null);
     }
 
-    public FinancialGoal saveGoal(FinancialGoal goal) {
-        return financialGoalRepository.save(goal);
-    }
-
-    public void deleteGoal(Long id) {
+    public void deleteFinancialGoal(Long id) {
         financialGoalRepository.deleteById(id);
     }
 }

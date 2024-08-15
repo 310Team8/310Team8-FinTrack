@@ -1,75 +1,78 @@
 package org.vaadin.example.views;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.vaadin.example.MainLayout;
 import org.vaadin.example.model.Income;
 import org.vaadin.example.service.IncomeService;
-import org.vaadin.example.MainLayout;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.example.service.SessionService;
+import org.vaadin.example.service.UserService;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-@Route(value = "incomes", layout = MainLayout.class)
-@PageTitle("Manage Income")
+@Route(value = "income", layout = MainLayout.class)
 public class IncomeView extends VerticalLayout {
 
-    private final IncomeService incomeService;
     private final Grid<Income> grid = new Grid<>(Income.class);
     private final TextField sourceField = new TextField("Source");
-    private final NumberField amountField = new NumberField("Amount");
-    private final DatePicker dateField = new DatePicker("Date");
-    private final Button saveButton = new Button("Save");
+    private final TextField amountField = new TextField("Amount");
+    private final TextField dateField = new TextField("Date");
 
-    @Autowired
-    public IncomeView(IncomeService incomeService) {
+    private final IncomeService incomeService;
+    private final SessionService sessionService;
+    private final UserService userService;
+
+    public IncomeView(IncomeService incomeService, SessionService sessionService, UserService userService) {
         this.incomeService = incomeService;
-        setUpForm();
-        setUpGrid();
-        loadData();
+        this.sessionService = sessionService;
+        this.userService = userService;
+
+        Button addButton = new Button("Add Income", event -> addIncome());
+        Button deleteButton = new Button("Delete Income", event -> deleteIncome());
+
+        HorizontalLayout formLayout = new HorizontalLayout(sourceField, amountField, dateField, addButton, deleteButton);
+        add(formLayout, grid);
+
+        listIncomes();
     }
 
-    private void setUpForm() {
-        saveButton.addClickListener(e -> saveIncome());
-        add(sourceField, amountField, dateField, saveButton);
+    private void listIncomes() {
+        Long userId = sessionService.getLoggedInUserId();
+        List<Income> incomes = incomeService.getIncomesByUserId(userId);
+        grid.setItems(incomes);
     }
 
-    private void setUpGrid() {
-        grid.setColumns("id", "source", "amount", "date");
-        grid.asSingleSelect().addValueChangeListener(e -> populateForm(e.getValue()));
-        add(grid);
-    }
+    private void addIncome() {
+        String source = sourceField.getValue();
+        String amountText = amountField.getValue();
+        BigDecimal amount = new BigDecimal(amountText);
+        String date = dateField.getValue();
 
-    private void loadData() {
-        grid.setItems(incomeService.getAllIncomes());
-    }
-
-    private void saveIncome() {
         Income income = new Income();
-        income.setSource(sourceField.getValue());
-
-        BigDecimal amount = BigDecimal.valueOf(amountField.getValue());
+        income.setSource(source);
         income.setAmount(amount);
+        income.setDate(java.sql.Date.valueOf(date));
+        income.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
 
-        income.setDate(dateField.getValue());
-        incomeService.saveIncome(income);
-        loadData();
-        Notification.show("Income saved");
+        incomeService.addIncome(income);
+        Notification.show("Income added successfully");
+        listIncomes();
     }
 
-    private void populateForm(Income income) {
-        if (income != null) {
-            sourceField.setValue(income.getSource());
-
-            amountField.setValue(income.getAmount().doubleValue());
-
-            dateField.setValue(income.getDate());
+    private void deleteIncome() {
+        Income selectedIncome = grid.asSingleSelect().getValue();
+        if (selectedIncome != null) {
+            incomeService.deleteIncome(selectedIncome.getId());
+            Notification.show("Income deleted successfully");
+            listIncomes();
+        } else {
+            Notification.show("Please select an income to delete");
         }
     }
 }

@@ -9,19 +9,20 @@ import java.util.List;
 
 @Service
 public class BudgetService {
+
     @Autowired
     private BudgetRepository budgetRepository;
 
-    public List<Budget> getAllBudgets() {
-        return budgetRepository.findAll();
+    public List<Budget> getBudgetsByUserId(Long userId) {
+        return budgetRepository.findByUserId(userId);
     }
 
-    public Budget getBudgetById(Long id) {
-        return budgetRepository.findById(id).orElse(null);
-    }
-
-    public Budget saveBudget(Budget budget) {
+    public Budget addBudget(Budget budget) {
         return budgetRepository.save(budget);
+    }
+
+    public Budget findBudgetById(Long id) {
+        return budgetRepository.findById(id).orElse(null);
     }
 
     public void deleteBudget(Long id) {

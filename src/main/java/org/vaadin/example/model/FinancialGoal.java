@@ -1,13 +1,12 @@
 package org.vaadin.example.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "financial_goal")
 public class FinancialGoal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +16,14 @@ public class FinancialGoal {
     private String description;
 
     @NotNull
+    @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal targetAmount;
 
-    // Getters and setters
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -42,5 +46,13 @@ public class FinancialGoal {
 
     public void setTargetAmount(BigDecimal targetAmount) {
         this.targetAmount = targetAmount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

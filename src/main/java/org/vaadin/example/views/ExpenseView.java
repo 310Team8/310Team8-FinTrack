@@ -1,91 +1,79 @@
 package org.vaadin.example.views;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.vaadin.example.model.Expense;
-import org.vaadin.example.model.ExpenseCategory;
-import org.vaadin.example.service.ExpenseCategoryService;
-import org.vaadin.example.service.ExpenseService;
 import org.vaadin.example.MainLayout;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.example.model.Expense;
+import org.vaadin.example.service.ExpenseService;
+import org.vaadin.example.service.SessionService;
+import org.vaadin.example.service.UserService;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Route(value = "expenses", layout = MainLayout.class)
-@PageTitle("Manage Expenses")
+@Route(value = "expense", layout = MainLayout.class)
 public class ExpenseView extends VerticalLayout {
 
-    private final ExpenseService expenseService;
-    private final ExpenseCategoryService categoryService;
     private final Grid<Expense> grid = new Grid<>(Expense.class);
     private final TextField descriptionField = new TextField("Description");
-    private final NumberField amountField = new NumberField("Amount");
-    private final DatePicker dateField = new DatePicker("Date");
-    private final ComboBox<ExpenseCategory> categoryComboBox = new ComboBox<>("Category");
-    private final Button saveButton = new Button("Save");
+    private final TextField amountField = new TextField("Amount");
+    private final TextField dateField = new TextField("Date");
 
-    @Autowired
-    public ExpenseView(ExpenseService expenseService, ExpenseCategoryService categoryService) {
+    private final ExpenseService expenseService;
+    private final SessionService sessionService;
+    private final UserService userService;
+
+    // Constructor Injection
+    public ExpenseView(ExpenseService expenseService, SessionService sessionService, UserService userService) {
         this.expenseService = expenseService;
-        this.categoryService = categoryService;
-        setUpForm();
-        setUpGrid();
-        loadData();
+        this.sessionService = sessionService;
+        this.userService = userService;
+
+        Button addButton = new Button("Add Expense", event -> addExpense());
+        Button deleteButton = new Button("Delete Expense", event -> deleteExpense());
+
+        HorizontalLayout formLayout = new HorizontalLayout(descriptionField, amountField, dateField, addButton, deleteButton);
+        add(formLayout, grid);
+
+        listExpenses();
     }
 
-    private void setUpForm() {
-        List<ExpenseCategory> categories = categoryService.getAllCategories();
-        categoryComboBox.setItems(categories);
-        categoryComboBox.setItemLabelGenerator(ExpenseCategory::getName);
-
-        saveButton.addClickListener(e -> saveExpense());
-
-        add(descriptionField, amountField, dateField, categoryComboBox, saveButton);
+    private void listExpenses() {
+        Long userId = sessionService.getLoggedInUserId();
+        List<Expense> expenses = expenseService.getExpensesByUserId(userId);
+        grid.setItems(expenses);
     }
 
-    private void setUpGrid() {
-        grid.setColumns("id", "description", "amount", "date", "category.name");
-        grid.asSingleSelect().addValueChangeListener(e -> populateForm(e.getValue()));
-        add(grid);
+    private void addExpense() {
+        String description = descriptionField.getValue();
+        String amountText = amountField.getValue();
+        BigDecimal amount = new BigDecimal(amountText);
+        String date = dateField.getValue();
+
+        Expense expense = new Expense();
+        expense.setDescription(description);
+        expense.setAmount(amount);
+        expense.setDate(java.sql.Date.valueOf(date));
+        expense.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
+
+        expenseService.addExpense(expense);
+        Notification.show("Expense added successfully");
+        listExpenses();
     }
 
-    private void loadData() {
-        grid.setItems(expenseService.getAllExpenses());
+    private void deleteExpense() {
+        Expense selectedExpense = grid.asSingleSelect().getValue();
+        if (selectedExpense != null) {
+            expenseService.deleteExpense(selectedExpense.getId());
+            Notification.show("Expense deleted successfully");
+            listExpenses();
+        } else {
+            Notification.show("Please select an expense to delete");
+        }
     }
-
-    private void saveExpense() {
-    Expense expense = new Expense();
-    expense.setDescription(descriptionField.getValue());
-
-   
-    BigDecimal amount = BigDecimal.valueOf(amountField.getValue());
-    expense.setAmount(amount);
-
-    expense.setDate(dateField.getValue());
-    expense.setCategory(categoryComboBox.getValue());
-    expenseService.saveExpense(expense);
-    loadData();
-    Notification.show("Expense saved");
-}
-
-
-private void populateForm(Expense expense) {
-    if (expense != null) {
-        descriptionField.setValue(expense.getDescription());
-        amountField.setValue(expense.getAmount().doubleValue());
-
-        dateField.setValue(expense.getDate());
-        categoryComboBox.setValue(expense.getCategory());
-    }
-}
-
 }

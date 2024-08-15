@@ -3,13 +3,9 @@ package org.vaadin.example;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.RouterLink;
-import org.vaadin.example.views.BudgetView;
-import org.vaadin.example.views.ExpenseView;
-import org.vaadin.example.views.IncomeView;
-import org.vaadin.example.views.FinancialGoalView;
-import org.vaadin.example.views.DashboardView;
-import org.vaadin.example.views.ExpenseCategoryView;
+import org.vaadin.example.views.*;
 
 public class MainLayout extends AppLayout {
 
@@ -21,7 +17,16 @@ public class MainLayout extends AppLayout {
     private void createHeader() {
         H1 logo = new H1("Financial Tracker");
         logo.addClassNames("text-l", "m-m");
-        addToNavbar(logo);
+
+        Button logoutButton = new Button("Sign Out", event -> {
+            getUI().ifPresent(ui -> {
+                // Invalidate the session and navigate to the login view
+                ui.getSession().close();
+                ui.navigate("login");
+            });
+        });
+
+        addToNavbar(logo, logoutButton);
     }
 
     private void createDrawer() {

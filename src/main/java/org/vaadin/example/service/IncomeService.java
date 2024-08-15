@@ -9,19 +9,20 @@ import java.util.List;
 
 @Service
 public class IncomeService {
+
     @Autowired
     private IncomeRepository incomeRepository;
 
-    public List<Income> getAllIncomes() {
-        return incomeRepository.findAll();
+    public List<Income> getIncomesByUserId(Long userId) {
+        return incomeRepository.findByUserId(userId);
     }
 
-    public Income getIncomeById(Long id) {
-        return incomeRepository.findById(id).orElse(null);
-    }
-
-    public Income saveIncome(Income income) {
+    public Income addIncome(Income income) {
         return incomeRepository.save(income);
+    }
+
+    public Income findIncomeById(Long id) {
+        return incomeRepository.findById(id).orElse(null);
     }
 
     public void deleteIncome(Long id) {
