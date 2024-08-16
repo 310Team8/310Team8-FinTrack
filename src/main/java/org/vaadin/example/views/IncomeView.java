@@ -33,6 +33,8 @@ public class IncomeView extends VerticalLayout {
         this.sessionService = sessionService;
         this.userService = userService;
 
+        configureGrid();
+
         Button addButton = new Button("Add Income", event -> addIncome());
         Button deleteButton = new Button("Delete Income", event -> deleteIncome());
 
@@ -40,6 +42,10 @@ public class IncomeView extends VerticalLayout {
         add(formLayout, grid);
 
         listIncomes();
+    }
+
+    private void configureGrid() {
+        grid.setColumns("source", "amount", "date");
     }
 
     private void listIncomes() {
@@ -63,6 +69,7 @@ public class IncomeView extends VerticalLayout {
         incomeService.addIncome(income);
         Notification.show("Income added successfully");
         listIncomes();
+        clearForm();
     }
 
     private void deleteIncome() {
@@ -74,5 +81,11 @@ public class IncomeView extends VerticalLayout {
         } else {
             Notification.show("Please select an income to delete");
         }
+    }
+
+    private void clearForm() {
+        sourceField.clear();
+        amountField.clear();
+        dateField.clear();
     }
 }

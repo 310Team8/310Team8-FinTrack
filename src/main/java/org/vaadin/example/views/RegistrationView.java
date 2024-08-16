@@ -12,10 +12,16 @@ import org.vaadin.example.service.UserService;
 @Route("register")
 public class RegistrationView extends VerticalLayout {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    public RegistrationView() {
+    @Autowired
+    public RegistrationView(UserService userService) {
+        this.userService = userService;
+
+        setSizeFull(); 
+        setAlignItems(Alignment.CENTER); 
+        setJustifyContentMode(JustifyContentMode.CENTER); 
+
         TextField username = new TextField("Username");
         PasswordField password = new PasswordField("Password");
 
@@ -33,9 +39,13 @@ public class RegistrationView extends VerticalLayout {
         });
 
         Button loginButton = new Button("Already have an account? Login here", event -> {
-            getUI().ifPresent(ui -> ui.navigate("login"));
+            getUI().ifPresent(ui -> ui.navigate(""));
         });
 
-        add(username, password, registerButton, loginButton);
+        VerticalLayout formLayout = new VerticalLayout(username, password, registerButton, loginButton);
+        formLayout.setSpacing(true);
+        formLayout.setAlignItems(Alignment.STRETCH);
+
+        add(formLayout);
     }
 }

@@ -40,7 +40,7 @@ public class UserController {
 
     @GetMapping("/logout")
     public ResponseEntity<String> logout() {
-        sessionService.invalidateSession();
+        sessionService.logout();
         return new ResponseEntity<>("Logout successful.", HttpStatus.OK);
     }
 

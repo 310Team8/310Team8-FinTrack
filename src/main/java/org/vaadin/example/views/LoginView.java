@@ -10,16 +10,19 @@ import org.vaadin.example.model.User;
 import org.vaadin.example.service.SessionService;
 import org.vaadin.example.service.UserService;
 
-@Route("login")
+@Route("")
 public class LoginView extends VerticalLayout {
 
     private final UserService userService;
     private final SessionService sessionService;
 
-    // Constructor Injection for UserService and SessionService
     public LoginView(UserService userService, SessionService sessionService) {
         this.userService = userService;
         this.sessionService = sessionService;
+
+        setSizeFull(); 
+        setAlignItems(Alignment.CENTER); 
+        setJustifyContentMode(JustifyContentMode.CENTER); 
 
         TextField username = new TextField("Username");
         PasswordField password = new PasswordField("Password");
@@ -42,6 +45,9 @@ public class LoginView extends VerticalLayout {
             getUI().ifPresent(ui -> ui.navigate("register"));
         });
 
-        add(username, password, loginButton, registerButton);
+        VerticalLayout formLayout = new VerticalLayout(username, password, loginButton, registerButton);
+        formLayout.setSpacing(true);
+        formLayout.setAlignItems(Alignment.STRETCH); 
+        add(formLayout);
     }
 }

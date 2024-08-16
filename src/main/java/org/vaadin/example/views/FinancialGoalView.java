@@ -32,6 +32,8 @@ public class FinancialGoalView extends VerticalLayout {
         this.sessionService = sessionService;
         this.userService = userService;
 
+        configureGrid();
+
         Button addButton = new Button("Add Goal", event -> addGoal());
         Button deleteButton = new Button("Delete Goal", event -> deleteGoal());
 
@@ -39,6 +41,10 @@ public class FinancialGoalView extends VerticalLayout {
         add(formLayout, grid);
 
         listGoals();
+    }
+
+    private void configureGrid() {
+        grid.setColumns("description", "targetAmount");
     }
 
     private void listGoals() {
@@ -60,6 +66,7 @@ public class FinancialGoalView extends VerticalLayout {
         financialGoalService.addFinancialGoal(goal);
         Notification.show("Goal added successfully");
         listGoals();
+        clearForm();
     }
 
     private void deleteGoal() {
@@ -71,5 +78,10 @@ public class FinancialGoalView extends VerticalLayout {
         } else {
             Notification.show("Please select a goal to delete");
         }
+    }
+
+    private void clearForm() {
+        descriptionField.clear();
+        targetAmountField.clear();
     }
 }

@@ -33,6 +33,8 @@ public class BudgetView extends VerticalLayout {
         this.sessionService = sessionService;
         this.userService = userService;
 
+        configureGrid();
+        
         Button addButton = new Button("Add Budget", event -> addBudget());
         Button deleteButton = new Button("Delete Budget", event -> deleteBudget());
 
@@ -42,6 +44,12 @@ public class BudgetView extends VerticalLayout {
         listBudgets();
     }
 
+    private void configureGrid() {
+        // Exclude id and user fields from being displayed
+        grid.setColumns("name", "amount");
+        grid.getColumnByKey("amount").setHeader("Amount ($)"); // Customize header
+    }
+
     private void listBudgets() {
         Long userId = sessionService.getLoggedInUserId();
         List<Budget> budgets = budgetService.getBudgetsByUserId(userId);
@@ -49,28 +57,39 @@ public class BudgetView extends VerticalLayout {
     }
 
     private void addBudget() {
-        String name = nameField.getValue();
-        String amountText = amountField.getValue();
-        BigDecimal amount = new BigDecimal(amountText);
+        try {
+            String name = nameField.getValue();
+            String amountText = amountField.getValue();
+            BigDecimal amount = new BigDecimal(amountText);
 
-        Budget budget = new Budget();
-        budget.setName(name);
-        budget.setAmount(amount);
-        budget.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
+            Budget budget = new Budget();
+            budget.setName(name);
+            budget.setAmount(amount);
+            budget.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
 
-        budgetService.addBudget(budget);
-        Notification.show("Budget added successfully");
-        listBudgets();
+            budgetService.addBudget(budget);
+            Notification.show("Budget added successfully", 3000, Notification.Position.TOP_CENTER);
+            
+            clearForm();
+            listBudgets();
+        } catch (NumberFormatException e) {
+            Notification.show("Please enter a valid amount", 3000, Notification.Position.TOP_CENTER);
+        }
     }
 
     private void deleteBudget() {
         Budget selectedBudget = grid.asSingleSelect().getValue();
         if (selectedBudget != null) {
             budgetService.deleteBudget(selectedBudget.getId());
-            Notification.show("Budget deleted successfully");
+            Notification.show("Budget deleted successfully", 3000, Notification.Position.TOP_CENTER);
             listBudgets();
         } else {
-            Notification.show("Please select a budget to delete");
+            Notification.show("Please select a budget to delete", 3000, Notification.Position.TOP_CENTER);
         }
+    }
+
+    private void clearForm() {
+        nameField.clear();
+        amountField.clear();
     }
 }

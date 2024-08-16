@@ -28,11 +28,12 @@ public class ExpenseView extends VerticalLayout {
     private final SessionService sessionService;
     private final UserService userService;
 
-    // Constructor Injection
     public ExpenseView(ExpenseService expenseService, SessionService sessionService, UserService userService) {
         this.expenseService = expenseService;
         this.sessionService = sessionService;
         this.userService = userService;
+
+        configureGrid();
 
         Button addButton = new Button("Add Expense", event -> addExpense());
         Button deleteButton = new Button("Delete Expense", event -> deleteExpense());
@@ -41,6 +42,11 @@ public class ExpenseView extends VerticalLayout {
         add(formLayout, grid);
 
         listExpenses();
+    }
+
+    private void configureGrid() {
+        grid.setColumns("description", "amount", "date", "category.name");
+        grid.getColumnByKey("category.name").setHeader("Category");
     }
 
     private void listExpenses() {
@@ -64,6 +70,7 @@ public class ExpenseView extends VerticalLayout {
         expenseService.addExpense(expense);
         Notification.show("Expense added successfully");
         listExpenses();
+        clearForm();
     }
 
     private void deleteExpense() {
@@ -75,5 +82,11 @@ public class ExpenseView extends VerticalLayout {
         } else {
             Notification.show("Please select an expense to delete");
         }
+    }
+
+    private void clearForm() {
+        descriptionField.clear();
+        amountField.clear();
+        dateField.clear();
     }
 }

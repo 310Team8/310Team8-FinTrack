@@ -30,6 +30,8 @@ public class ExpenseCategoryView extends VerticalLayout {
         this.sessionService = sessionService;
         this.userService = userService;
 
+        configureGrid();
+        
         Button addButton = new Button("Add Category", event -> addCategory());
         Button deleteButton = new Button("Delete Category", event -> deleteCategory());
 
@@ -37,6 +39,11 @@ public class ExpenseCategoryView extends VerticalLayout {
         add(formLayout, grid);
 
         listCategories();
+    }
+
+    private void configureGrid() {
+        // Exclude id and user fields from being displayed
+        grid.setColumns("name");
     }
 
     private void listCategories() {
@@ -48,12 +55,18 @@ public class ExpenseCategoryView extends VerticalLayout {
     private void addCategory() {
         String name = nameField.getValue();
 
+        if (name.trim().isEmpty()) {
+            Notification.show("Category name cannot be empty", 3000, Notification.Position.TOP_CENTER);
+            return;
+        }
+
         ExpenseCategory category = new ExpenseCategory();
         category.setName(name);
         category.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
 
         expenseCategoryService.addExpenseCategory(category);
-        Notification.show("Category added successfully");
+        Notification.show("Category added successfully", 3000, Notification.Position.TOP_CENTER);
+        clearForm();
         listCategories();
     }
 
@@ -61,10 +74,14 @@ public class ExpenseCategoryView extends VerticalLayout {
         ExpenseCategory selectedCategory = grid.asSingleSelect().getValue();
         if (selectedCategory != null) {
             expenseCategoryService.deleteExpenseCategory(selectedCategory.getId());
-            Notification.show("Category deleted successfully");
+            Notification.show("Category deleted successfully", 3000, Notification.Position.TOP_CENTER);
             listCategories();
         } else {
-            Notification.show("Please select a category to delete");
+            Notification.show("Please select a category to delete", 3000, Notification.Position.TOP_CENTER);
         }
+    }
+
+    private void clearForm() {
+        nameField.clear();
     }
 }

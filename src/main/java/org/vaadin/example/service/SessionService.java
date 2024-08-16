@@ -2,26 +2,21 @@ package org.vaadin.example.service;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpSession;
+import com.vaadin.flow.server.VaadinSession;
 
 @Service
 public class SessionService {
 
-    private final HttpSession session;
-
-    public SessionService(HttpSession session) {
-        this.session = session;
-    }
-
     public void setLoggedInUserId(Long userId) {
-        session.setAttribute("userId", userId);
+        VaadinSession.getCurrent().setAttribute("userId", userId);
     }
 
     public Long getLoggedInUserId() {
-        return (Long) session.getAttribute("userId");
+        return (Long) VaadinSession.getCurrent().getAttribute("userId");
     }
 
-    public void invalidateSession() {
-        session.invalidate();
+    public void logout() {
+        VaadinSession.getCurrent().getSession().invalidate();
+        VaadinSession.getCurrent().close();
     }
 }
