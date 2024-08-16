@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.vaadin.example.model.Income;
 import org.vaadin.example.repository.IncomeRepository;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,5 +29,11 @@ public class IncomeService {
 
     public void deleteIncome(Long id) {
         incomeRepository.deleteById(id);
+    }
+
+    public BigDecimal getTotalIncomeForCurrentMonth(Long userId) {
+        LocalDate startOfMonth = LocalDate.now().withDayOfMonth(1);
+        LocalDate endOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
+        return incomeRepository.findTotalIncomeForPeriod(userId, startOfMonth, endOfMonth);
     }
 }

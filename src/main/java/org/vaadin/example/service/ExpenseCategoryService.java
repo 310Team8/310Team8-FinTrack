@@ -28,4 +28,8 @@ public class ExpenseCategoryService {
     public void deleteExpenseCategory(Long id) {
         expenseCategoryRepository.deleteById(id);
     }
+
+    public List<ExpenseCategory> getCategoriesByUserId(Long userId) {
+        return expenseCategoryRepository.findByUserId(userId);
+    }
 }
