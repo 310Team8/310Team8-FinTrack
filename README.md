@@ -1,4 +1,4 @@
-<!-- PROJECT SHIELDS -->
+  <!-- PROJECT SHIELDS -->
 [![GitHub forks](https://img.shields.io/github/forks/310Team8/FinTrack.svg?style=for-the-badge)](https://github.com/310Team8/FinTrack/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/310Team8/FinTrack.svg?style=for-the-badge)](https://github.com/310Team8/FinTrack/issues)
 [![GitHub contributors](https://img.shields.io/github/contributors/310Team8/FinTrack.svg?style=for-the-badge)](https://github.com/310Team8/FinTrack/graphs/contributors)
@@ -52,7 +52,6 @@
       </ul>
     </li>
     <li><a href="#versions">Versions</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -68,20 +67,19 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Write here...
-You can read more at [Project Description](./DESCRIPTION.md) about the specifics.
+FinTrack is designed to be a comprehensive financial management tool aimed at helping users gain better control over their finances. Whether for personal use or business purposes, FinTrack provides a robust platform for tracking income, expenses, and budgets. The tool is built with a focus on user-friendly data visualization and forecasting features, ensuring users can easily interpret their financial data and make informed decisions. You can read more at [Project Description](./DESCRIPTION.md) about the specifics.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ### What does this project do?
-Write here
+FinTrack empowers users to efficiently manage their financial activities. It enables users to create and maintain personal or business financial profiles, categorize and monitor expenses, set and adhere to budgets, and forecast both income and asset values. Additionally, FinTrack offers goal-setting and tracking features, allowing users to achieve their financial objectives with ease.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ### Why is this project useful?
-Write here
+FinTrack is useful because it provides a centralized platform for managing and optimizing financial resources, making it easier for individuals and businesses to track their financial health. By offering features such as expense categorization, budget monitoring, and income forecasting, it helps users make informed financial decisions, avoid overspending, and achieve their financial goals. The data visualization tools further enhance the user experience by presenting complex financial data in an easy-to-understand format, making financial management more accessible and efficient.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -145,23 +143,6 @@ To set up Maven:
 Write here 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](../../issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- CONTRIBUTING -->
