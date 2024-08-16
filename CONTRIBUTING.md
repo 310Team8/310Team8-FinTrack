@@ -14,13 +14,8 @@ Thank you for considering contributing to FinTrack! Your contributions help make
     <li><a href="#how-to-submit-a-pull-request">How to Submit a Pull Request</a></li>
     <li><a href="#issue-approval-process">Issue Approval Process</a></li>
     <li><a href="#pull-request-approval-process">Pull Request Approval Process</a></li>
-    <li><a href="#setting-up-your-environment-and-running-tests">Setting Up Your Environment and Running Tests</a></li>
+    <li><a href="#setting-up-your-environment">Setting Up Your Environment</a></li>
     <li><a href="#types-of-contributions-were-looking-for">Types of Contributions We're Looking For</a></li>
-    <li><a href="#getting-started-for-newcomers">Getting Started for Newcomers</a></li>
-    <li><a href="#technical-requirements-for-contributions">Technical Requirements for Contributions</a></li>
-    <li><a href="#roadmap-and-vision">Roadmap and Vision</a></li>
-    <li><a href="#high-level-design--architecture-information">High-Level Design / Architecture Information</a></li>
-    <li><a href="#contacting-us">Contacting Us</a></li>
   </ol>
 </details>
 
@@ -121,17 +116,42 @@ To ensure that all pull requests are properly reviewed, validated, and adhere to
 
 All approved pull requests will be documented in our project tracker via the wiki and any associated issues will be updated accordingly.
 
-## Setting Up Your Environment and Running Tests
-link goes here
+## Setting Up Your Environment
+For instructions on setting up your development environment, please refer to the [Getting Started](./README.md#getting-started) section in the README.
+
 ## Types of Contributions We're Looking For
-link goes here
-## Getting Started for Newcomers
-link goes here
-## Technical Requirements for Contributions
-link goes here
-## Roadmap and Vision
-link goes here
-## High-Level Design / Architecture Information
-link goes here
-## Contacting Us
-link goes here
+
+We welcome a variety of contributions to the FinTrack project, including but not limited to:
+
+1. **Bug Fixes**: 
+   - If you find a bug and know how to fix it, your contribution is valuable! 
+   - Please ensure you follow the steps for filing a bug report before submitting a fix.
+
+2. **New Features**: 
+   - Have an idea for a new feature that could improve FinTrack? We’d love to see it!
+   - Make sure to discuss your idea with the team by opening an issue first.
+
+3. **Improving Documentation**: 
+   - Good documentation helps others understand and contribute to the project.
+   - If you notice anything missing or unclear, please help us improve it.
+
+4. **Code Refactoring**: 
+   - If you find areas of the code that could be cleaner, more efficient, or more maintainable, your refactoring efforts are appreciated.
+
+5. **Testing**: 
+   - Writing tests is a crucial part of maintaining the project’s stability.
+   - If you can help improve the test coverage or fix failing tests, we encourage your contributions.
+
+6. **Design and UX Enhancements**: 
+   - If you have a background in design or user experience, your insights on improving the look and feel of FinTrack are welcome.
+
+7. **Performance Improvements**: 
+   - If you spot a way to make FinTrack faster or more resource-efficient, your optimizations would be highly valued.
+
+8. **Security Improvements**: 
+   - Security is critical. If you can help us identify and fix vulnerabilities, your contributions will help keep our users safe.
+
+9. **Internationalization (i18n)**: 
+   - Help make FinTrack accessible to users around the world by contributing translations or improving existing ones.
+
+
