@@ -28,6 +28,9 @@ public class Income {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @NotNull
+    private String paymentFrequency;
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -67,5 +70,13 @@ public class Income {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getPaymentFrequency() {
+        return paymentFrequency;
+    }
+
+    public void setPaymentFrequency(String paymentFrequency) {
+        this.paymentFrequency = paymentFrequency;
     }
 }
