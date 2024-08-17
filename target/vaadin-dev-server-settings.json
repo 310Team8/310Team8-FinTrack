@@ -9,9 +9,9 @@
   "devBundleOutput": "/Users/andrewshin/Desktop/FinTrack/target/dev-bundle/webapp",
   "devBundleStatsOutput": "/Users/andrewshin/Desktop/FinTrack/target/dev-bundle/config",
   "jarResourcesFolder": "/Users/andrewshin/Desktop/FinTrack/src/main/frontend/generated/jar-resources",
-  "themeName": "my-theme",
+  "themeName": "",
   "clientServiceWorkerSource": "/Users/andrewshin/Desktop/FinTrack/target/sw.ts",
-  "pwaEnabled": true,
-  "offlineEnabled": true,
-  "offlinePath": "'.'"
+  "pwaEnabled": false,
+  "offlineEnabled": false,
+  "offlinePath": "'offline.html'"
 }
