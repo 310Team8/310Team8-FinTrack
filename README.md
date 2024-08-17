@@ -18,7 +18,7 @@
     <br />
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://fintrack-rbm9.onrender.com">View Demo</a>
     ·
  <a href="https://github.com/310Team8/FinTrack/issues/new?labels=bug&template=bug_report.md">Report Bug</a>
 ·
@@ -70,7 +70,7 @@
 ## About The Project
 FinTrack is designed to be a comprehensive financial management tool aimed at helping users gain better control over their finances. Whether for personal use or business purposes, FinTrack provides a robust platform for tracking income, expenses, and budgets. The tool is built with a focus on user-friendly data visualization and forecasting features, ensuring users can easily interpret their financial data and make informed decisions. You can read more at [Project Description](./DESCRIPTION.md) about the next steps!
 
-This project has been deployed to Render, a free hosting service that provides automated builds and deployments. The application is configured to automatically rebuild and redeploy whenever there is a merge to the main branch. This ensures that the latest changes are always reflected in the live environment without any manual intervention. You can access the live application by visiting the <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>. If you encounter an issue, please contact us at 
+This project has been deployed to Render, a free hosting service that provides automated builds and deployments. The application is configured to automatically rebuild and redeploy whenever there is a merge to the main branch. This ensures that the latest changes are always reflected in the live environment without any manual intervention. You can access the live application by clicking <a href="https://fintrack-rbm9.onrender.com">View Demo</a>. If you encounter an issue, please contact us at <a href="#contacts">Contacts</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
