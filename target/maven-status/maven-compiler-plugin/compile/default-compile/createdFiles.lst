@@ -11,6 +11,7 @@ org/vaadin/example/service/ExpenseService.class
 org/vaadin/example/model/Budget.class
 org/vaadin/example/repository/UserRepository.class
 org/vaadin/example/MainLayout.class
+org/vaadin/example/repository/NoteRepository.class
 org/vaadin/example/controllers/UserController.class
 org/vaadin/example/model/ExpenseCategory.class
 org/vaadin/example/views/LoginView.class
@@ -19,11 +20,13 @@ org/vaadin/example/views/IncomeView.class
 org/vaadin/example/views/BudgetView.class
 org/vaadin/example/service/IncomeService.class
 org/vaadin/example/model/FinancialGoal.class
+org/vaadin/example/service/NoteService.class
 org/vaadin/example/views/FinancialGoalView.class
 org/vaadin/example/controllers/BudgetController.class
 org/vaadin/example/service/UserService.class
 org/vaadin/example/service/ExpenseCategoryService.class
 org/vaadin/example/repository/BudgetRepository.class
+org/vaadin/example/model/Note.class
 org/vaadin/example/model/Expense.class
 org/vaadin/example/controllers/ExpenseController.class
 org/vaadin/example/model/Income.class

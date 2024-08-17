@@ -54,6 +54,7 @@
     <li><a href="#versions">Versions</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
+     <li><a href="#contacts">Contacts</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -67,7 +68,9 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-FinTrack is designed to be a comprehensive financial management tool aimed at helping users gain better control over their finances. Whether for personal use or business purposes, FinTrack provides a robust platform for tracking income, expenses, and budgets. The tool is built with a focus on user-friendly data visualization and forecasting features, ensuring users can easily interpret their financial data and make informed decisions. You can read more at [Project Description](./DESCRIPTION.md) about the specifics.
+FinTrack is designed to be a comprehensive financial management tool aimed at helping users gain better control over their finances. Whether for personal use or business purposes, FinTrack provides a robust platform for tracking income, expenses, and budgets. The tool is built with a focus on user-friendly data visualization and forecasting features, ensuring users can easily interpret their financial data and make informed decisions. You can read more at [Project Description](./DESCRIPTION.md) about the next steps!
+
+This project has been deployed to Render, a free hosting service that provides automated builds and deployments. The application is configured to automatically rebuild and redeploy whenever there is a merge to the main branch. This ensures that the latest changes are always reflected in the live environment without any manual intervention. You can access the live application by visiting the <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>. If you encounter an issue, please contact us at 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -160,6 +163,14 @@ Distributed under the MIT License. Read more at [MIT License](./LICENSE) for mor
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- CONTACTSE -->
+## Contacts
+
+If you have any inquiries related to this project or face any issues contact us using the information below:
+
+Email: hshi270@aucklanduni.ac.nz
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- ACKNOWLEDGMENTS -->

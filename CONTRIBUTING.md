@@ -155,3 +155,6 @@ We welcome a variety of contributions to the FinTrack project, including but not
    - Help make FinTrack accessible to users around the world by contributing translations or improving existing ones.
 
 
+Please look at [Description](./DESCRIPTION.md) for specific functionalities we are looking for!
+
+
