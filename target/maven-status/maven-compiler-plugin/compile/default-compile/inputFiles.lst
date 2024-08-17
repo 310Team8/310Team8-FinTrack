@@ -1,9 +1,11 @@
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/ExpenseCategory.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/controllers/UserController.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/Note.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/MainLayout.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/BudgetService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/UserService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/model/User.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/NoteService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/service/IncomeService.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/views/LoginView.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/repository/ExpenseCategoryRepository.java
@@ -30,6 +32,7 @@
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/repository/BudgetRepository.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/controllers/ExpenseCategoryController.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/controllers/FinancialGoalController.java
+/Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/repository/NoteRepository.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/views/IncomeView.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/repository/ExpenseRepository.java
 /Users/andrewshin/Desktop/FinTrack/src/main/java/org/vaadin/example/views/FinancialGoalView.java

@@ -1,10 +1,13 @@
 /*
 This class is required for the application do not chnage change but this is the general css class
 
-   CSS styling examples for the Vaadin app.
 
-   Visit https://vaadin.com/docs/styling/application-theme/ for more information.
+  CSS styling examples for the Vaadin app.
+
+
+  Visit https://vaadin.com/docs/styling/application-theme/ for more information.
 */
+
 
 /* Example: CSS class name to center align the content . */
 .centered-content {
@@ -12,14 +15,17 @@ This class is required for the application do not chnage change but this is the 
   max-width: 250px;
 }
 
+
 /* Example: the style is applied only to the textfields which have the `bordered` class name. */
 vaadin-text-field.bordered::part(input-field) {
   box-shadow: inset 0 0 0 1px var(--lumo-contrast-30pct);
   background-color: var(--lumo-base-color);
 }
 
+
 /* styles.css */
 @import "dashboard-styles.css";
+
 
 /* dashboard-styles.css */
 .dashboard-title {
@@ -27,11 +33,13 @@ vaadin-text-field.bordered::part(input-field) {
   margin-bottom: 20px;
 }
 
+
 .dashboard-stats {
   width: 100%;
   justify-content: space-between;
   margin-bottom: 30px;
 }
+
 
 .dashboard-card {
   background-color: #f7f9fc;
@@ -42,16 +50,19 @@ vaadin-text-field.bordered::part(input-field) {
   width: 45%;
 }
 
+
 .card-title {
   font-size: 1.2em;
   margin-bottom: 10px;
   color: #555;
 }
 
+
 .card-value {
   font-size: 2.5em;
   color: #1e88e5;
 }
+
 
 /* Style for the category section title */
 .category-title {
@@ -59,6 +70,7 @@ vaadin-text-field.bordered::part(input-field) {
   margin-bottom: 10px;
   color: #333;
 }
+
 
 /* Style for the category list container */
 .category-layout {
@@ -68,15 +80,18 @@ vaadin-text-field.bordered::part(input-field) {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
 /* Style for the ListBox component */
 .category-list-box {
   width: 100%;
-  max-height: 300px; /* Adjust this based on your design */
+  max-height: 300px;
+  /* Adjust this based on your design */
   overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #fff;
 }
+
 
 /* Add a line and padding between each item */
 .category-list-box vaadin-list-box::part(item) {
@@ -86,6 +101,7 @@ vaadin-text-field.bordered::part(input-field) {
   color: #555;
 }
 
+
 /* Last item should not have a border */
 .category-list-box vaadin-list-box::part(item):last-child {
   border-bottom: none;
@@ -93,15 +109,47 @@ vaadin-text-field.bordered::part(input-field) {
 
 
 
+
+
+
 /* adding responsive design */
 @media screen and (max-width: 768px) {
   .dashboard-card {
-      width: 100%;
-      margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 20px;
   }
-  .dashboard-stats {
-      flex-direction: column;
-      align-items: center;
-  }
-}
 
+  .dashboard-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .notes-section {
+    overflow: auto;
+    /* Ensure scrolling if needed */
+  }
+
+
+  .source-container {
+    width: 100%;
+    overflow-wrap: break-word;
+    /* Ensure long words break and wrap */
+    word-wrap: break-word;
+    /* Fallback for older browsers */
+    hyphens: auto;
+    /* Automatic hyphenation */
+    margin-bottom: 10px;
+    /* Add spacing between notes */
+  }
+
+
+  .source-container p {
+    margin: 0;
+    word-wrap: break-word;
+    /* Ensure long words break and wrap */
+  }
+
+
+
+
+}

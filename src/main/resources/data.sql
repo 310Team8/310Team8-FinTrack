@@ -11,7 +11,7 @@ CREATE TABLE budget (
     user_id BIGINT NOT NULL, 
     name VARCHAR(255) NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 -- Table for tracking expenses
@@ -22,8 +22,8 @@ CREATE TABLE expense (
     amount DECIMAL(10, 2) NOT NULL,
     date DATE NOT NULL,
     category_id BIGINT,
-    FOREIGN KEY (category_id) REFERENCES expense_category(id),
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (category_id) REFERENCES expense_category(id) ON DELETE SET NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 -- Table for expense categories
@@ -31,7 +31,7 @@ CREATE TABLE expense_category (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL, 
     name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 -- Table for financial goals
@@ -40,7 +40,7 @@ CREATE TABLE financial_goal (
     user_id BIGINT NOT NULL, 
     description VARCHAR(255) NOT NULL,
     target_amount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 -- Table for tracking income
@@ -50,5 +50,13 @@ CREATE TABLE income (
     source VARCHAR(255) NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
     date DATE NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);
+
+-- Table for tracking notes
+CREATE TABLE note (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    content TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
