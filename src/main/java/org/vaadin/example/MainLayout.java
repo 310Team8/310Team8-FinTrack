@@ -31,18 +31,33 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
 
 
    private void createHeader() {
-       H1 logo = new H1("FinTrack");
-       logo.addClassNames("text-l", "m-m");
+        H1 logo = new H1("FinTrack");
+        logo.addClassNames("text-l", "m-m");
 
 
-       Button logoutButton = new Button("Sign Out", event -> {
-           VaadinSession.getCurrent().getSession().invalidate();
-           VaadinSession.getCurrent().close();
-           getUI().ifPresent(ui -> ui.navigate(""));
-       });
+        Button logoutButton = new Button("Sign Out", event -> {
+            VaadinSession.getCurrent().getSession().invalidate();
+            VaadinSession.getCurrent().close();
+            getUI().ifPresent(ui -> ui.navigate(""));
+        });
+
+        Button budgetButton = new Button("Budgets");
+        budgetButton.addClickListener(e -> budgetButton.getUI().ifPresent(ui -> ui.navigate(BudgetView.class)));
+
+        Button expenseButton = new Button("Expenses");
+        expenseButton.addClickListener(e -> expenseButton.getUI().ifPresent(ui -> ui.navigate(ExpenseView.class)));
+
+        Button incomeButton = new Button("Income");
+        incomeButton.addClickListener(e -> incomeButton.getUI().ifPresent(ui -> ui.navigate(IncomeView.class)));
+
+        Button goalButton = new Button("Goals");
+        goalButton.addClickListener(e -> goalButton.getUI().ifPresent(ui -> ui.navigate(FinancialGoalView.class)));
+
+        Button dashboardButton = new Button("Dashboard");
+        dashboardButton.addClickListener(e -> dashboardButton.getUI().ifPresent(ui -> ui.navigate(DashboardView.class)));
 
 
-       HorizontalLayout header = new HorizontalLayout(logo, logoutButton);
+       HorizontalLayout header = new HorizontalLayout(logo, dashboardButton, budgetButton, expenseButton, incomeButton, goalButton, logoutButton);
        header.expand(logo);
        header.setWidthFull();
        header.setAlignItems(Alignment.CENTER);
