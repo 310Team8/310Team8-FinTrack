@@ -131,6 +131,24 @@ vaadin-text-field.bordered::part(input-field) {
   margin-bottom: 20px; /* Space between the logo and the rest of the form */
 }
 
+/* Form layout styling */
+.form-layout {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+/* Button layout styling */
+.v-button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Grid styling */
+.v-grid {
+  padding-left: 20px;
+}
+
 
 
 

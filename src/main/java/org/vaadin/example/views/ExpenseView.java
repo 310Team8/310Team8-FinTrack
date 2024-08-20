@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Route(value = "expense", layout = MainLayout.class)
-public class ExpenseView extends VerticalLayout {
+public class ExpenseView extends HorizontalLayout {
 
     private final Grid<Expense> grid = new Grid<>(Expense.class);
     private final TextField descriptionField = new TextField("Description");
@@ -34,12 +34,21 @@ public class ExpenseView extends VerticalLayout {
         this.userService = userService;
 
         configureGrid();
+        configureForm();
+
+        VerticalLayout formLayout = new VerticalLayout(descriptionField, amountField, dateField);
+        formLayout.setWidth("400px");
+        formLayout.addClassName("form-layout");
 
         Button addButton = new Button("Add Expense", event -> addExpense());
         Button deleteButton = new Button("Delete Expense", event -> deleteExpense());
+        HorizontalLayout buttonLayout = new HorizontalLayout(addButton, deleteButton);
 
-        HorizontalLayout formLayout = new HorizontalLayout(descriptionField, amountField, dateField, addButton, deleteButton);
+        formLayout.add(buttonLayout);
         add(formLayout, grid);
+
+        setSizeFull();
+        grid.setSizeFull();
 
         listExpenses();
     }
@@ -47,6 +56,13 @@ public class ExpenseView extends VerticalLayout {
     private void configureGrid() {
         grid.setColumns("description", "amount", "date", "category.name");
         grid.getColumnByKey("category.name").setHeader("Category");
+        grid.addClassName("v-grid");
+    }
+
+    private void configureForm() {
+        descriptionField.setWidthFull();
+        amountField.setWidthFull();
+        dateField.setWidthFull();
     }
 
     private void listExpenses() {
@@ -68,7 +84,7 @@ public class ExpenseView extends VerticalLayout {
         expense.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
 
         expenseService.addExpense(expense);
-        Notification.show("Expense added successfully");
+        Notification.show("Expense added successfully").addClassName("v-notification");
         listExpenses();
         clearForm();
     }
@@ -77,10 +93,10 @@ public class ExpenseView extends VerticalLayout {
         Expense selectedExpense = grid.asSingleSelect().getValue();
         if (selectedExpense != null) {
             expenseService.deleteExpense(selectedExpense.getId());
-            Notification.show("Expense deleted successfully");
+            Notification.show("Expense deleted successfully").addClassName("v-notification");
             listExpenses();
         } else {
-            Notification.show("Please select an expense to delete");
+            Notification.show("Please select an expense to delete").addClassName("v-notification");
         }
     }
 
