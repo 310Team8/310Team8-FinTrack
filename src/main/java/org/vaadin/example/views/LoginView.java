@@ -53,4 +53,15 @@ public class LoginView extends VerticalLayout {
             }
         });
 
-        Button registerButton = new Button("Don't have an 
+        Button registerButton = new Button("Don't have an account? Register here", event -> {
+            getUI().ifPresent(ui -> ui.navigate("register"));
+        });
+
+        VerticalLayout formLayout = new VerticalLayout(logo, username, password, loginButton, registerButton);
+        formLayout.setSpacing(true);
+        formLayout.setAlignItems(Alignment.STRETCH);
+
+        overlayBox.add(formLayout);
+        add(overlayBox);
+    }
+}
