@@ -131,23 +131,91 @@ vaadin-text-field.bordered::part(input-field) {
   margin-bottom: 20px; /* Space between the logo and the rest of the form */
 }
 
-/* Form layout styling */
+/* General styling for the form and layout */
 .form-layout {
   padding: 20px;
   background-color: #f9f9f9;
-  border-radius: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-/* Button layout styling */
-.v-button {
-  margin-top: 10px;
-  width: 100%;
+.dashboard-card {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* Grid styling */
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-value {
+  font-size: 24px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Styling for the grid */
 .v-grid {
-  padding-left: 20px;
+  margin-top: 20px;
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+/* Styling for buttons */
+.v-button {
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.v-button:hover {
+  background-color: #0056b3;
+}
+
+.v-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Notification style */
+.v-notification {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Placeholder styling for text fields and date picker */
+input::placeholder,
+textarea::placeholder {
+  color: #a0a0a0;
+  font-style: italic;
+}
+
+/* Style for date picker */
+.date-picker {
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+}
+
 
 
 
