@@ -42,6 +42,10 @@ public class FinancialGoal {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @NotNull
+    @DecimalMin(value = "0.0", inclusive = true)
+    private BigDecimal amountSaved;
+
     // Getters and Setters
 
     /**
@@ -114,5 +118,13 @@ public class FinancialGoal {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public BigDecimal getSavedAmount() {
+        return amountSaved;
+    }
+
+    public void setSavedAmount(BigDecimal amountSaved) {
+        this.amountSaved = amountSaved;
     }
 }
