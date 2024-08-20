@@ -107,6 +107,29 @@ vaadin-text-field.bordered::part(input-field) {
   border-bottom: none;
 }
 
+.login-view {
+  background-image: url('FinTrack_image-1.jpg'); /* Ensure this path is correct */
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay-box {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  max-width: 400px; /* Adjust this value as needed */
+  width: 100%;
+}
+
+.logo {
+  font-family: 'Arial', sans-serif; /* You can change this to any font you prefer */
+  font-size: 2.5em;
+  color: rgb(0, 0, 0); /* White color to stand out against the gradient background */
+  text-align: center;
+  margin-bottom: 20px; /* Space between the logo and the rest of the form */
+}
+
 
 
 
@@ -148,6 +171,7 @@ vaadin-text-field.bordered::part(input-field) {
     word-wrap: break-word;
     /* Ensure long words break and wrap */
   }
+
 
 
 
