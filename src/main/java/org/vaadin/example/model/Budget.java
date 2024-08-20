@@ -42,6 +42,18 @@ public class Budget {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    /**
+     * The icon associated with the budget.
+     */
+    private String icon;
+
+    /**
+     * The current amount spent in the budget.
+     */
+    private BigDecimal currentAmount = BigDecimal.ZERO;
+
+
+
     // Getters and Setters
 
     /**
@@ -114,5 +126,42 @@ public class Budget {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * Gets the icon associated with the budget.
+     *
+     * @return the icon associated with the budget
+     */
+    public String getIcon() {
+        return icon;
+    }
+
+    /**
+     * Sets the icon associated with the budget.
+     *
+     * @param icon the icon to set
+     */
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    /**
+     * Gets the current amount spent in the budget.
+     *
+     * @return the current amount spent in the budget
+     */
+    public BigDecimal getCurrentAmount() {
+        return currentAmount;
+    }
+    
+
+    /**
+     * Sets the current amount spent in the budget.
+     *
+     * @param currentAmount the current amount to set
+     */
+    public void setCurrentAmount(BigDecimal currentAmount) {
+        this.currentAmount = currentAmount;
     }
 }

@@ -217,6 +217,76 @@ textarea::placeholder {
 }
 
 
+/* General Styling */
+.budget-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.budget-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  padding: 20px;
+  width: 100%; /* Ensure the container spans the full width */
+}
+
+.budget-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  width: 200px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.budget-icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.budget-target {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.delete-button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Add Button Styling */
+.add-button {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+/* Form Layout Styling */
+input {
+  margin-right: 10px;
+}
+
+/* Progress Bar Styling */
+vaadin-progress-bar {
+  --vaadin-progress-value-color: #4caf50; /* Green progress bar */
+  --vaadin-progress-background-color: #e0e0e0; /* Light grey background */
+  height: 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.current-amount {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+
 
 
 
