@@ -133,7 +133,7 @@ To set up Maven:
 
 4. **Run the Project**:
    ```sh
-   mvn spring-boot:run
+   mvn clean spring-boot:run 
    ```
    Alternatively, you can open Application.java in your IDE (such as IntelliJ IDEA or VS Code) and press the "Run" button to start the application.
 

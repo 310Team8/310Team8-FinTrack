@@ -13,7 +13,9 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexWrap;
 import org.vaadin.example.MainLayout;
@@ -31,7 +33,7 @@ public class AssetView extends VerticalLayout {
     private final FlexLayout assetLayout = new FlexLayout();
     private final TextField nameField = new TextField("Asset Name");
     private final NumberField valueField = new NumberField("Value ($)");
-    private final TextField categoryField = new TextField("Category");
+    private final ComboBox<String> categoryField = new ComboBox<>("Category");
     private final NumberField interestRateField = new NumberField("Interest Rate (%)");
 
     private final AssetService assetService;
@@ -85,6 +87,9 @@ public class AssetView extends VerticalLayout {
         formLayout.setWidthFull();
         formLayout.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
         formLayout.setAlignItems(Alignment.CENTER);
+        formLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.END);
+
+        
 
         // Initialize the total assets card
         totalAssetsValue = new H2("$ 0.00");
@@ -116,7 +121,8 @@ public class AssetView extends VerticalLayout {
         valueField.setPlaceholder("Enter value...");
         valueField.getStyle().set("width", "150px");
         
-        categoryField.setPlaceholder("Enter category...");
+        categoryField.setItems("Vehicles", "Property", "Stocks", "Savings", "Equipment", "Jewellery", "Artworks");
+        categoryField.setPlaceholder("Select category...");
         categoryField.getStyle().set("width", "150px");
 
         interestRateField.setPlaceholder("Enter interest rate...");
@@ -146,7 +152,7 @@ public class AssetView extends VerticalLayout {
                 .set("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
                 .set("background-color", "#ffffff");
 
-        Icon assetIcon = VaadinIcon.AIRPLANE.create(); // Replace with an appropriate icon
+        Icon assetIcon = getIconForCategory(asset.getCategory());
         assetIcon.setSize("24px");
         assetIcon.getStyle().set("color", "#007bff");
 
@@ -202,7 +208,8 @@ public class AssetView extends VerticalLayout {
         NumberField valueField = new NumberField("Value ($)");
         valueField.setValue(asset.getValue().doubleValue());
 
-        TextField categoryField = new TextField("Category");
+        ComboBox<String> categoryField = new ComboBox<>("Category");
+        categoryField.setItems("Vehicles", "Property", "Stocks", "Savings", "Equipment", "Jewellery", "Artworks");
         categoryField.setValue(asset.getCategory());
 
         NumberField interestRateField = new NumberField("Interest Rate (%)");
@@ -319,7 +326,7 @@ public class AssetView extends VerticalLayout {
 
     private Div createDashboardCard(String title, H2 value) {
         Div card = new Div();
-        card.setWidthFull(); // Increase width here
+        card.setWidthFull(); 
         card.getStyle().set("border", "1px solid #e0e0e0")
                 .set("border-radius", "8px")
                 .set("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
@@ -337,6 +344,28 @@ public class AssetView extends VerticalLayout {
         card.add(content);
         return card;
     }
+
+    private Icon getIconForCategory(String category) {
+        switch (category.toLowerCase()) {
+            case "vehicles":
+                return VaadinIcon.CAR.create();
+            case "property":
+                return VaadinIcon.HOME.create();
+            case "stocks":
+                return VaadinIcon.CHART_LINE.create();
+            case "savings":
+                return VaadinIcon.MONEY.create();
+            case "equipment":
+                return VaadinIcon.TOOLS.create();
+            case "jewellery":
+                return VaadinIcon.DIAMOND.create();
+            case "artworks":
+                return VaadinIcon.PICTURE.create();
+            default:
+                return VaadinIcon.MONEY.create();
+        }
+    }
+    
 }
 
         
