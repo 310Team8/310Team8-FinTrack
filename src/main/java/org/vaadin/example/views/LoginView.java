@@ -12,11 +12,40 @@ import org.vaadin.example.model.User;
 import org.vaadin.example.service.SessionService;
 import org.vaadin.example.service.UserService;
 
+/**
+ * The LoginView class provides the user interface for the login page of the application.
+ * Users can enter their username and password to log into the application. If the login 
+ * is successful, the user is redirected to the dashboard. Otherwise, an error notification 
+ * is shown. The view also provides a link to navigate to the registration page.
+ * 
+ * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
+ * the components vertically on the page. It uses various Vaadin components like {@link com.vaadin.flow.component.textfield.TextField},
+ * {@link com.vaadin.flow.component.textfield.PasswordField}, and {@link com.vaadin.flow.component.button.Button} to create an interactive
+ * login form.</p>
+ * 
+ * <p>The {@code @Route} annotation maps this view to the root URL path, meaning it is the first 
+ * page users see when they access the application.</p>
+ * 
+ * <p>This class interacts with the following services: {@link org.vaadin.example.service.UserService}
+ * for managing user authentication, and {@link org.vaadin.example.service.SessionService} for managing 
+ * session-related data.</p>
+ * 
+ * @see org.vaadin.example.service.UserService
+ * @see org.vaadin.example.service.SessionService
+ */
+
 @Route("")
 public class LoginView extends VerticalLayout {
 
     private final UserService userService;
     private final SessionService sessionService;
+
+    /**
+     * Constructs a new LoginView and initializes the login form components and layout.
+     * 
+     * @param userService the service used to manage user authentication
+     * @param sessionService the service used to manage session-related data
+     */
 
     public LoginView(UserService userService, SessionService sessionService) {
         this.userService = userService;

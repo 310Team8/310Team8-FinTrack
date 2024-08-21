@@ -29,6 +29,29 @@ import org.vaadin.example.service.NoteService;
 import org.vaadin.example.service.SessionService;
 import org.vaadin.example.service.UserService;
 
+/**
+ * The IncomeView class provides the user interface for managing income entries within the application.
+ * Users can add, update, view, and delete income records. The class also provides a dashboard to display 
+ * the total forecasted income for the month, a breakdown of income sources, and allows users to add notes about their income.
+ * 
+ * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
+ * the components vertically on the page. It uses various Vaadin components like {@link com.vaadin.flow.component.grid.Grid},
+ * {@link com.vaadin.flow.component.textfield.TextField}, {@link com.vaadin.flow.component.datepicker.DatePicker}, 
+ * and {@link com.vaadin.flow.component.combobox.ComboBox} to create an interactive user interface.</p>
+ * 
+ * <p>The {@code @Route} annotation maps this view to the "income" URL path and associates 
+ * it with the {@link org.vaadin.example.MainLayout}.</p>
+ * 
+ * <p>This class interacts with the following services: {@link org.vaadin.example.service.IncomeService}
+ * for managing income data, {@link org.vaadin.example.service.NoteService} for managing notes,
+ * {@link org.vaadin.example.service.SessionService} for managing session-related data, and 
+ * {@link org.vaadin.example.service.UserService} for retrieving user information.</p>
+ * 
+ * @see org.vaadin.example.service.IncomeService
+ * @see org.vaadin.example.service.NoteService
+ * @see org.vaadin.example.service.SessionService
+ * @see org.vaadin.example.service.UserService
+ */
 @Route(value = "income", layout = MainLayout.class)
 public class IncomeView extends VerticalLayout {
 
@@ -50,6 +73,14 @@ public class IncomeView extends VerticalLayout {
 
     private Income selectedIncome; 
 
+    /**
+     * Constructs a new IncomeView and initializes the components and layout.
+     * 
+     * @param incomeService the service used to manage income data
+     * @param noteService the service used to manage notes
+     * @param sessionService the service used to manage session-related data, particularly the logged-in user
+     * @param userService the service used to manage user data
+     */
     public IncomeView(
             IncomeService incomeService,
             NoteService noteService,
@@ -120,6 +151,10 @@ public class IncomeView extends VerticalLayout {
         updateTotalIncome();
     }
 
+    /**
+     * Configures the grid to display the list of incomes, including source, amount, date,
+     * and payment frequency. Adds an "Actions" column with an edit button for each income entry.
+     */
     private void configureGrid() {
         grid.setColumns("source", "amount", "date", "paymentFrequency");
         grid.addComponentColumn(income -> {
@@ -142,6 +177,9 @@ public class IncomeView extends VerticalLayout {
         });
     }
 
+    /**
+     * Configures the form fields for adding or updating income entries.
+     */
     private void configureForm() {
         sourceField.setPlaceholder("e.g., Salary");
         amountField.setPlaceholder("e.g., 1000.00");
@@ -151,12 +189,19 @@ public class IncomeView extends VerticalLayout {
         frequencyField.setPlaceholder("Select payment frequency");
     }
 
+    /**
+     * Lists the income entries for the currently logged-in user.
+     */
     private void listIncomes() {
         Long userId = sessionService.getLoggedInUserId();
         List<Income> incomes = incomeService.getIncomesByUserId(userId);
         grid.setItems(incomes);
     }
 
+    /**
+     * Adds or updates an income entry based on the user input. If the user input is invalid, 
+     * a notification will be displayed.
+     */
     private void addOrUpdateIncome() {
         String source = sourceField.getValue();
         String amountText = amountField.getValue();
@@ -187,6 +232,14 @@ public class IncomeView extends VerticalLayout {
         }
     }
     
+    /**
+     * Adds a new income to the database and updates the grid to display the new income entry.
+     * 
+     * @param source the source of the income
+     * @param amount the amount of the income
+     * @param date the date of the income
+     * @param paymentFrequency the payment frequency of the income
+     */
     private void addIncome(String source, BigDecimal amount, LocalDate date, String paymentFrequency) {
         Income income = new Income();
         income.setSource(source);
@@ -202,6 +255,16 @@ public class IncomeView extends VerticalLayout {
         clearForm();
     }
     
+    /**
+     * Updates the details of an existing income in the database and updates the grid
+     * to display the updated income entry.
+     * 
+     * @param source the updated source of the income
+     * @param amount the updated amount of the income
+     * @param date the updated date of the income
+     * @param paymentFrequency the updated payment frequency of the income
+     */
+
     private void updateIncome(String source, BigDecimal amount, LocalDate date, String paymentFrequency) {
         if (selectedIncome != null) {
             selectedIncome.setSource(source);
@@ -218,6 +281,11 @@ public class IncomeView extends VerticalLayout {
         }
     }
 
+    /**
+     * Prepares the form with the selected income's details for editing.
+     * 
+     * @param income the income entry to be edited
+     */
     private void editIncome(Income income) {
         selectedIncome = income;
 
@@ -227,6 +295,10 @@ public class IncomeView extends VerticalLayout {
         frequencyField.setValue(income.getPaymentFrequency());
     }
 
+    /**
+     * Deletes the selected income from the database and updates the grid. 
+     * If no income is selected, a notification is displayed prompting the user to select one.
+     */
     private void deleteIncome() {
         Income selectedIncome = grid.asSingleSelect().getValue();
         if (selectedIncome != null) {
@@ -239,6 +311,9 @@ public class IncomeView extends VerticalLayout {
         }
     }
 
+    /**
+     * Clears the input fields in the income creation/update form.
+     */
     private void clearForm() {
         sourceField.clear();
         amountField.clear();
@@ -247,6 +322,14 @@ public class IncomeView extends VerticalLayout {
         selectedIncome = null;
     }
 
+     /**
+     * Creates a dashboard card to display a specific title and value, used here to show 
+     * the forecasted total income for the current month.
+     * 
+     * @param title the title of the dashboard card
+     * @param valueComponent the value component to be displayed in the dashboard card
+     * @return a Div containing the visual representation of the dashboard card
+     */
     private Div createDashboardCard(String title, H2 valueComponent) {
         Div card = new Div();
         card.addClassName("dashboard-card");
@@ -260,6 +343,14 @@ public class IncomeView extends VerticalLayout {
         return card;
     }
 
+    /**
+     * Creates a dashboard card to display a breakdown of income sources. This card is updated
+     * as new incomes are added or existing incomes are updated or deleted.
+     * 
+     * @param title the title of the dashboard card
+     * @param content the content component to be displayed in the dashboard card
+     * @return a Div containing the visual representation of the income sources breakdown card
+     */
     private Div createIncomeSourcesCard(String title, Div content) {
         Div card = new Div();
         card.addClassName("dashboard-card");
@@ -273,6 +364,10 @@ public class IncomeView extends VerticalLayout {
         return card;
     }
 
+    /**
+     * Updates the total income displayed on the dashboard by calculating the sum 
+     * of all incomes for the currently logged-in user.
+     */
     private void updateTotalIncome() {
         Long userId = sessionService.getLoggedInUserId();
         List<Income> incomes = incomeService.getIncomesByUserId(userId);
@@ -284,6 +379,13 @@ public class IncomeView extends VerticalLayout {
         updateIncomeSourcesCard(incomes, totalIncome);
     }
 
+     /**
+     * Updates the income sources breakdown card by calculating the percentage contribution
+     * of each income source to the total income.
+     * 
+     * @param incomes the list of incomes to be displayed
+     * @param totalIncome the total income to be used for calculating percentages
+     */
     private void updateIncomeSourcesCard(List<Income> incomes, BigDecimal totalIncome) {
         Map<String, BigDecimal> sourcePercentages =
                 incomes.stream()
@@ -332,7 +434,9 @@ public class IncomeView extends VerticalLayout {
         incomeSourcesCard.add(content);
     }
     
-
+    /**
+     * Fetches and lists the notes related to income for the currently logged-in user.
+     */
     private void listNotes() {
         Long userId = sessionService.getLoggedInUserId();
         List<Note> notes = noteService.getNotesByUserId(userId);
@@ -341,6 +445,13 @@ public class IncomeView extends VerticalLayout {
             addNoteToCard(note.getId(), note.getContent());
         }
     }
+
+        /**
+     * Adds a note to the notes section of the dashboard and stores it in the database.
+     * 
+     * @param noteId the ID of the note being added (if available)
+     * @param note the content of the note being added
+     */
 
     private void addNoteToCard(Long noteId, String note) {
         HorizontalLayout noteLayout = new HorizontalLayout();
@@ -372,7 +483,11 @@ public class IncomeView extends VerticalLayout {
         notesSection.add(noteLayout);
       }
     
-
+      /**
+     * Adds a note to the database.
+     * 
+     * @param noteContent the content of the note being added
+     */
     private void addNoteToDatabase(String noteContent) {
         Note note = new Note();
         note.setContent(noteContent);

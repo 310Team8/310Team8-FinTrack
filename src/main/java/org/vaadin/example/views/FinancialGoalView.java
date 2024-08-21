@@ -26,6 +26,29 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+/**
+ * The FinancialGoalView class provides the user interface for managing financial goals within the application.
+ * Users can add, view, update, and delete financial goals. The class also displays the user's financial goals
+ * in a visually appealing card layout.
+ * 
+ * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
+ * the components vertically on the page. It uses a {@link com.vaadin.flow.component.orderedlayout.FlexLayout}
+ * to display financial goals in a flexible, responsive layout, and various Vaadin components like 
+ * {@link com.vaadin.flow.component.textfield.TextField}, {@link com.vaadin.flow.component.textfield.NumberField},
+ * and {@link com.vaadin.flow.component.progressbar.ProgressBar} to create an interactive user interface.</p>
+ * 
+ * <p>The {@code @Route} annotation maps this view to the "goal" URL path and associates 
+ * it with the {@link org.vaadin.example.MainLayout}.</p>
+ * 
+ * <p>This class interacts with the following services: {@link org.vaadin.example.service.FinancialGoalService}
+ * for managing financial goal data, {@link org.vaadin.example.service.SessionService} for managing session-related data,
+ * and {@link org.vaadin.example.service.UserService} for retrieving user information.</p>
+ * 
+ * @see org.vaadin.example.service.FinancialGoalService
+ * @see org.vaadin.example.service.SessionService
+ * @see org.vaadin.example.service.UserService
+ */
+
 @Route(value = "goal", layout = MainLayout.class)
 public class FinancialGoalView extends VerticalLayout {
 
@@ -38,6 +61,13 @@ public class FinancialGoalView extends VerticalLayout {
     private final SessionService sessionService;
     private final UserService userService;
 
+    /**
+     * Constructs a new FinancialGoalView and initializes the components and layout.
+     * 
+     * @param financialGoalService the service used to manage financial goal data
+     * @param sessionService the service used to manage session-related data, particularly the logged-in user
+     * @param userService the service used to manage user data
+     */
     public FinancialGoalView(FinancialGoalService financialGoalService, SessionService sessionService, UserService userService) {
         this.financialGoalService = financialGoalService;
         this.sessionService = sessionService;
@@ -48,6 +78,10 @@ public class FinancialGoalView extends VerticalLayout {
         listGoals();
     }
 
+    /**
+     * Configures the layout of the financial goals section, ensuring a responsive design with
+     * flexible wrapping and centered content.
+     */
     private void configureLayout() {
         goalLayout.setWidthFull();
         goalLayout.setFlexWrap(FlexWrap.WRAP);
@@ -55,6 +89,10 @@ public class FinancialGoalView extends VerticalLayout {
         goalLayout.getStyle().set("gap", "20px");
     }
 
+    /**
+     * Creates the main layout for the view, including the title, form for adding financial goals,
+     * and the container for displaying the list of goals.
+     */
     private void createLayout() {
         setAlignItems(Alignment.CENTER);
         setWidthFull();
@@ -108,6 +146,10 @@ public class FinancialGoalView extends VerticalLayout {
         add(mainLayout);
     }
 
+    /**
+     * Fetches and lists the financial goals for the currently logged-in user in the goal layout.
+     * If no goals are found, a notification is displayed.
+     */
     private void listGoals() {
         Long userId = sessionService.getLoggedInUserId();
         List<FinancialGoal> goals = financialGoalService.getFinancialGoalsByUserId(userId);
@@ -123,6 +165,13 @@ public class FinancialGoalView extends VerticalLayout {
         }
     }
 
+    /**
+     * Creates a visual card for a given financial goal, displaying its description, target amount,
+     * saved amount, and progress towards the target. The card also includes buttons for editing and deleting the goal.
+     * 
+     * @param goal the financial goal to create a card for
+     * @return a VerticalLayout representing the goal card
+     */
     private VerticalLayout createGoalCard(FinancialGoal goal) {
         VerticalLayout cardLayout = new VerticalLayout();
         cardLayout.setWidth("300px");
@@ -198,8 +247,11 @@ public class FinancialGoalView extends VerticalLayout {
         return cardLayout;
     }
     
-    
-
+    /**
+     * Displays a dialog allowing the user to edit an existing financial goal.
+     * 
+     * @param goal the financial goal to be edited
+     */
     private void showEditDialog(FinancialGoal goal) {
         Dialog editDialog = new Dialog();
         editDialog.setWidth("400px");
@@ -268,12 +320,22 @@ public class FinancialGoalView extends VerticalLayout {
         editDialog.add(dialogLayout);
         editDialog.open();
     }
-    
 
+    /**
+     * Retrieves the appropriate icon for a financial goal. Currently, it always returns a coin pile icon.
+     * 
+     * @param goal the financial goal for which to get an icon
+     * @return the icon representing the financial goal
+     */
     private Icon getGoalIcon(FinancialGoal goal) {
         return VaadinIcon.COIN_PILES.create();
     }
 
+    /**
+     * Adds a new financial goal based on the user input, saves it to the database, and updates the goal layout to display the new goal.
+     * Validates the input to ensure the description is not empty, the target amount is positive, 
+     * and the saved amount is not greater than the target amount.
+     */
     private void addGoal() {
         String description = descriptionField.getValue();
         BigDecimal targetAmount = targetAmountField.getValue() != null ? BigDecimal.valueOf(targetAmountField.getValue()) : BigDecimal.ZERO;
@@ -301,6 +363,9 @@ public class FinancialGoalView extends VerticalLayout {
         clearForm();
     }
 
+    /**
+     * Clears the form fields used for adding or editing a financial goal.
+     */
     private void clearForm() {
         descriptionField.clear();
         targetAmountField.clear();
