@@ -45,7 +45,7 @@ vaadin-text-field.bordered::part(input-field) {
 .dashboard-stats {
   width: 100%;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 
 
@@ -56,7 +56,7 @@ vaadin-text-field.bordered::part(input-field) {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 50%;
-  opacity: 0.9;;
+  opacity: 0.9;
 }
 
 
@@ -145,6 +145,7 @@ vaadin-text-field.bordered::part(input-field) {
   display: flex;
   justify-content: space-between;
   gap: 20px; /* Space between the two lists */
+  margin-bottom: 25px;
 }
 
 /* Ensure both category and expense layouts take up equal space */
@@ -172,7 +173,7 @@ vaadin-text-field.bordered::part(input-field) {
 
 /* Style for the category list container */
 .category-layout {
-  background-color: #fffffff0;
+  background-color: #ffffff;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -203,6 +204,70 @@ vaadin-text-field.bordered::part(input-field) {
 /* Last item should not have a border */
 .category-list-box vaadin-list-box::part(item):last-child {
   border-bottom: none;
+}
+
+/* Style for the Expenses section title */
+.income-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333;
+}
+.income-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1em;
+  color: #555;
+  width: 95%;
+}
+
+
+/* Style for the category list container */
+.income-layout {
+  background-color: #ffffffe0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Style for the ListBox component */
+.income-list-box {
+  width: 100%;
+  max-height: 300px;
+  /* Adjust this based on your design */
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffffe3;
+}
+
+
+/* Add a line and padding between each item */
+.income-list-box vaadin-list-box::part(item) {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  font-size: 1em;
+  color: #555;
+}
+
+
+/* Last item should not have a border */
+.income-list-box vaadin-list-box::part(item):last-child {
+  border-bottom: none;
+}
+/* Style for the amount part (right-aligned, red color) */
+.income-amount {
+  color: rgb(0, 172, 20);
+  text-align: right;
+  font-weight: bold;
+}
+/* Style for the description part (left-aligned) */
+.income-description {
+  flex: 1;
+  margin-right: 20px;
 }
 
 

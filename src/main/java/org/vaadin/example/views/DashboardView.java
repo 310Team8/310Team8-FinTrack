@@ -18,6 +18,7 @@ import org.hibernate.annotations.Fetch;
 import org.vaadin.example.MainLayout;
 import org.vaadin.example.model.Expense;
 import org.vaadin.example.model.ExpenseCategory;
+import org.vaadin.example.model.Income;
 import org.vaadin.example.service.ExpenseCategoryService;
 import org.vaadin.example.service.ExpenseService;
 import org.vaadin.example.service.IncomeService;
@@ -67,7 +68,6 @@ public class DashboardView extends VerticalLayout {
     private final IncomeService incomeService;
     private final ExpenseCategoryService expenseCategoryService;
 
-
     /**
      * Constructs a new DashboardView and initializes the components and layout.
      * 
@@ -114,13 +114,18 @@ public class DashboardView extends VerticalLayout {
         VerticalLayout categoryLayout = createExpenseCategoryList(currentUserId);
         VerticalLayout expenseLayout = createExpenseList(currentUserId);
 
-        //In your DashboardView or another relevant view
+        // In your DashboardView or another relevant view
         HorizontalLayout categoryAndExpenseLayout = new HorizontalLayout(categoryLayout, expenseLayout);
         categoryAndExpenseLayout.addClassName("category-expense-layout");
 
-        
+    
+         // Create the income list
+         VerticalLayout incomeLayout = createIncomeList(currentUserId);
+         incomeLayout.addClassName("income-full-row");
+ 
+         // Add all components to the main layout
+         add(dashboardTitle, statsLayout, categoryAndExpenseLayout, incomeLayout);
 
-        add(dashboardTitle, statsLayout,categoryAndExpenseLayout);
 
         
 
@@ -164,36 +169,35 @@ public class DashboardView extends VerticalLayout {
      */
     private VerticalLayout createExpenseCategoryList(Long userId) {
         List<ExpenseCategory> categories = expenseCategoryService.getExpenseCategoriesByUserId(userId);
-    
+
         // Title for the categories section
         H2 categoryTitle = new H2("Expense Categories");
         categoryTitle.addClassName("category-title");
-    
+
         VerticalLayout categoryLayout = new VerticalLayout();
         categoryLayout.addClassName("category-layout");
-    
+
         // Create a custom Div for each category
         for (ExpenseCategory category : categories) {
             Div categoryItem = new Div();
             categoryItem.addClassName("category-item");
-    
+
             // Create a span for the category name
             Div name = new Div();
             name.setText(category.getName());
             name.addClassName("category-name");
-    
+
             // Add the category name to the category item
             categoryItem.add(name);
-    
+
             // Add the category item to the layout
             categoryLayout.add(categoryItem);
         }
-    
+
         VerticalLayout mainLayout = new VerticalLayout(categoryTitle, categoryLayout);
         mainLayout.addClassName("category-list-box");
         return mainLayout;
     }
-    
 
     /**
      * Creates a layout that displays the users's expense in a list
@@ -208,40 +212,84 @@ public class DashboardView extends VerticalLayout {
      */
     private VerticalLayout createExpenseList(Long userId) {
         List<Expense> expenses = expenseService.getExpensesByUserId(userId);
-    
+
         // Title for the expenses section
         H2 expenseTitle = new H2("Expenses");
         expenseTitle.addClassName("expense-title");
-    
+
         VerticalLayout expenseLayout = new VerticalLayout();
         expenseLayout.addClassName("expense-layout");
-    
+
         // Create a custom Div for each expense
         for (Expense expense : expenses) {
             Div expenseItem = new Div();
             expenseItem.addClassName("expense-item");
-    
+
             // Create a span for the description
             Div description = new Div();
             description.setText(expense.getDescription());
             description.addClassName("expense-description");
-    
+
             // Create a span for the amount
             Div amount = new Div();
             amount.setText("$" + expense.getAmount().toString());
             amount.addClassName("expense-amount");
-    
+
             // Add the description and amount to the expense item
             expenseItem.add(description, amount);
-    
+
             // Add the expense item to the layout
             expenseLayout.add(expenseItem);
         }
-    
+
         VerticalLayout mainLayout = new VerticalLayout(expenseTitle, expenseLayout);
         mainLayout.addClassName("expense-list-box");
         return mainLayout;
     }
-    
-    
+
+    /**
+     * Creates a layout that displays the users's income in a list
+     * 
+     * 
+     * 
+     * @param userId
+     * @return
+     */
+    private VerticalLayout createIncomeList(Long userId) {
+        List<Income> incomes = incomeService.getIncomesByUserId(userId);
+
+        // Title for the incomes section
+        H2 incomeTitle = new H2("Incomes");
+        incomeTitle.addClassName("income-title");
+
+        VerticalLayout incomeLayout = new VerticalLayout();
+        incomeLayout.addClassName("income-layout");
+
+        // Create a custom Div for each income
+        for (Income income : incomes) {
+            Div incomeItem = new Div();
+            incomeItem.addClassName("income-item");
+
+            // Use the "source" field as the description
+            Div description = new Div();
+            description.setText(income.getSource());
+            description.addClassName("income-description");
+
+            // Create a span for the amount
+            Div amount = new Div();
+            amount.setText("$" + income.getAmount().toString());
+            amount.addClassName("income-amount");
+
+            // Add the description and amount to the income item
+            incomeItem.add(description, amount);
+
+            // Add the income item to the layout
+            incomeLayout.add(incomeItem);
+        }
+
+        VerticalLayout mainLayout = new VerticalLayout(incomeTitle, incomeLayout);
+        mainLayout.addClassName("income-list-box");
+        return mainLayout;
+    }
+
 }
