@@ -43,4 +43,12 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
      * @return a list of expenses for the specified user within the period
      */
     List<Expense> findByUserIdAndDateBetween(Long userId, LocalDate startDate, LocalDate endDate);
+
+    /**
+     * Finds a list of expenses associated with a specific budget ID.
+     *
+     * @param budgetId the ID of the budget whose expenses are to be retrieved
+     * @return a list of expenses associated with the specified budget ID
+     */
+    List<Expense> findByBudgetId(Long budgetId);
 }

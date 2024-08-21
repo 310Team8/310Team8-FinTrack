@@ -67,6 +67,17 @@ public class ExpenseService {
     public BigDecimal getTotalExpensesForCurrentMonth(Long userId) {
         LocalDate startOfMonth = LocalDate.now().withDayOfMonth(1);
         LocalDate endOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
+       
         return expenseRepository.findTotalExpensesForPeriod(userId, startOfMonth, endOfMonth);
+    }
+
+    /**
+     * Retrieves a list of expenses associated with a specific budget ID.
+     *
+     * @param budgetId the ID of the budget whose expenses are to be retrieved
+     * @return a list of expenses associated with the specified budget ID
+     */
+    public List<Expense> getExpensesByBudget(Long budgetId) {
+        return expenseRepository.findByBudgetId(budgetId);
     }
 }

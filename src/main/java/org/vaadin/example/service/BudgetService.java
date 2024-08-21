@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.vaadin.example.model.Budget;
 import org.vaadin.example.repository.BudgetRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -54,5 +55,33 @@ public class BudgetService {
      */
     public void deleteBudget(Long id) {
         budgetRepository.deleteById(id);
+    }
+
+    /**
+     * Increases the current amount of a budget.
+     *
+     * @param budgetId the ID of the budget to update
+     * @param amount the amount to add to the current amount
+     */
+    public void increaseCurrentAmount(Long budgetId, BigDecimal amount) {
+        Budget budget = findBudgetById(budgetId);
+        if (budget != null) {
+            budget.setCurrentAmount(budget.getCurrentAmount().add(amount));
+            budgetRepository.save(budget);
+        }
+    }
+
+    /**
+     * Decreases the current amount of a budget.
+     *
+     * @param budgetId the ID of the budget to update
+     * @param amount the amount to subtract from the current amount
+     */
+    public void decreaseCurrentAmount(Long budgetId, BigDecimal amount) {
+        Budget budget = findBudgetById(budgetId);
+        if (budget != null) {
+            budget.setCurrentAmount(budget.getCurrentAmount().subtract(amount));
+            budgetRepository.save(budget);
+        }
     }
 }

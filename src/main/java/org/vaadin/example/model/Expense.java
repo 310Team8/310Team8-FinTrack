@@ -60,6 +60,11 @@ public class Expense {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    // New relationship to Budget
+    @ManyToOne
+    @JoinColumn(name = "budget_id")
+    private Budget budget;
+
     // Getters and Setters
 
     /**
@@ -168,5 +173,14 @@ public class Expense {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /* */
+    public Budget getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Budget budget) {
+        this.budget = budget;
     }
 }
