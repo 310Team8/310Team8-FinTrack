@@ -26,6 +26,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The BudgetView class represents the user interface for managing budgets within the application.
+ * It provides functionality to add, display, and delete budgets. Each budget can have a name, target 
+ * amount, and an associated icon. The class also displays the progress of expenses against the budget.
+ * 
+ * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize 
+ * the components vertically on the page. The class uses various Vaadin components like {@link com.vaadin.flow.component.textfield.TextField},
+ * {@link com.vaadin.flow.component.combobox.ComboBox}, {@link com.vaadin.flow.component.button.Button}, 
+ * {@link com.vaadin.flow.component.progressbar.ProgressBar}, and others to create an interactive UI.</p>
+ * 
+ * <p>The {@code @Route} annotation maps this view to the "budget" URL path and associates it with the 
+ * {@link org.vaadin.example.MainLayout}.</p>
+ * 
+ * <p>The class relies on several services: {@link org.vaadin.example.service.BudgetService} for handling 
+ * budget data, {@link org.vaadin.example.service.ExpenseService} for retrieving expenses related to a budget, 
+ * {@link org.vaadin.example.service.SessionService} for getting the logged-in user ID, and 
+ * {@link org.vaadin.example.service.UserService} for retrieving user information.</p>
+ * 
+ * @see org.vaadin.example.service.BudgetService
+ * @see org.vaadin.example.service.ExpenseService
+ * @see org.vaadin.example.service.SessionService
+ * @see org.vaadin.example.service.UserService
+ */
 @Route(value = "budget", layout = MainLayout.class)
 public class BudgetView extends VerticalLayout {
 
@@ -41,6 +64,14 @@ public class BudgetView extends VerticalLayout {
     private final Map<Budget, Div> budgetCards = new HashMap<>();
     private final Div budgetContainer = new Div();
 
+    /**
+     * Constructs a new BudgetView and initializes the components and layout.
+     * 
+     * @param budgetService the service used to manage budget data
+     * @param expenseService the service used to retrieve expenses data
+     * @param sessionService the service used to manage session-related data, particularly the logged-in user
+     * @param userService the service used to manage user data
+     */
     public BudgetView(BudgetService budgetService, ExpenseService expenseService, SessionService sessionService, UserService userService) {
         this.budgetService = budgetService;
         this.expenseService = expenseService;
@@ -69,16 +100,25 @@ public class BudgetView extends VerticalLayout {
         listBudgets();
     }
 
+    /**
+     * Configures the input fields for budget name and target amount.
+     */
     private void configureInputFields() {
         nameField.setPlaceholder("Enter a name");
         amountField.setPlaceholder("Enter the target amount");
     }
 
+    /**
+     * Configures the ComboBox used to select an icon for the budget.
+     */
     private void configureIconComboBox() {
         iconComboBox.setItems("💼", "🍽️", "🏠", "🚗");
         iconComboBox.setPlaceholder("Select an icon");
     }
 
+    /**
+     * Retrieves and lists all budgets for the currently logged-in user.
+     */
     private void listBudgets() {
         Long userId = sessionService.getLoggedInUserId();
         List<Budget> budgets = budgetService.getBudgetsByUserId(userId);
@@ -89,6 +129,13 @@ public class BudgetView extends VerticalLayout {
         }
     }
 
+    /**
+     * Creates a visual card for the specified budget, showing its icon, name, target amount, 
+     * total expenses so far, and a progress bar indicating how much of the budget has been spent.
+     * 
+     * @param budget the budget to create a card for
+     * @return a Div containing the visual representation of the budget
+     */
     private Div createBudgetCard(Budget budget) {
         Div card = new Div();
         card.addClassName("budget-card");
@@ -137,6 +184,12 @@ public class BudgetView extends VerticalLayout {
         return card;
     }
 
+    /**
+     * Calculates the total expenses associated with the given budget.
+     * 
+     * @param budget the budget for which to calculate total expenses
+     * @return the total amount of expenses as a BigDecimal
+     */
     private BigDecimal getTotalExpensesForBudget(Budget budget) {
         List<Expense> expenses = expenseService.getExpensesByBudget(budget.getId());
         return expenses.stream()
@@ -144,6 +197,12 @@ public class BudgetView extends VerticalLayout {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    /**
+     * Adds a new budget based on the user input, saves it to the database, and updates the UI 
+     * to display the new budget.
+     * 
+     * <p>If the user inputs invalid amounts, a notification will be displayed.</p>
+     */
     private void addBudget() {
         try {
             String name = nameField.getValue();
@@ -170,6 +229,12 @@ public class BudgetView extends VerticalLayout {
         }
     }
 
+    /**
+     * Deletes the specified budget from the database and removes its visual representation 
+     * from the UI.
+     * 
+     * @param budget the budget to be deleted
+     */
     private void deleteBudget(Budget budget) {
         Div budgetCard = budgetCards.get(budget);
         if (budgetCard != null) {
@@ -180,6 +245,9 @@ public class BudgetView extends VerticalLayout {
         }
     }
 
+    /**
+     * Clears the input fields in the budget creation form.
+     */
     private void clearForm() {
         nameField.clear();
         amountField.clear();
