@@ -63,7 +63,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
 
 
 
-       HorizontalLayout header = new HorizontalLayout(logo, dashboardButton, budgetButton, expenseButton, incomeButton, goalButton, logoutButton);
+       HorizontalLayout header = new HorizontalLayout(logo, dashboardButton, budgetButton, expenseButton, incomeButton, assetButton, goalButton, logoutButton);
        header.expand(logo);
        header.setWidthFull();
        header.setAlignItems(Alignment.CENTER);
