@@ -68,9 +68,13 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-FinTrack is designed to be a comprehensive financial management tool aimed at helping users gain better control over their finances. Whether for personal use or business purposes, FinTrack provides a robust platform for tracking income, expenses, and budgets. The tool is built with a focus on user-friendly data visualization and forecasting features, ensuring users can easily interpret their financial data and make informed decisions. You can read more at [Project Description](./DESCRIPTION.md) about the next steps!
+FinTrack is designed to be a comprehensive financial management tool aimed at helping users gain better control over their finances. Whether for personal use or business purposes, FinTrack provides a robust platform for tracking income, expenses, and budgets. The tool is built with a focus on user-friendly data visualisation and forecasting features, ensuring users can easily interpret their financial data and make informed decisions. You can read more at [Project Description](./DESCRIPTION.md) about the next steps!
 
 This project has been deployed to Render, a free hosting service that provides automated builds and deployments. The application is configured to automatically rebuild and redeploy whenever there is a merge to the main branch. This ensures that the latest changes are always reflected in the live environment without any manual intervention. You can access the live application by clicking <a href="https://fintrack-rbm9.onrender.com">View Demo</a>. If you encounter an issue, please contact us at <a href="#contacts">Contacts</a>
+
+**Important Note:** As this application is hosted on a free service, the demo may take up to 50 seconds to respond if it has been inactive. This is due to the hosting service temporarily pausing the application to save resources. Thank you for your patience!
+
+Make sure to contact us at  <a href="#contacts">Contacts</a> for the database variables to store in your environment variables.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -115,29 +119,39 @@ To set up Maven:
 
 ### Installation
 
-1. **Clone the repo using Terminal/Command Prompt**:
+1. **Fork the Repo**:
+   Click the "Fork" button at the top right of the repository page to fork the project to your GitHub account.
+
+2. **Clone the Forked Repo using Terminal/Command Prompt**:
+   Replace `your-username` with your GitHub username.
 
      ```sh
-     git clone https://github.com/310Team8/FinTrack.git
+     git clone https://github.com/your-username/FinTrack.git
      ```
 
-2. **Navigate to the project directory**:
+3. **Navigate to the Project Directory**:
      ```sh
      cd FinTrack
      ```
 
-3. **Install Maven dependencies**:
+4. **Update application.properties under resources**:
+
+    Before running the application locally, make sure to set Vaadin to development mode by updating the application.properties file.
+     ```sh
+     vaadin.productionMode=false
+     ```
+   ***Note:*** When you push your changes to the repository, remember to change vaadin.productionMode back to true to enable production mode.
+6. **Install Maven Dependencies**:
      ```sh
      mvn clean install
      ```
 
-4. **Run the Project**:
+7. **Run the Project**:
    ```sh
    mvn spring-boot:run
    ```
-   Alternatively, you can open Application.java in your IDE (such as IntelliJ IDEA or VS Code) and press the "Run" button to start the application.
-
-   Once the application is running, your web browser should open automatically. If not, open a new browser window and type `http://localhost:8080` to access the application.
+  Alternatively, you can open Application.java in your IDE (such as IntelliJ IDEA or VS Code) and press the "Run" button to start the application.
+  Once the application is running, your web browser should open automatically. If not, open a new browser window and type http://localhost:8080 to access the application.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -169,6 +183,10 @@ Distributed under the MIT License. Read more at [MIT License](./LICENSE) for mor
 If you have any inquiries related to this project or face any issues contact us using the information below:
 
 Email: hshi270@aucklanduni.ac.nz
+Email: sdes755@aucklanduni.ac.nz
+Email: sbha878@aucklanduni.ac.nz
+Email: srab017@aucklanduni.ac.nz
+Email: jman988@aucklanduni.ac.nz
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -183,4 +201,3 @@ Email: hshi270@aucklanduni.ac.nz
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
