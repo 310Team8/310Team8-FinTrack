@@ -64,28 +64,10 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
             getUI().ifPresent(ui -> ui.navigate(""));
         });
 
-        Button budgetButton = new Button("Budgets");
-        budgetButton.addClickListener(e -> budgetButton.getUI().ifPresent(ui -> ui.navigate(BudgetView.class)));
-
-        Button expenseButton = new Button("Expenses");
-        expenseButton.addClickListener(e -> expenseButton.getUI().ifPresent(ui -> ui.navigate(ExpenseView.class)));
-
-        Button incomeButton = new Button("Income");
-        incomeButton.addClickListener(e -> incomeButton.getUI().ifPresent(ui -> ui.navigate(IncomeView.class)));
-
-        Button goalButton = new Button("Goals");
-        goalButton.addClickListener(e -> goalButton.getUI().ifPresent(ui -> ui.navigate(FinancialGoalView.class)));
-
-        Button dashboardButton = new Button("Dashboard");
-        dashboardButton.addClickListener(e -> dashboardButton.getUI().ifPresent(ui -> ui.navigate(DashboardView.class)));
-
-        Button assetButton = new Button("Assets");
-        assetButton.addClickListener(e -> assetButton.getUI().ifPresent(ui -> ui.navigate(AssetView.class)));
 
 
 
-
-       HorizontalLayout header = new HorizontalLayout(logo, dashboardButton, budgetButton, expenseButton, incomeButton, assetButton, goalButton, logoutButton);
+       HorizontalLayout header = new HorizontalLayout(logo, logoutButton);
        header.expand(logo);
        header.setWidthFull();
        header.setAlignItems(Alignment.CENTER);
