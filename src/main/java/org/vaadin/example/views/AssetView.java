@@ -6,7 +6,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.html.Div;
@@ -255,27 +254,46 @@ public class AssetView extends VerticalLayout {
     }
 
     private void addAsset() {
-        String name = nameField.getValue();
-        BigDecimal value = BigDecimal.valueOf(valueField.getValue());
-        String category = categoryField.getValue();
-        BigDecimal interestRate = BigDecimal.valueOf(interestRateField.getValue());
-
-        if (name.isEmpty() || value == null || category.isEmpty() || interestRate == null) {
-            Notification.show("Please fill in all fields", 3000, Notification.Position.TOP_CENTER);
-            return;
+        try {
+            String name = nameField.getValue();
+            Double valueText = valueField.getValue();
+            String category = categoryField.getValue();
+            Double interestRateText = interestRateField.getValue();
+    
+            // Validate that fields are not empty
+            if (name.isEmpty() || valueText == null || category.isEmpty()) {
+                Notification.show("Please fill in all fields", 3000, Notification.Position.TOP_CENTER);
+                return;
+            }
+    
+            BigDecimal value = BigDecimal.valueOf(valueText);
+            BigDecimal interestRate = (interestRateText != null) ? BigDecimal.valueOf(interestRateText) : null;
+    
+            Asset asset = new Asset();
+            asset.setName(name);
+            asset.setValue(value);
+            asset.setCategory(category);
+            asset.setInterestRate(interestRate);
+            asset.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
+    
+            assetService.addAsset(asset);
+            Notification.show("Asset added successfully", 3000, Notification.Position.TOP_CENTER);
+            
+            clearForm();
+            listAssets();
+            updateTotalAssets();
+            updateTotalChangeInAssets();
+        } catch (NumberFormatException e) {
+            Notification.show("Please enter a valid value", 3000, Notification.Position.TOP_CENTER);
         }
-
-        Asset newAsset = new Asset();
-        newAsset.setName(name);
-        newAsset.setValue(value);
-        newAsset.setCategory(category);
-        newAsset.setInterestRate(interestRate);
-
-        assetService.addAsset(newAsset);
-        Notification.show("Asset added successfully", 3000, Notification.Position.TOP_CENTER);
-        listAssets();
-        updateTotalAssets();
-        updateTotalChangeInAssets();
+    }
+    
+    // Method to clear the form fields
+    private void clearForm() {
+        nameField.clear();
+        valueField.clear();
+        categoryField.clear();
+        interestRateField.clear();
     }
 
     private void updateTotalAssets() {
