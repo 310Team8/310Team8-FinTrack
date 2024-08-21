@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.vaadin.example.model.Asset;
 import org.vaadin.example.repository.AssetRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -54,5 +55,31 @@ public class AssetService {
      */
     public void deleteAsset(Long id) {
         assetRepository.deleteById(id);
+    }
+
+    public BigDecimal getTotalAssetsLastYear(Long userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTotalAssetsLastYear'");
+    }
+
+    public BigDecimal getTotalAssetsCurrent(Long userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTotalAssetsCurrent'");
+    }
+
+    public Asset updateAsset(Asset updatedAsset) {
+        // Find the existing asset by ID
+        Asset existingAsset = findAssetById(updatedAsset.getId());
+        if (existingAsset != null) {
+            // Update the details of the existing asset
+            existingAsset.setName(updatedAsset.getName());
+            existingAsset.setValue(updatedAsset.getValue());
+            existingAsset.setCategory(updatedAsset.getCategory());
+            existingAsset.setInterestRate(updatedAsset.getInterestRate());
+
+            // Save the updated asset to the repository
+            return assetRepository.save(existingAsset);
+        }
+        return null; // Return null if the asset does not exist
     }
 }

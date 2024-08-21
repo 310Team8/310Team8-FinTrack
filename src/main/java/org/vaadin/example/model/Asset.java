@@ -35,6 +35,20 @@ public class Asset {
     private BigDecimal value;
 
     /**
+     * The category of the asset.
+     * Cannot be null.
+     */
+    @NotNull
+    private String category;
+
+    /**
+     * The interest rate of the asset.
+     * Can be null.
+     */
+    @DecimalMin(value = "0.0", inclusive = true)
+    private BigDecimal interestRate;
+
+    /**
      * The user associated with the asset.
      * Cannot be null.
      */
@@ -96,6 +110,42 @@ public class Asset {
      */
     public void setValue(BigDecimal value) {
         this.value = value;
+    }
+
+    /**
+     * Gets the category of the asset.
+     *
+     * @return the category of the asset
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * Sets the category of the asset.
+     *
+     * @param category the category to set
+     */
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    /**
+     * Gets the interest rate of the asset.
+     *
+     * @return the interest rate of the asset
+     */
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    /**
+     * Sets the interest rate of the asset.
+     *
+     * @param interestRate the interest rate to set
+     */
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
     }
 
     /**
