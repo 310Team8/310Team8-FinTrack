@@ -14,7 +14,6 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexWrap;
 
 import org.vaadin.example.MainLayout;
@@ -140,11 +139,11 @@ public class FinancialGoalView extends VerticalLayout {
         description.getStyle().set("font-weight", "500")
                 .set("font-size", "1.1em")
                 .set("color", "#333")
-                .set("white-space", "normal") // Ensure text wraps
-                .set("overflow", "hidden") // Hide overflow text
-                .set("text-overflow", "ellipsis") // Add ellipsis for overflowed text
-                .set("width", "calc(100% - 40px)") // Ensure the span takes up full width with padding
-                .set("word-break", "break-word"); // Break long words if necessary
+                .set("white-space", "normal") 
+                .set("overflow", "hidden") 
+                .set("text-overflow", "ellipsis") 
+                .set("width", "calc(100% - 40px)")
+                .set("word-break", "break-word");
     
         Span targetAmount = new Span("Target: $" + goal.getTargetAmount());
         targetAmount.getStyle().set("color", "#666")
@@ -193,7 +192,7 @@ public class FinancialGoalView extends VerticalLayout {
         HorizontalLayout topLayout = new HorizontalLayout(goalIcon, description);
         topLayout.setAlignItems(Alignment.CENTER);
         topLayout.setJustifyContentMode(JustifyContentMode.START); // Change to START to wrap text correctly
-        topLayout.setWidth("100%"); // Ensure it takes full width
+        topLayout.setWidth("100%");
     
         cardLayout.add(topLayout, targetAmount, savedAmount, progressBar, editButton, deleteButton);
         return cardLayout;
@@ -207,11 +206,11 @@ public class FinancialGoalView extends VerticalLayout {
     
         TextField descriptionField = new TextField("Goal Description");
         descriptionField.setValue(goal.getDescription());
-        descriptionField.setReadOnly(false); // Make editable
+        descriptionField.setReadOnly(false); 
     
         NumberField targetAmountField = new NumberField("Target Amount ($)");
         targetAmountField.setValue(goal.getTargetAmount().doubleValue());
-        targetAmountField.setReadOnly(false); // Make editable
+        targetAmountField.setReadOnly(false);
     
         NumberField savedAmountField = new NumberField("Saved Amount ($)");
         savedAmountField.setValue(goal.getSavedAmount().doubleValue());
@@ -235,7 +234,6 @@ public class FinancialGoalView extends VerticalLayout {
                 return;
             }
     
-            // Update goal with new values
             goal.setDescription(newDescription);
             goal.setTargetAmount(newTargetAmount);
             goal.setSavedAmount(newSavedAmount);

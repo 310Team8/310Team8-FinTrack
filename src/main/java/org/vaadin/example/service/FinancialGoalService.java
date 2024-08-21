@@ -54,14 +54,11 @@ public class FinancialGoalService {
      * @return the updated financial goal object
      */
     public FinancialGoal updateFinancialGoal(FinancialGoal financialGoal) {
-        // Check if the financial goal exists
         FinancialGoal existingGoal = findFinancialGoalById(financialGoal.getId());
         if (existingGoal != null) {
-            // Update the existing goal with new data
             existingGoal.setSavedAmount(financialGoal.getSavedAmount());
             existingGoal.setTargetAmount(financialGoal.getTargetAmount());
             existingGoal.setDescription(financialGoal.getDescription());
-            // Save the updated goal
             return financialGoalRepository.save(existingGoal);
         }
         return null;

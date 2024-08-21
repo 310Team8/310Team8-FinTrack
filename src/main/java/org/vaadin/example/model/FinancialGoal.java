@@ -120,10 +120,21 @@ public class FinancialGoal {
         this.user = user;
     }
 
+     /**
+     * Gets the saved amount for achieving the financial goal.
+     *
+     * @return the amountSaved associated with the goal.
+     */
+
     public BigDecimal getSavedAmount() {
         return amountSaved;
     }
 
+     /**
+     * Sets the saved amount for achieving the financial goal.
+     *
+     * @param amountSaved the saved amount to set
+     */
     public void setSavedAmount(BigDecimal amountSaved) {
         this.amountSaved = amountSaved;
     }
