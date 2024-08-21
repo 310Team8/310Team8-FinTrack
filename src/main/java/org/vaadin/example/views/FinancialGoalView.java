@@ -103,7 +103,7 @@ public class FinancialGoalView extends VerticalLayout {
 
         VerticalLayout mainLayout = new VerticalLayout(title, formLayout, goalLayout);
         mainLayout.setSizeFull();
-        mainLayout.getStyle().set("background-color", "#f7f7f7");
+        mainLayout.getStyle().set("background-color", "#ffffff");
 
         add(mainLayout);
     }
@@ -226,10 +226,15 @@ public class FinancialGoalView extends VerticalLayout {
     
         saveButton.addClickListener(event -> {
             String newDescription = descriptionField.getValue();
+
+            if(savedAmountField.isEmpty() || targetAmountField.isEmpty()){
+                Notification.show("Invalid input(s). Ensure all fields are correctly filled.", 3000, Notification.Position.TOP_CENTER);
+                return;
+            }
             BigDecimal newTargetAmount = BigDecimal.valueOf(targetAmountField.getValue());
             BigDecimal newSavedAmount = BigDecimal.valueOf(savedAmountField.getValue());
     
-            if (newDescription.isEmpty() || newTargetAmount.compareTo(BigDecimal.ZERO) <= 0 || newSavedAmount.compareTo(newTargetAmount) > 0 || newSavedAmount.compareTo(BigDecimal.ZERO) < 0|| targetAmountField.isEmpty() || savedAmountField.isEmpty()) {
+            if (newDescription.isEmpty() || newTargetAmount.compareTo(BigDecimal.ZERO) <= 0 || newSavedAmount.compareTo(newTargetAmount) > 0 || newSavedAmount.compareTo(BigDecimal.ZERO) < 0) {
                 Notification.show("Invalid input(s). Ensure all fields are correctly filled.", 3000, Notification.Position.TOP_CENTER);
                 return;
             }

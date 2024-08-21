@@ -80,4 +80,18 @@ public class ExpenseService {
     public List<Expense> getExpensesByBudget(Long budgetId) {
         return expenseRepository.findByBudgetId(budgetId);
     }
+
+    /**
+     * Updates an existing expense in the repository.
+     *
+     * @param expense the expense object with updated information
+     * @return the updated expense object
+     */
+    public Expense updateExpense(Expense expense) {
+        if (expenseRepository.existsById(expense.getId())) {
+            return expenseRepository.save(expense);
+        } else {
+            throw new IllegalArgumentException("Expense not found with ID: " + expense.getId());
+        }
+    }
 }

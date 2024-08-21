@@ -69,4 +69,25 @@ public class IncomeService {
         LocalDate endOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
         return incomeRepository.findTotalIncomeForPeriod(userId, startOfMonth, endOfMonth);
     }
+
+    /**
+     * Updates an existing income in the repository.
+     *
+     * @param updatedIncome the income object with updated details
+     * @return the updated income object
+     */
+    public Income updateIncome(Income updatedIncome) {
+        Income existingIncome = incomeRepository.findById(updatedIncome.getId()).orElse(null);
+        if (existingIncome != null) {
+            existingIncome.setSource(updatedIncome.getSource());
+            existingIncome.setAmount(updatedIncome.getAmount());
+            existingIncome.setDate(updatedIncome.getDate());
+            existingIncome.setPaymentFrequency(updatedIncome.getPaymentFrequency());
+            return incomeRepository.save(existingIncome);
+        }
+        return null;
+    }
+
+
+
 }

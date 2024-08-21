@@ -14,17 +14,17 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import org.vaadin.example.MainLayout;
+import org.vaadin.example.model.Budget;
 import org.vaadin.example.model.Expense;
+import org.vaadin.example.service.BudgetService;
 import org.vaadin.example.service.ExpenseService;
 import org.vaadin.example.service.SessionService;
 import org.vaadin.example.service.UserService;
 import com.vaadin.flow.component.combobox.ComboBox;
-import org.vaadin.example.model.Budget;
-import org.vaadin.example.service.BudgetService;
-
 
 @Route(value = "expense", layout = MainLayout.class)
 public class ExpenseView extends VerticalLayout {
@@ -35,7 +35,6 @@ public class ExpenseView extends VerticalLayout {
     private final DatePicker datePicker = new DatePicker("Date");
     private final ComboBox<Budget> budgetComboBox = new ComboBox<>("Select Budget");
 
-
     private final ExpenseService expenseService;
     private final SessionService sessionService;
     private final UserService userService;
@@ -43,6 +42,7 @@ public class ExpenseView extends VerticalLayout {
 
     private H2 totalExpensesValue;
     private Div totalExpensesCard;
+    private Expense selectedExpense;
 
     public ExpenseView(ExpenseService expenseService, SessionService sessionService, UserService userService, BudgetService budgetService) {
         this.expenseService = expenseService;
@@ -55,7 +55,7 @@ public class ExpenseView extends VerticalLayout {
         configureGrid();
         configureForm();
     
-        Button addButton = new Button("Add Expense", event -> addExpense());
+        Button addButton = new Button("Add/Update Expense", event -> addOrUpdateExpense());
         Button deleteButton = new Button("Delete Expense", event -> deleteExpense());
     
         HorizontalLayout formLayout = new HorizontalLayout(descriptionField, amountField, datePicker, budgetComboBox, addButton, deleteButton);
@@ -73,7 +73,7 @@ public class ExpenseView extends VerticalLayout {
     
         add(mainLayout);
     
-        listBudgets(); // Populate the budget dropdown
+        listBudgets();
         listExpenses();
         updateTotalExpenses();
     }
@@ -81,11 +81,17 @@ public class ExpenseView extends VerticalLayout {
     private void configureGrid() {
         grid.setColumns("description", "amount", "date");
 
-        // Handle the budget column with a null-safe approach
+        
         grid.addColumn(expense -> {
             Budget budget = expense.getBudget();
             return budget != null ? budget.getName() : "No Budget";
         }).setHeader("Budget");
+
+        grid.addComponentColumn(expense -> {
+            Button editButton = new Button("Edit");
+            editButton.addClickListener(event -> editExpense(expense));
+            return editButton;
+        }).setHeader("Actions");
     }
 
     private void configureForm() {
@@ -104,18 +110,29 @@ public class ExpenseView extends VerticalLayout {
     private void listExpenses() {
         Long userId = sessionService.getLoggedInUserId();
         List<Expense> expenses = expenseService.getExpensesByUserId(userId);
-        // Filter out or handle expenses with null budgets
         grid.setItems(expenses);
     }
     
-
-    private void addExpense() {
+    private void addOrUpdateExpense() {
         String description = descriptionField.getValue();
         String amountText = amountField.getValue();
         BigDecimal amount = new BigDecimal(amountText);
         LocalDate date = datePicker.getValue();
         Budget selectedBudget = budgetComboBox.getValue();
 
+        if (description.isEmpty() || amount.compareTo(BigDecimal.ZERO) <= 0 || date == null) {
+            Notification.show("Please fill in all required fields with valid data.");
+            return;
+        }
+
+        if (selectedExpense == null) {
+            addExpense(description, amount, date, selectedBudget);
+        } else {
+            updateExpense(selectedExpense, description, amount, date, selectedBudget);
+        }
+    }
+
+    private void addExpense(String description, BigDecimal amount, LocalDate date, Budget selectedBudget) {
         Expense expense = new Expense();
         expense.setDescription(description);
         expense.setAmount(amount);
@@ -128,7 +145,7 @@ public class ExpenseView extends VerticalLayout {
 
         if (selectedBudget != null) {
             selectedBudget.setCurrentAmount(selectedBudget.getCurrentAmount().add(amount));
-            budgetService.addBudget(selectedBudget);  // Update the budget's current amount
+            budgetService.addBudget(selectedBudget);
         }
 
         listExpenses();
@@ -136,13 +153,42 @@ public class ExpenseView extends VerticalLayout {
         clearForm();
     }
 
-   private void deleteExpense() {
+    private void updateExpense(Expense expense, String description, BigDecimal amount, LocalDate date, Budget selectedBudget) {
+        expense.setDescription(description);
+        expense.setAmount(amount);
+        expense.setDate(date != null ? java.sql.Date.valueOf(date) : null);
+        expense.setBudget(selectedBudget);
+
+        expenseService.updateExpense(expense);
+        Notification.show("Expense updated successfully");
+
+        if (selectedBudget != null) {
+            selectedBudget.setCurrentAmount(selectedBudget.getCurrentAmount().add(amount));
+            budgetService.addBudget(selectedBudget); 
+        }
+
+        listExpenses();
+        updateTotalExpenses();
+        clearForm();
+        selectedExpense = null;
+    }
+
+    private void editExpense(Expense expense) {
+        selectedExpense = expense;
+
+        descriptionField.setValue(expense.getDescription());
+        amountField.setValue(expense.getAmount().toString());
+        datePicker.setValue(((Date) expense.getDate()).toLocalDate());
+        budgetComboBox.setValue(expense.getBudget());
+    }
+
+    private void deleteExpense() {
         Expense selectedExpense = grid.asSingleSelect().getValue();
         if (selectedExpense != null) {
             Budget associatedBudget = selectedExpense.getBudget();
             if (associatedBudget != null) {
                 associatedBudget.setCurrentAmount(associatedBudget.getCurrentAmount().subtract(selectedExpense.getAmount()));
-                budgetService.addBudget(associatedBudget);  // Update the budget's current amount
+                budgetService.addBudget(associatedBudget);
             }
 
             expenseService.deleteExpense(selectedExpense.getId());
@@ -159,6 +205,7 @@ public class ExpenseView extends VerticalLayout {
         amountField.clear();
         datePicker.clear();
         budgetComboBox.clear();
+        selectedExpense = null;
     }
 
     private Div createDashboardCard(String title, H2 valueComponent) {
