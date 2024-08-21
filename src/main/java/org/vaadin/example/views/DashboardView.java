@@ -16,28 +16,45 @@ import java.util.stream.Collectors;
 
 import org.hibernate.annotations.Fetch;
 import org.vaadin.example.MainLayout;
+import org.vaadin.example.model.Expense;
 import org.vaadin.example.model.ExpenseCategory;
 import org.vaadin.example.service.ExpenseCategoryService;
 import org.vaadin.example.service.ExpenseService;
 import org.vaadin.example.service.IncomeService;
 
 /**
- * The DashboardView class represents the dashboard page of the application, providing 
- * an overview of the user's financial status for the current month, including total 
+ * The DashboardView class represents the dashboard page of the application,
+ * providing
+ * an overview of the user's financial status for the current month, including
+ * total
  * expenses, total income, and a list of expense categories.
  * 
- * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} 
- * to organize the dashboard components vertically on the page. It uses various Vaadin 
- * components like {@link com.vaadin.flow.component.html.Div}, {@link com.vaadin.flow.component.html.H2}, 
- * {@link com.vaadin.flow.component.listbox.ListBox}, and {@link com.vaadin.flow.component.orderedlayout.HorizontalLayout}
- * to create a visually appealing and interactive UI.</p>
+ * <p>
+ * This class extends
+ * {@link com.vaadin.flow.component.orderedlayout.VerticalLayout}
+ * to organize the dashboard components vertically on the page. It uses various
+ * Vaadin
+ * components like {@link com.vaadin.flow.component.html.Div},
+ * {@link com.vaadin.flow.component.html.H2},
+ * {@link com.vaadin.flow.component.listbox.ListBox}, and
+ * {@link com.vaadin.flow.component.orderedlayout.HorizontalLayout}
+ * to create a visually appealing and interactive UI.
+ * </p>
  * 
- * <p>The {@code @Route} annotation maps this view to the "dashboard" URL path and associates 
- * it with the {@link org.vaadin.example.MainLayout}.</p>
+ * <p>
+ * The {@code @Route} annotation maps this view to the "dashboard" URL path and
+ * associates
+ * it with the {@link org.vaadin.example.MainLayout}.
+ * </p>
  * 
- * <p>This class relies on several services: {@link org.vaadin.example.service.ExpenseService} 
- * for retrieving expense data, {@link org.vaadin.example.service.IncomeService} for retrieving income data, 
- * and {@link org.vaadin.example.service.ExpenseCategoryService} for retrieving the user's expense categories.</p>
+ * <p>
+ * This class relies on several services:
+ * {@link org.vaadin.example.service.ExpenseService}
+ * for retrieving expense data, {@link org.vaadin.example.service.IncomeService}
+ * for retrieving income data,
+ * and {@link org.vaadin.example.service.ExpenseCategoryService} for retrieving
+ * the user's expense categories.
+ * </p>
  * 
  * @see org.vaadin.example.service.ExpenseService
  * @see org.vaadin.example.service.IncomeService
@@ -50,18 +67,22 @@ public class DashboardView extends VerticalLayout {
     private final IncomeService incomeService;
     private final ExpenseCategoryService expenseCategoryService;
 
+
     /**
      * Constructs a new DashboardView and initializes the components and layout.
      * 
-     * @param expenseService the service used to manage expense data
-     * @param incomeService the service used to manage income data
-     * @param expenseCategoryService the service used to manage expense category data
+     * @param expenseService         the service used to manage expense data
+     * @param incomeService          the service used to manage income data
+     * @param expenseCategoryService the service used to manage expense category
+     *                               data
      */
-    public DashboardView(ExpenseService expenseService, IncomeService incomeService, ExpenseCategoryService expenseCategoryService) {
+    public DashboardView(ExpenseService expenseService, IncomeService incomeService,
+            ExpenseCategoryService expenseCategoryService) {
         this.expenseService = expenseService;
         this.incomeService = incomeService;
         this.expenseCategoryService = expenseCategoryService;
 
+        addClassName("dashboard-view");
         Long currentUserId = (Long) VaadinSession.getCurrent().getAttribute("userId");
 
         // Fetch the total expenses and income for the current month
@@ -89,16 +110,26 @@ public class DashboardView extends VerticalLayout {
         HorizontalLayout statsLayout = new HorizontalLayout(totalExpensesCard, totalIncomeCard);
         statsLayout.addClassName("dashboard-stats");
 
-        add(dashboardTitle, statsLayout);
+        // Create the category and expense lists
+        VerticalLayout categoryLayout = createExpenseCategoryList(currentUserId);
+        VerticalLayout expenseLayout = createExpenseList(currentUserId);
 
-        // Fetch and display expense categories
-        add(createExpenseCategoryList(currentUserId));
+        //In your DashboardView or another relevant view
+        HorizontalLayout categoryAndExpenseLayout = new HorizontalLayout(categoryLayout, expenseLayout);
+        categoryAndExpenseLayout.addClassName("category-expense-layout");
+
+        
+
+        add(dashboardTitle, statsLayout,categoryAndExpenseLayout);
+
+        
 
         // Additional dashboard components and features can be added here
     }
 
     /**
-     * Creates a card displaying a title and a value. The card is used for displaying
+     * Creates a card displaying a title and a value. The card is used for
+     * displaying
      * total expenses and total income in the dashboard.
      * 
      * @param title the title of the card
@@ -122,37 +153,95 @@ public class DashboardView extends VerticalLayout {
     /**
      * Creates a layout that displays the user's expense categories in a list.
      * 
-     * <p>The categories are retrieved based on the user ID, and each category is displayed 
-     * with a border line and padding.</p>
+     * <p>
+     * The categories are retrieved based on the user ID, and each category is
+     * displayed
+     * with a border line and padding.
+     * </p>
      * 
      * @param userId the ID of the user for whom the categories are fetched
      * @return a VerticalLayout containing the expense categories
      */
     private VerticalLayout createExpenseCategoryList(Long userId) {
-    List<ExpenseCategory> categories = expenseCategoryService.getExpenseCategoriesByUserId(userId);
+        List<ExpenseCategory> categories = expenseCategoryService.getExpenseCategoriesByUserId(userId);
     
-    // Title for the categories section
-    H2 categoryTitle = new H2("Expense Categories");
-    categoryTitle.addClassName("category-title");
-
-    // ListBox to display categories
-    ListBox<String> categoryListBox = new ListBox<>();
-    categoryListBox.addClassName("category-list-box");
-    categoryListBox.setItems(categories.stream().map(ExpenseCategory::getName).toArray(String[]::new));
-
-    // Custom item renderer with lines between categories
-    categoryListBox.setRenderer(new TextRenderer<>(item -> item));
-    categoryListBox.addAttachListener(event -> {
-        for (Element item : categoryListBox.getElement().getChildren().collect(Collectors.toList())) {
-            item.getStyle().set("border-bottom", "1px solid #ccc");
-            item.getStyle().set("padding", "10px");
+        // Title for the categories section
+        H2 categoryTitle = new H2("Expense Categories");
+        categoryTitle.addClassName("category-title");
+    
+        VerticalLayout categoryLayout = new VerticalLayout();
+        categoryLayout.addClassName("category-layout");
+    
+        // Create a custom Div for each category
+        for (ExpenseCategory category : categories) {
+            Div categoryItem = new Div();
+            categoryItem.addClassName("category-item");
+    
+            // Create a span for the category name
+            Div name = new Div();
+            name.setText(category.getName());
+            name.addClassName("category-name");
+    
+            // Add the category name to the category item
+            categoryItem.add(name);
+    
+            // Add the category item to the layout
+            categoryLayout.add(categoryItem);
         }
-    });
+    
+        VerticalLayout mainLayout = new VerticalLayout(categoryTitle, categoryLayout);
+        mainLayout.addClassName("category-list-box");
+        return mainLayout;
+    }
+    
 
-    // Layout to contain the title and ListBox
-    VerticalLayout categoryLayout = new VerticalLayout(categoryTitle, categoryListBox);
-    categoryLayout.addClassName("category-layout");
-
-    return categoryLayout;
-}
+    /**
+     * Creates a layout that displays the users's expense in a list
+     * 
+     * <p>
+     * the expense are retrvied based on the user ID, each expense is displayed with
+     * a border line and padding.
+     * </p>
+     * 
+     * @param userId the ID of the user for whom the expenses are fetched
+     * @return a VerticalLayout containing the expenses
+     */
+    private VerticalLayout createExpenseList(Long userId) {
+        List<Expense> expenses = expenseService.getExpensesByUserId(userId);
+    
+        // Title for the expenses section
+        H2 expenseTitle = new H2("Expenses");
+        expenseTitle.addClassName("expense-title");
+    
+        VerticalLayout expenseLayout = new VerticalLayout();
+        expenseLayout.addClassName("expense-layout");
+    
+        // Create a custom Div for each expense
+        for (Expense expense : expenses) {
+            Div expenseItem = new Div();
+            expenseItem.addClassName("expense-item");
+    
+            // Create a span for the description
+            Div description = new Div();
+            description.setText(expense.getDescription());
+            description.addClassName("expense-description");
+    
+            // Create a span for the amount
+            Div amount = new Div();
+            amount.setText("$" + expense.getAmount().toString());
+            amount.addClassName("expense-amount");
+    
+            // Add the description and amount to the expense item
+            expenseItem.add(description, amount);
+    
+            // Add the expense item to the layout
+            expenseLayout.add(expenseItem);
+        }
+    
+        VerticalLayout mainLayout = new VerticalLayout(expenseTitle, expenseLayout);
+        mainLayout.addClassName("expense-list-box");
+        return mainLayout;
+    }
+    
+    
 }
