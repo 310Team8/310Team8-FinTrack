@@ -230,8 +230,8 @@ public class FinancialGoalView extends VerticalLayout {
             BigDecimal newTargetAmount = BigDecimal.valueOf(targetAmountField.getValue());
             BigDecimal newSavedAmount = BigDecimal.valueOf(savedAmountField.getValue());
     
-            if (newDescription.isEmpty() || newTargetAmount.compareTo(BigDecimal.ZERO) <= 0 || newSavedAmount.compareTo(newTargetAmount) > 0) {
-                Notification.show("Invalid input. Ensure all fields are correctly filled.", 3000, Notification.Position.TOP_CENTER);
+            if (newDescription.isEmpty() || newTargetAmount.compareTo(BigDecimal.ZERO) <= 0 || newSavedAmount.compareTo(newTargetAmount) > 0 || newSavedAmount.compareTo(BigDecimal.ZERO) < 0|| targetAmountField.isEmpty() || savedAmountField.isEmpty()) {
+                Notification.show("Invalid input(s). Ensure all fields are correctly filled.", 3000, Notification.Position.TOP_CENTER);
                 return;
             }
     
@@ -276,8 +276,13 @@ public class FinancialGoalView extends VerticalLayout {
         BigDecimal targetAmount = targetAmountField.getValue() != null ? BigDecimal.valueOf(targetAmountField.getValue()) : BigDecimal.ZERO;
         BigDecimal savedAmount = savedAmountField.getValue() != null ? BigDecimal.valueOf(savedAmountField.getValue()) : BigDecimal.ZERO;
 
-        if (description.isEmpty() || targetAmount.compareTo(BigDecimal.ZERO) <= 0) {
-            Notification.show("Please enter a valid goal description and target amount.", 3000, Notification.Position.TOP_CENTER);
+        if (description.isEmpty() || targetAmount.compareTo(BigDecimal.ZERO) <= 0 || savedAmount.compareTo(BigDecimal.ZERO) < 0 || targetAmountField.isEmpty() || savedAmountField.isEmpty()) {
+            Notification.show("Please enter a valid goal description, target amount and saved amount", 3000, Notification.Position.TOP_CENTER);
+            return;
+        }
+
+        if (savedAmount.compareTo(targetAmount) > 0) {
+            Notification.show("Saved amount cannot be greater than target amount.", 3000, Notification.Position.TOP_CENTER);
             return;
         }
 
