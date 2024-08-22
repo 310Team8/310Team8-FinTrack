@@ -2,6 +2,11 @@ package org.vaadin.example.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,18 +33,21 @@ public class UserServiceTests {
 
     @Test
     void testRegisterUser() {
+        String name = "John Doe";
+        String plainPassword = "password123";
         User user = new User();
-        user.setName("testuser");
-        user.setPassword(BCrypt.hashpw("testpassword", BCrypt.gensalt()));
+        user.setName(name);
+        user.setPassword(BCrypt.hashpw(plainPassword, BCrypt.gensalt()));
 
-        Mockito.when(userRepository.save(user)).thenReturn(user);
+        when(userRepository.save(any(User.class))).thenReturn(user);
 
-        User registeredUser = userService.registerUser("testuser", "testpassword");
+        User registeredUser = userService.registerUser(name, plainPassword);
 
         assertNotNull(registeredUser);
-        assertEquals(user.getName(), registeredUser.getName());
-        assertEquals(user.getPassword(), registeredUser.getPassword());
-        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        assertEquals(name, registeredUser.getName());
+        assertTrue(BCrypt.checkpw(plainPassword, registeredUser.getPassword()));
+
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
