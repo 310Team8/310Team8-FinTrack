@@ -93,7 +93,7 @@ class DashboardViewTests {
         H2 cardTitle = (H2) expenseCategoryList.getChildren().filter(c -> c instanceof H2 && ((H2) c).getClassName().equals("category-title")).findFirst().get();
         assertEquals("Expense Categories", cardTitle.getText());
         
-        List<Div> categoryItems = expenseCategoryList.getChildren().filter(c -> c instanceof Div && ((Div) c).getClassName().equals("category-item"))
+        List<Div> categoryItems = expenseCategoryList.getChildren().filter(c -> c instanceof Div && ((Div) c).getClassName().equals("category-name"))
         .map(c -> (Div) c).collect(Collectors.toList());
 
         assertEquals(3, categoryItems.size());
