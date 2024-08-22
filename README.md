@@ -157,7 +157,7 @@ To set up Maven:
 
 
 ## Versions
-Write here 
+[Fintrack v1.0.0](https://github.com/310Team8/FinTrack/releases/tag/v1.0.0)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
