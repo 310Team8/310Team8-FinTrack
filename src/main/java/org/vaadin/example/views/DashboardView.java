@@ -68,7 +68,7 @@ public class DashboardView extends VerticalLayout {
         // Additional dashboard components and features can be added here
     }
 
-    Div createDashboardCard(String title, String value) {
+    private Div createDashboardCard(String title, String value) {
         Div card = new Div();
         card.addClassName("dashboard-card");
 
@@ -82,7 +82,7 @@ public class DashboardView extends VerticalLayout {
         return card;
     }
 
-    VerticalLayout createExpenseCategoryList(Long userId) {
+    private VerticalLayout createExpenseCategoryList(Long userId) {
     List<ExpenseCategory> categories = expenseCategoryService.getExpenseCategoriesByUserId(userId);
     
     // Title for the categories section

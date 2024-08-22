@@ -19,9 +19,9 @@ import java.util.List;
 @Route(value = "budget", layout = MainLayout.class)
 public class BudgetView extends VerticalLayout {
 
-    final Grid<Budget> grid = new Grid<>(Budget.class);
-    final TextField nameField = new TextField("Budget Name");
-    final TextField amountField = new TextField("Amount");
+    private final Grid<Budget> grid = new Grid<>(Budget.class);
+    private final TextField nameField = new TextField("Budget Name");
+    private final TextField amountField = new TextField("Amount");
 
     private final BudgetService budgetService;
     private final SessionService sessionService;
@@ -50,13 +50,13 @@ public class BudgetView extends VerticalLayout {
         grid.getColumnByKey("amount").setHeader("Amount ($)"); // Customize header
     }
 
-    void listBudgets() {
+    private void listBudgets() {
         Long userId = sessionService.getLoggedInUserId();
         List<Budget> budgets = budgetService.getBudgetsByUserId(userId);
         grid.setItems(budgets);
     }
 
-    void addBudget() {
+    private void addBudget() {
         try {
             String name = nameField.getValue();
             String amountText = amountField.getValue();
@@ -77,7 +77,7 @@ public class BudgetView extends VerticalLayout {
         }
     }
 
-    void deleteBudget() {
+    private void deleteBudget() {
         Budget selectedBudget = grid.asSingleSelect().getValue();
         if (selectedBudget != null) {
             budgetService.deleteBudget(selectedBudget.getId());
@@ -88,7 +88,7 @@ public class BudgetView extends VerticalLayout {
         }
     }
 
-    void clearForm() {
+    private void clearForm() {
         nameField.clear();
         amountField.clear();
     }
