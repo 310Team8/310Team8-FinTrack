@@ -57,8 +57,8 @@ public class BudgetView extends VerticalLayout {
     private final SessionService sessionService;
     private final UserService userService;
 
-    private final TextField nameField = new TextField("Budget Name");
-    private final TextField amountField = new TextField("Target Amount ($)");
+    final TextField nameField = new TextField("Budget Name");
+    final TextField amountField = new TextField("Target Amount ($)");
     private final ComboBox<String> iconComboBox = new ComboBox<>("Choose an Icon");
 
     private final Map<Budget, Div> budgetCards = new HashMap<>();
@@ -119,7 +119,7 @@ public class BudgetView extends VerticalLayout {
     /**
      * Retrieves and lists all budgets for the currently logged-in user.
      */
-    private void listBudgets() {
+    void listBudgets() {
         Long userId = sessionService.getLoggedInUserId();
         List<Budget> budgets = budgetService.getBudgetsByUserId(userId);
         for (Budget budget : budgets) {
@@ -203,7 +203,7 @@ public class BudgetView extends VerticalLayout {
      * 
      * <p>If the user inputs invalid amounts, a notification will be displayed.</p>
      */
-    private void addBudget() {
+    void addBudget() {
         try {
             String name = nameField.getValue();
             String amountText = amountField.getValue();
@@ -235,7 +235,7 @@ public class BudgetView extends VerticalLayout {
      * 
      * @param budget the budget to be deleted
      */
-    private void deleteBudget(Budget budget) {
+    void deleteBudget(Budget budget) {
         Div budgetCard = budgetCards.get(budget);
         if (budgetCard != null) {
             budgetService.deleteBudget(budget.getId());
@@ -248,7 +248,7 @@ public class BudgetView extends VerticalLayout {
     /**
      * Clears the input fields in the budget creation form.
      */
-    private void clearForm() {
+    void clearForm() {
         nameField.clear();
         amountField.clear();
         iconComboBox.clear();

@@ -71,11 +71,14 @@ class DashboardViewTests {
     void testCreateExpenseCategoryList() {
         
         ExpenseCategory expenseCategory = new ExpenseCategory();
-        expenseCategory.setName("Rent");
+        String item1name = "Rent";
+        expenseCategory.setName(item1name);
         ExpenseCategory expenseCategory2 = new ExpenseCategory();
-        expenseCategory2.setName("Groceries");
+        String item2name = "Groceries";
+        expenseCategory2.setName(item2name);
         ExpenseCategory expenseCategory3 = new ExpenseCategory();
-        expenseCategory3.setName("Utilities");
+        String item3name = "Utilities";
+        expenseCategory3.setName(item3name);
         
         List<ExpenseCategory> expenseCategories = List.of(
             expenseCategory,
@@ -85,18 +88,25 @@ class DashboardViewTests {
             Mockito.when(expenseCategoryService.getExpenseCategoriesByUserId(1L)).thenReturn(expenseCategories);
             
         VerticalLayout expenseCategoryList = dashboardView.createExpenseCategoryList(1L);
+        assertNotNull(expenseCategoryList);
 
         H2 cardTitle = (H2) expenseCategoryList.getChildren().filter(c -> c instanceof H2 && ((H2) c).getClassName().equals("category-title")).findFirst().get();
         assertEquals("Expense Categories", cardTitle.getText());
-        ListBox<String> listBox = (ListBox) expenseCategoryList.getChildren().filter(c -> c instanceof ListBox).findFirst().get();
+        
+        List<Div> categoryItems = expenseCategoryList.getChildren().filter(c -> c instanceof Div && ((Div) c).getClassName().equals("category-item"))
+        .map(c -> (Div) c).collect(Collectors.toList());
 
-        String item1 = listBox.getElement().getChild(0).getText();
-        String item2 = listBox.getElement().getChild(1).getText();
-        String item3 = listBox.getElement().getChild(2).getText();
+        assertEquals(3, categoryItems.size());
 
-        assertEquals("Rent", item1);
-        assertEquals("Groceries", item2);
-        assertEquals("Utilities", item3);
+        List<String> itemNames= List.of(item1name, item2name, item3name);
+        for (int i = 0; i < categoryItems.size(); i++) {
+            Div categoryItem = categoryItems.get(i);
+            assertEquals("category-item", categoryItem.getClassName());
+            assertEquals(itemNames.get(i), categoryItem.getText());
+
+            H2 categoryName = (H2) categoryItem.getChildren().filter(c -> c instanceof H2 && ((H2) c).getClassName().equals("category-name")).findFirst().get();
+            assertEquals(expenseCategories.get(i).getName(), categoryName.getText());
+        }
 
         assertEquals("category-layout", expenseCategoryList.getClassName());
     }

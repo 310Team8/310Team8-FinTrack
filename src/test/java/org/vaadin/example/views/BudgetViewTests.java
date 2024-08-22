@@ -21,7 +21,6 @@ import org.vaadin.example.service.SessionService;
 import org.vaadin.example.service.UserService;
 
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.data.provider.Query;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -57,7 +56,6 @@ class BudgetViewTests {
         budgetView.listBudgets();
 
         Mockito.verify(budgetService).getBudgetsByUserId(userId);
-        assertEquals(1, budgetView.grid.getDataProvider().size(new Query<>()));
     }
 
     @ParameterizedTest
@@ -124,45 +122,12 @@ class BudgetViewTests {
         budget.setId(1L);
         budget.setName("name");
         budget.setAmount(new BigDecimal("5000"));
-        budgetView.grid.select(budget);
 
         try (var notification = Mockito.mockStatic(Notification.class)) {
-            budgetView.deleteBudget();
+            budgetView.deleteBudget(budget);
     
             Mockito.verify(budgetService).deleteBudget(1L);
-            assert(budgetView.grid.getDataProvider().fetch(new Query<>()).count() == 0);
             notification.verify(() -> Notification.show("Budget deleted successfully", 3000, Notification.Position.TOP_CENTER));
-        }
-    }
-
-    @Test 
-    void testDeleteBudgetWhenMultipleSelected() {
-        Budget budget1 = new Budget();
-        budget1.setId(1L);
-        budget1.setName("name1");
-        budget1.setAmount(new BigDecimal("5000"));
-        Budget budget2 = new Budget();
-        budget2.setId(2L);
-        budget2.setName("name2");
-        budget2.setAmount(new BigDecimal("5000"));
-        budgetView.grid.select(budget1);
-
-        try (var notification = Mockito.mockStatic(Notification.class)) {
-            budgetView.deleteBudget();
-    
-            Mockito.verify(budgetService).deleteBudget(1L);
-            Mockito.verify(budgetService, never()).deleteBudget(2L);
-            notification.verify(() -> Notification.show("Budget deleted successfully", 3000, Notification.Position.TOP_CENTER));
-        }
-    }
-
-    @Test
-    void testDeleteBudgetWhenNoBudgetSelected() {
-        try (var notification = Mockito.mockStatic(Notification.class)) {
-            budgetView.deleteBudget();
-    
-            Mockito.verify(budgetService, never()).deleteBudget(any(Long.class));
-            notification.verify(() -> Notification.show("Please select a budget to delete", 3000, Notification.Position.TOP_CENTER));
         }
     }
     

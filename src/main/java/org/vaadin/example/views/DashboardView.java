@@ -141,7 +141,7 @@ public class DashboardView extends VerticalLayout {
      * @param value the value to be displayed in the card
      * @return a Div containing the visual representation of the card
      */
-    private Div createDashboardCard(String title, String value) {
+    Div createDashboardCard(String title, String value) {
         Div card = new Div();
         card.addClassName("dashboard-card");
 
@@ -167,7 +167,7 @@ public class DashboardView extends VerticalLayout {
      * @param userId the ID of the user for whom the categories are fetched
      * @return a VerticalLayout containing the expense categories
      */
-    private VerticalLayout createExpenseCategoryList(Long userId) {
+    VerticalLayout createExpenseCategoryList(Long userId) {
         List<ExpenseCategory> categories = expenseCategoryService.getExpenseCategoriesByUserId(userId);
 
         // Title for the categories section
