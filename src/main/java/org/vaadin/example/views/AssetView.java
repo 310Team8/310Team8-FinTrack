@@ -45,6 +45,13 @@ public class AssetView extends VerticalLayout {
     private Div totalAssetsCard;
     private Div totalChangeCard;
 
+    /**
+     * Constructs an AssetView instance.
+     * 
+     * @param assetService the service for managing assets
+     * @param sessionService the service for managing user sessions
+     * @param userService the service for managing user information
+     */
     public AssetView(AssetService assetService, SessionService sessionService, UserService userService) {
         this.assetService = assetService;
         this.sessionService = sessionService;
@@ -56,6 +63,9 @@ public class AssetView extends VerticalLayout {
         updateTotalChangeInAssets();
     }
 
+    /**
+     * Configures the layout of the view, including the form fields, buttons, and asset list display.
+     */
     private void configureLayout() {
         assetLayout.setWidthFull();
         assetLayout.setFlexWrap(FlexWrap.WRAP);
@@ -114,6 +124,9 @@ public class AssetView extends VerticalLayout {
         add(mainLayout);
     }
 
+    /**
+     * Configures the form fields for adding a new asset, setting their placeholders and styles.
+     */
     private void configureFormFields() {
         nameField.setPlaceholder("Enter asset name...");
         nameField.getStyle().set("width", "200px");
@@ -129,6 +142,10 @@ public class AssetView extends VerticalLayout {
         interestRateField.getStyle().set("width", "150px");
     }
 
+    /**
+     * Lists the assets for the logged-in user and displays them in the asset layout.
+     * If no assets are found, a notification is displayed.
+     */
     private void listAssets() {
         Long userId = sessionService.getLoggedInUserId();
         List<Asset> assets = assetService.getAssetsByUserId(userId);
@@ -144,6 +161,12 @@ public class AssetView extends VerticalLayout {
         }
     }
 
+    /**
+     * Creates a card layout for displaying an asset's details.
+     * 
+     * @param asset the asset to display
+     * @return a VerticalLayout containing the asset's details
+     */
     private VerticalLayout createAssetCard(Asset asset) {
         VerticalLayout cardLayout = new VerticalLayout();
         cardLayout.setWidth("300px");
@@ -198,6 +221,12 @@ public class AssetView extends VerticalLayout {
         return cardLayout;
     }
 
+
+    /**
+     * Shows a dialog for editing an existing asset.
+     * 
+     * @param asset the asset to edit
+     */
     private void showEditDialog(Asset asset) {
         Dialog editDialog = new Dialog();
         editDialog.setWidth("400px");
@@ -225,6 +254,15 @@ public class AssetView extends VerticalLayout {
                 .set("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.1)");
 
         saveButton.addClickListener(event -> {
+            if(nameField.isEmpty() || valueField.isEmpty() || categoryField.isEmpty() || interestRateField.isEmpty()){
+                Notification.show("Please enter all fields", 3000, Notification.Position.TOP_CENTER);
+                return;
+            }
+
+            if(BigDecimal.valueOf(valueField.getValue()).compareTo(BigDecimal.ZERO) <= 0 || BigDecimal.valueOf(interestRateField.getValue()).compareTo(BigDecimal.ZERO) <= 0 ){
+                Notification.show("Please enter valid input values", 3000, Notification.Position.TOP_CENTER);
+                return;
+            }
             Asset updatedAsset = new Asset();
             updatedAsset.setId(asset.getId());
             updatedAsset.setName(nameField.getValue());
@@ -260,6 +298,10 @@ public class AssetView extends VerticalLayout {
         editDialog.open();
     }
 
+    /**
+     * Adds a new asset based on the values entered in the form fields.
+     * Validates the input before saving the asset.
+     */
     private void addAsset() {
         try {
             String name = nameField.getValue();
@@ -295,7 +337,9 @@ public class AssetView extends VerticalLayout {
         }
     }
     
-    // Method to clear the form fields
+    /**
+     * Clears the form fields after adding or editing an asset.
+     */
     private void clearForm() {
         nameField.clear();
         valueField.clear();
@@ -303,6 +347,9 @@ public class AssetView extends VerticalLayout {
         interestRateField.clear();
     }
 
+    /**
+     * Updates the total value of the user's assets and displays it in the total assets card.
+     */
     private void updateTotalAssets() {
         Long userId = sessionService.getLoggedInUserId();
         List<Asset> assets = assetService.getAssetsByUserId(userId);
@@ -313,6 +360,10 @@ public class AssetView extends VerticalLayout {
         totalAssetsValue.setText("$ " + totalAssets.toString());
     }
 
+     /**
+     * Updates the total change in the value of the user's assets over the past year and 
+     * displays it in the total change card.
+     */
     private void updateTotalChangeInAssets() {
         Long userId = sessionService.getLoggedInUserId();
         BigDecimal totalChange = BigDecimal.ZERO;
@@ -322,8 +373,15 @@ public class AssetView extends VerticalLayout {
         String color = totalChange.compareTo(BigDecimal.ZERO) >= 0 ? "green" : "red";
         totalChangeValue.setText(changeText);
         totalChangeValue.getStyle().set("color", color);
-    }
+    }   
 
+    /**
+     * Creates a dashboard card with a title and a value.
+     * 
+     * @param title the title of the card
+     * @param value the value to display in the card
+     * @return a Div containing the card layout
+     */
     private Div createDashboardCard(String title, H2 value) {
         Div card = new Div();
         card.setWidthFull(); 
@@ -345,6 +403,12 @@ public class AssetView extends VerticalLayout {
         return card;
     }
 
+    /**
+     * Returns an icon representing the category of an asset.
+     * 
+     * @param category the category of the asset
+     * @return an Icon corresponding to the category
+     */
     private Icon getIconForCategory(String category) {
         switch (category.toLowerCase()) {
             case "vehicles":
