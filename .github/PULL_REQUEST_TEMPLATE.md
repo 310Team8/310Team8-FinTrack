@@ -1,18 +1,16 @@
+# Pull Request Title (Brief description of changes)
+
+## Related Issue
+*Link to the related issue(s) and touch on any details. Use the 'closes', 'fixes', 'resolves' etc. keywords.* 
+
 ## Description
+*Provide a **detailed** description of the changes made in this PR.*
 
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change.
+## Testing
+*Describe the tests that were run to verify your changes and testing instructions for PR reviewers.*
 
-Closes # (issue)
+## Images 
+*Add any relevant images to demonstrate changes.*
 
-## Type of Change
-
-(delete this part: put an X on the box eg. [X])
-
-- [ ] Bug fix 
-- [ ] New/Update feature 
-- [ ] New/Update Documentation
-
-
-## Additional Information
-- Please assign yourself on the assignees tab
-
+## Additional Context
+*Any other context or information that reviewers might need.*

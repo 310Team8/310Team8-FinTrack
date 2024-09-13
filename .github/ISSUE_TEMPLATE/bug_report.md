@@ -1,35 +1,26 @@
 ---
-name: Bug report
-about: Create a bug report to help us improve
+name: Bugs
+about: Reporting Bugs
 title: ''
-labels: bug
+labels: ''
 assignees: ''
 
 ---
 
-## Describe the bug
-A clear and concise description of what the bug is.
+# Bug Name (Same as title)
+## Expected Behaviour
+*Describe what behaviour is expected in this situation.*  
 
-## To Reproduce
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+## Actual Behaviour
+*Describe what behaviour is actually happening or being observed in the situation.*  
 
-## Expected behavior
-A clear and concise description of what you expected to happen.
+## Steps to Reproduce
+*Details on how to reproduce the issue/bug.*
 
-## Observed behavior
-A clear and concise description of what actually happened.
+## Images and Resources
+*Add any images or resources demonstrating or relating to the problem.*
 
-## Screenshots
-If applicable, add screenshots of relevant logs, stack traces, code examples, test cases to help explain your problem.
-
-## Desktop (please complete the following information):
-- OS: [e.g. Mac]
-- Browser [e.g. chrome, safari]
-- Version [e.g. 22]
-
-## Additional context
-Add any other context about the problem here.
+## Environment
+*Operating System:*
+*Device:*
+*Browser:*
