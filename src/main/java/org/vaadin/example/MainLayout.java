@@ -16,6 +16,7 @@ import org.vaadin.example.views.AssetView;
 import org.vaadin.example.views.BudgetView;
 import org.vaadin.example.views.ExpenseView;
 import org.vaadin.example.views.IncomeView;
+import org.vaadin.example.views.InvoiceView;
 import org.vaadin.example.views.FinancialGoalView;
 import org.vaadin.example.views.ExpenseCategoryView;
 import org.vaadin.example.views.LoginView;
@@ -89,6 +90,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
        RouterLink goalLink = new RouterLink("Manage Goals", FinancialGoalView.class);
        RouterLink categoryLink = new RouterLink("Manage Categories", ExpenseCategoryView.class);
        RouterLink assetLink = new RouterLink("Manage Assets", AssetView.class);
+       RouterLink invoiceLink = new RouterLink("Manage Invoices", InvoiceView.class);
 
 
        VerticalLayout drawerLayout = new VerticalLayout(
@@ -98,7 +100,8 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
            incomeLink,
            goalLink,
            categoryLink,
-           assetLink
+           assetLink,
+           invoiceLink
        );
       
        drawerLayout.setAlignItems(Alignment.STRETCH);
