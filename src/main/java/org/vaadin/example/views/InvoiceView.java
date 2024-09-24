@@ -1,6 +1,7 @@
 package org.vaadin.example.views;
 
 import org.vaadin.example.MainLayout;
+import org.vaadin.example.model.Invoice;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -61,32 +62,5 @@ public class InvoiceView extends VerticalLayout {
 
         // Add the form layout and the grid to the main layout
         add(formLayout, invoiceGrid);
-    }
-
-    // Inner class to represent an Invoice
-    public static class Invoice {
-        private String recipientName;
-        private Double amount;
-
-        public Invoice(String recipientName, Double amount) {
-            this.recipientName = recipientName;
-            this.amount = amount;
-        }
-
-        public String getRecipientName() {
-            return recipientName;
-        }
-
-        public void setRecipientName(String recipientName) {
-            this.recipientName = recipientName;
-        }
-
-        public Double getAmount() {
-            return amount;
-        }
-
-        public void setAmount(Double amount) {
-            this.amount = amount;
-        }
     }
 }
