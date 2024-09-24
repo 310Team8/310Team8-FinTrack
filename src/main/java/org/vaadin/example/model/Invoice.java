@@ -1,22 +1,32 @@
 package org.vaadin.example.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
+
+import java.time.LocalDate;
 
 /**
  * Entity representing an invoice.
- * An invoice has a recipient name and an amount payable.
+ * An invoice has a recipient name, an amount payable, and additional details like invoice number, issue date, etc.
  */
 @Entity
 @Table(name = "invoice")
 public class Invoice {
+
     /**
      * The unique identifier for the invoice.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * The unique number of the invoice.
+     * Cannot be null.
+     */
+    @NotNull
+    private String invoiceNumber;
 
     /**
      * The name of the recipient for the invoice.
@@ -31,77 +41,110 @@ public class Invoice {
      */
     @NotNull
     @DecimalMin(value = "0.0", inclusive = false)
-    private Double amount;
+    private double amount;
 
     /**
-     * Default constructor for JPA.
+     * The issue date of the invoice.
+     * Cannot be null.
      */
+    @NotNull
+    private LocalDate issueDate;
+
+    /**
+     * The due date of the invoice.
+     * Cannot be null.
+     */
+    @NotNull
+    private LocalDate dueDate;
+
+    /**
+     * The description or purpose of the invoice.
+     */
+    private String description;
+
+    /**
+     * The status of the invoice (e.g., "Pending", "Paid", "Overdue").
+     */
+    @NotNull
+    private String status;
+
+    // Default constructor for JPA
     public Invoice() {}
 
-    /**
-     * Constructs an Invoice with the given recipient name and amount payable.
-     *
-     * @param recipientName the name of the recipient
-     * @param amount the amount payable
-     */
-    public Invoice(String recipientName, Double amount) {
+    // Constructor with parameters
+    public Invoice(String invoiceNumber, String recipientName, double amount, LocalDate issueDate, LocalDate dueDate, String description, String status) {
+        this.invoiceNumber = invoiceNumber;
         this.recipientName = recipientName;
         this.amount = amount;
+        this.issueDate = issueDate;
+        this.dueDate = dueDate;
+        this.description = description;
+        this.status = status;
     }
 
     // Getters and Setters
 
-    /**
-     * Gets the unique identifier for the invoice.
-     *
-     * @return the ID of the invoice
-     */
     public Long getId() {
         return id;
     }
 
-    /**
-     * Sets the unique identifier for the invoice.
-     *
-     * @param id the ID to set
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * Gets the name of the recipient for the invoice.
-     *
-     * @return the name of the recipient
-     */
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
     public String getRecipientName() {
         return recipientName;
     }
 
-    /**
-     * Sets the name of the recipient for the invoice.
-     *
-     * @param recipientName the name to set
-     */
     public void setRecipientName(String recipientName) {
         this.recipientName = recipientName;
     }
 
-    /**
-     * Gets the amount payable for the invoice.
-     *
-     * @return the amount payable
-     */
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    /**
-     * Sets the amount payable for the invoice.
-     *
-     * @param amount the amount to set
-     */
-    public void setAmount(Double amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public LocalDate getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
