@@ -1,4 +1,4 @@
-package org.vaadin.example.model;
+package org.vaadin.application.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -68,21 +68,13 @@ public class Invoice {
     @NotNull
     private String status;
 
-    // Default constructor for JPA
-    public Invoice() {}
-
-    // Constructor with parameters
-    public Invoice(String invoiceNumber, String recipientName, double amount, LocalDate issueDate, LocalDate dueDate, String description, String status) {
-        this.invoiceNumber = invoiceNumber;
-        this.recipientName = recipientName;
-        this.amount = amount;
-        this.issueDate = issueDate;
-        this.dueDate = dueDate;
-        this.description = description;
-        this.status = status;
-    }
-
-    // Getters and Setters
+    /**
+     * The user associated with the asset.
+     * Cannot be null.
+     */
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Long getId() {
         return id;
@@ -146,5 +138,23 @@ public class Invoice {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * Gets the user associated with the asset.
+     *
+     * @return the user associated with the asset
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the user associated with the asset.
+     *
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 }
