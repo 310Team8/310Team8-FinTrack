@@ -105,8 +105,6 @@ public class ExpenseView extends VerticalLayout {
         this.userService = userService;
         this.budgetService = budgetService;
 
-        System.out.println("ExpenseView constructor called");
-
         configureGrid();
         configureForm();
 
