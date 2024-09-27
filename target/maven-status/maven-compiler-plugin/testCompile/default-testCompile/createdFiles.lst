@@ -1,1 +1,9 @@
-org/vaadin/example/MainViewIT.class
+org\vaadin\example\service\FinancialGoalServiceTests.class
+org\vaadin\example\service\ExpenceServiceTest.class
+org\vaadin\example\service\SessionServiceTests.class
+org\vaadin\example\service\BudgetServiceTests.class
+org\vaadin\example\service\IncomeServiceTests.class
+org\vaadin\example\service\ExpenseCategoryServiceTests.class
+org\vaadin\example\service\NoteServiceTests.class
+org\vaadin\example\MainViewIT.class
+org\vaadin\example\service\UserServiceTests.class

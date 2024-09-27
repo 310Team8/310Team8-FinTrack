@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.vaadin.example.model.Expense;
-import org.vaadin.example.model.ExpenseCategory;
-import org.vaadin.example.model.User;
-import org.vaadin.example.repository.ExpenseCategoryRepository;
+import org.vaadin.application.model.Expense;
+import org.vaadin.application.model.ExpenseCategory;
+import org.vaadin.application.model.User;
+import org.vaadin.application.repository.ExpenseCategoryRepository;
+import org.vaadin.application.service.ExpenseCategoryService;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +38,7 @@ public class ExpenseCategoryServiceTests {
     void testGetExpenseCategoriesByUserId() {
         User user = new User();
         user.setId(1L);
-        
+
         ExpenseCategory expenseCategory1 = new ExpenseCategory();
         expenseCategory1.setId(1L);
         expenseCategory1.setName("Groceries");
@@ -48,14 +50,14 @@ public class ExpenseCategoryServiceTests {
         expenseCategory2.setUser(user);
 
         List<ExpenseCategory> expenseCategories = Arrays.asList(expenseCategory1, expenseCategory2);
-        
+
         when(expenseCategoryRepository.findByUserId(user.getId())).thenReturn(expenseCategories);
 
         List<ExpenseCategory> result = expenseCategoryService.getExpenseCategoriesByUserId(user.getId());
 
         assertEquals(2, result.size());
         assertEquals(expenseCategory1, result.get(0));
-        assertEquals(expenseCategory2, result.get(1)); 
+        assertEquals(expenseCategory2, result.get(1));
     }
 
     @Test
@@ -85,7 +87,8 @@ public class ExpenseCategoryServiceTests {
         expenseCategory.setName("Groceries");
         expenseCategory.setUser(user);
 
-        when(expenseCategoryRepository.findById(expenseCategory.getId())).thenReturn(java.util.Optional.of(expenseCategory));
+        when(expenseCategoryRepository.findById(expenseCategory.getId()))
+                .thenReturn(java.util.Optional.of(expenseCategory));
 
         ExpenseCategory result = expenseCategoryService.findExpenseCategoryById(expenseCategory.getId());
 
@@ -115,7 +118,7 @@ public class ExpenseCategoryServiceTests {
     void testGetCategoriesByUserId() {
         User user = new User();
         user.setId(1L);
-        
+
         ExpenseCategory expenseCategory1 = new ExpenseCategory();
         expenseCategory1.setId(1L);
         expenseCategory1.setName("Groceries");
@@ -127,13 +130,13 @@ public class ExpenseCategoryServiceTests {
         expenseCategory2.setUser(user);
 
         List<ExpenseCategory> expenseCategories = Arrays.asList(expenseCategory1, expenseCategory2);
-        
+
         when(expenseCategoryRepository.findByUserId(user.getId())).thenReturn(expenseCategories);
 
         List<ExpenseCategory> result = expenseCategoryService.getCategoriesByUserId(user.getId());
 
         assertEquals(2, result.size());
         assertEquals(expenseCategory1, result.get(0));
-        assertEquals(expenseCategory2, result.get(1)); 
+        assertEquals(expenseCategory2, result.get(1));
     }
 }

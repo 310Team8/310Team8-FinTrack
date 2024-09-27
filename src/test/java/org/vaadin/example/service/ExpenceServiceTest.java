@@ -15,28 +15,31 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.vaadin.example.model.Expense;
-import org.vaadin.example.repository.ExpenseRepository;
+import org.vaadin.application.model.Expense;
+import org.vaadin.application.repository.ExpenseRepository;
+import org.vaadin.application.service.ExpenseService;
+
 import java.sql.Date;
 import java.time.LocalDate;
 
 import jakarta.inject.Inject;
 
 public class ExpenceServiceTest {
-    
+
     @Mock
     private ExpenseRepository expenseRepository;
 
     @InjectMocks
     private ExpenseService expenseService;
 
-    @BeforeEach void setUp() {
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test 
+    @Test
     void testGetExpensesByUserId() {
-        
+
         Long userId = 1L;
 
         Expense expense1 = new Expense();
@@ -52,7 +55,7 @@ public class ExpenceServiceTest {
         expense1.setDate(Date.valueOf(LocalDate.of(2024, 1, 13)));
 
         List<Expense> expenses = Arrays.asList(expense1, expense2);
-        
+
         when(expenseRepository.findByUserId(userId)).thenReturn(expenses);
 
         List<Expense> result = expenseService.getExpensesByUserId(userId);

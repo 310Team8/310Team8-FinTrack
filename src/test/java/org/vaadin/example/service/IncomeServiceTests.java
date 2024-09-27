@@ -11,15 +11,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.vaadin.example.model.Expense;
-import org.vaadin.example.model.Income;
-import org.vaadin.example.model.User;
-import org.vaadin.example.repository.IncomeRepository;
+import org.vaadin.application.model.Expense;
+import org.vaadin.application.model.Income;
+import org.vaadin.application.model.User;
+import org.vaadin.application.repository.IncomeRepository;
+import org.vaadin.application.service.IncomeService;
+
 import java.util.Arrays;
 import java.util.List;
 import java.time.LocalDate;
 import java.math.BigDecimal;
-
 
 public class IncomeServiceTests {
 

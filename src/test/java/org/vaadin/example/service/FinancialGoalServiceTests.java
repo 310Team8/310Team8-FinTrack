@@ -1,13 +1,14 @@
 package org.vaadin.example.service;
 
-import org.vaadin.example.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.vaadin.example.model.FinancialGoal;
-import org.vaadin.example.repository.FinancialGoalRepository;
+import org.vaadin.application.model.FinancialGoal;
+import org.vaadin.application.model.User;
+import org.vaadin.application.repository.FinancialGoalRepository;
+import org.vaadin.application.service.FinancialGoalService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FinancialGoalServiceTests {
- 
+
     @Mock
     private FinancialGoalRepository financialGoalRepository;
 
@@ -38,7 +39,7 @@ public class FinancialGoalServiceTests {
     void testGetFinancialGoalsByUserId() {
         User user = new User();
         user.setId(1L);
-        
+
         FinancialGoal financialGoal1 = new FinancialGoal();
         financialGoal1.setId(1L);
         financialGoal1.setDescription("Buy a new car");
@@ -52,14 +53,14 @@ public class FinancialGoalServiceTests {
         financialGoal2.setUser(user);
 
         List<FinancialGoal> financialGoals = Arrays.asList(financialGoal1, financialGoal2);
-        
+
         when(financialGoalRepository.findByUserId(user.getId())).thenReturn(financialGoals);
 
         List<FinancialGoal> result = financialGoalService.getFinancialGoalsByUserId(user.getId());
 
         assertEquals(2, result.size());
         assertEquals(financialGoal1, result.get(0));
-        assertEquals(financialGoal2, result.get(1)); 
+        assertEquals(financialGoal2, result.get(1));
         verify(financialGoalRepository, times(1)).findByUserId(user.getId());
     }
 
@@ -102,7 +103,7 @@ public class FinancialGoalServiceTests {
         verify(financialGoalRepository, times(1)).findById(id);
     }
 
-    @Test 
+    @Test
     void testFindFinancialGoalByIdNotFound() {
         Long id = 1L;
         when(financialGoalRepository.findById(id)).thenReturn(Optional.empty());
@@ -118,6 +119,5 @@ public class FinancialGoalServiceTests {
         financialGoalService.deleteFinancialGoal(id);
         verify(financialGoalRepository, times(1)).deleteById(id);
     }
-    
-}
 
+}

@@ -15,8 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.vaadin.example.model.User;
-import org.vaadin.example.repository.UserRepository;
+import org.vaadin.application.model.User;
+import org.vaadin.application.repository.UserRepository;
+import org.vaadin.application.service.UserService;
 
 public class UserServiceTests {
 

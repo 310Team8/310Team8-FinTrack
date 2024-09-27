@@ -10,8 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.vaadin.example.model.Note;
-import org.vaadin.example.repository.NoteRepository;
+import org.vaadin.application.model.Note;
+import org.vaadin.application.repository.NoteRepository;
+import org.vaadin.application.service.NoteService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +51,8 @@ public class NoteServiceTests {
     public void testAddNote() {
         Note note = new Note();
         note.setId(1L);
-        
-        //Should we be returning the note when added to verify creation?
+
+        // Should we be returning the note when added to verify creation?
         noteService.addNote(note);
 
         verify(noteRepository, times(1)).save(note);
@@ -66,5 +67,5 @@ public class NoteServiceTests {
 
         verify(noteRepository, times(1)).deleteById(1L);
     }
-    
+
 }
