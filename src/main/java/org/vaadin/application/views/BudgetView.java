@@ -71,10 +71,10 @@ import org.vaadin.application.service.UserService;
 @Route(value = "budget", layout = MainLayout.class)
 public class BudgetView extends VerticalLayout {
 
-    private final BudgetService budgetService;
-    private final ExpenseService expenseService;
-    private final SessionService sessionService;
-    private final UserService userService;
+    private final transient BudgetService budgetService;
+    private final transient ExpenseService expenseService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
 
     final TextField nameField = new TextField("Budget Name");
     final TextField amountField = new TextField("Target Amount ($)");

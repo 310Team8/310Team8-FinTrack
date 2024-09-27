@@ -80,10 +80,10 @@ public class IncomeView extends VerticalLayout {
     private final DatePicker datePicker = new DatePicker("Date");
     private final ComboBox<String> frequencyField = new ComboBox<>("Payment Frequency");
 
-    private final IncomeService incomeService;
-    private final NoteService noteService;
-    private final SessionService sessionService;
-    private final UserService userService;
+    private final transient IncomeService incomeService;
+    private final transient NoteService noteService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
 
     private H2 cardValue;
     private Div totalIncomeCard;
@@ -323,9 +323,9 @@ public class IncomeView extends VerticalLayout {
      * select one.
      */
     private void deleteIncome() {
-        Income selectedIncome = grid.asSingleSelect().getValue();
-        if (selectedIncome != null) {
-            incomeService.deleteIncome(selectedIncome.getId());
+        Income selectedIncomeToDelete = grid.asSingleSelect().getValue();
+        if (selectedIncomeToDelete != null) {
+            incomeService.deleteIncome(selectedIncomeToDelete.getId());
             Notification.show("Income deleted successfully");
             listIncomes();
             updateTotalIncome();

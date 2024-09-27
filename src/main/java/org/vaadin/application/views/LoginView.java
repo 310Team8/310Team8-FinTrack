@@ -53,8 +53,8 @@ import com.vaadin.flow.router.Route;
 @Route("")
 public class LoginView extends VerticalLayout {
 
-    private final UserService userService;
-    private final SessionService sessionService;
+    private final transient UserService userService;
+    private final transient SessionService sessionService;
 
     /**
      * Constructs a new LoginView and initializes the login form components and

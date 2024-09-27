@@ -37,14 +37,12 @@ public class AssetView extends VerticalLayout {
     private final ComboBox<String> categoryField = new ComboBox<>("Category");
     private final NumberField interestRateField = new NumberField("Interest Rate (%)");
 
-    private final AssetService assetService;
-    private final SessionService sessionService;
-    private final UserService userService;
+    private final transient AssetService assetService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
 
     private H2 totalAssetsValue;
     private H2 totalChangeValue;
-    private Div totalAssetsCard;
-    private Div totalChangeCard;
 
     /**
      * Constructs an AssetView instance.
@@ -69,6 +67,9 @@ public class AssetView extends VerticalLayout {
      * asset list display.
      */
     private void configureLayout() {
+        Div totalChangeCard;
+        Div totalAssetsCard;
+
         assetLayout.setWidthFull();
         assetLayout.setFlexWrap(FlexWrap.WRAP);
         assetLayout.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
@@ -233,18 +234,18 @@ public class AssetView extends VerticalLayout {
         Dialog editDialog = new Dialog();
         editDialog.setWidth("400px");
 
-        TextField nameField = new TextField("Asset Name");
-        nameField.setValue(asset.getName());
+        TextField editNameField = new TextField("Asset Name");
+        editNameField.setValue(asset.getName());
 
-        NumberField valueField = new NumberField("Value ($)");
-        valueField.setValue(asset.getValue().doubleValue());
+        NumberField editValueField = new NumberField("Value ($)");
+        editValueField.setValue(asset.getValue().doubleValue());
 
-        ComboBox<String> categoryField = new ComboBox<>("Category");
-        categoryField.setItems("Vehicles", "Property", "Stocks", "Savings", "Equipment", "Jewellery", "Artworks");
-        categoryField.setValue(asset.getCategory());
+        ComboBox<String> editCategoryField = new ComboBox<>("Category");
+        editCategoryField.setItems("Vehicles", "Property", "Stocks", "Savings", "Equipment", "Jewellery", "Artworks");
+        editCategoryField.setValue(asset.getCategory());
 
-        NumberField interestRateField = new NumberField("Interest Rate (%)");
-        interestRateField.setValue(asset.getInterestRate() != null ? asset.getInterestRate().doubleValue() : 0);
+        NumberField editInterestRateField = new NumberField("Interest Rate (%)");
+        editInterestRateField.setValue(asset.getInterestRate() != null ? asset.getInterestRate().doubleValue() : 0);
 
         Button saveButton = new Button("Save", VaadinIcon.CHECK.create());
         saveButton.getStyle().set("background-color", "#007bff")
@@ -256,22 +257,23 @@ public class AssetView extends VerticalLayout {
                 .set("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.1)");
 
         saveButton.addClickListener(event -> {
-            if (nameField.isEmpty() || valueField.isEmpty() || categoryField.isEmpty() || interestRateField.isEmpty()) {
+            if (editNameField.isEmpty() || editValueField.isEmpty() || editCategoryField.isEmpty()
+                    || editInterestRateField.isEmpty()) {
                 Notification.show("Please enter all fields", 3000, Notification.Position.TOP_CENTER);
                 return;
             }
 
-            if (BigDecimal.valueOf(valueField.getValue()).compareTo(BigDecimal.ZERO) <= 0
-                    || BigDecimal.valueOf(interestRateField.getValue()).compareTo(BigDecimal.ZERO) <= 0) {
+            if (BigDecimal.valueOf(editValueField.getValue()).compareTo(BigDecimal.ZERO) <= 0
+                    || BigDecimal.valueOf(editInterestRateField.getValue()).compareTo(BigDecimal.ZERO) <= 0) {
                 Notification.show("Please enter valid input values", 3000, Notification.Position.TOP_CENTER);
                 return;
             }
             Asset updatedAsset = new Asset();
             updatedAsset.setId(asset.getId());
-            updatedAsset.setName(nameField.getValue());
-            updatedAsset.setValue(BigDecimal.valueOf(valueField.getValue()));
-            updatedAsset.setCategory(categoryField.getValue());
-            updatedAsset.setInterestRate(BigDecimal.valueOf(interestRateField.getValue()));
+            updatedAsset.setName(editNameField.getValue());
+            updatedAsset.setValue(BigDecimal.valueOf(editValueField.getValue()));
+            updatedAsset.setCategory(editCategoryField.getValue());
+            updatedAsset.setInterestRate(BigDecimal.valueOf(editInterestRateField.getValue()));
 
             assetService.updateAsset(updatedAsset);
             Notification.show("Asset updated successfully", 3000, Notification.Position.TOP_CENTER);
@@ -292,7 +294,8 @@ public class AssetView extends VerticalLayout {
 
         cancelButton.addClickListener(event -> editDialog.close());
 
-        VerticalLayout dialogLayout = new VerticalLayout(nameField, valueField, categoryField, interestRateField,
+        VerticalLayout dialogLayout = new VerticalLayout(editNameField, editValueField, editCategoryField,
+                editInterestRateField,
                 new HorizontalLayout(saveButton, cancelButton));
         dialogLayout.setSizeUndefined();
         dialogLayout.setPadding(true);

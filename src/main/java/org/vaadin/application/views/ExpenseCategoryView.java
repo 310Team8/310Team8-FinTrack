@@ -58,9 +58,9 @@ public class ExpenseCategoryView extends VerticalLayout {
     private final Grid<ExpenseCategory> grid = new Grid<>(ExpenseCategory.class);
     private final TextField nameField = new TextField("Category Name");
 
-    private final ExpenseCategoryService expenseCategoryService;
-    private final SessionService sessionService;
-    private final UserService userService;
+    private final transient ExpenseCategoryService expenseCategoryService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
 
     /**
      * Constructs a new ExpenseCategoryView and initializes the components and

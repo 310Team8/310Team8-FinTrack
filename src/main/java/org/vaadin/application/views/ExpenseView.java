@@ -80,10 +80,10 @@ public class ExpenseView extends VerticalLayout {
     private final DatePicker datePicker = new DatePicker("Date");
     private final ComboBox<Budget> budgetComboBox = new ComboBox<>("Select Budget");
 
-    private final ExpenseService expenseService;
-    private final SessionService sessionService;
-    private final UserService userService;
-    private final BudgetService budgetService;
+    private final transient ExpenseService expenseService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
+    private final transient BudgetService budgetService;
 
     private H2 totalExpensesValue;
     private Div totalExpensesCard;
@@ -300,16 +300,17 @@ public class ExpenseView extends VerticalLayout {
      * prompting the user to select one.
      */
     private void deleteExpense() {
-        Expense selectedExpense = grid.asSingleSelect().getValue();
-        if (selectedExpense != null) {
-            Budget associatedBudget = selectedExpense.getBudget();
+        Expense selectedExpenseToDelete = grid.asSingleSelect().getValue();
+        if (selectedExpenseToDelete != null) {
+            Budget associatedBudget = selectedExpenseToDelete.getBudget();
             if (associatedBudget != null) {
                 associatedBudget
-                        .setCurrentAmount(associatedBudget.getCurrentAmount().subtract(selectedExpense.getAmount()));
+                        .setCurrentAmount(
+                                associatedBudget.getCurrentAmount().subtract(selectedExpenseToDelete.getAmount()));
                 budgetService.addBudget(associatedBudget);
             }
 
-            expenseService.deleteExpense(selectedExpense.getId());
+            expenseService.deleteExpense(selectedExpenseToDelete.getId());
             Notification.show("Expense deleted successfully");
             listExpenses();
             updateTotalExpenses();

@@ -75,9 +75,9 @@ public class FinancialGoalView extends VerticalLayout {
     private final NumberField targetAmountField = new NumberField("Target Amount ($)");
     private final NumberField savedAmountField = new NumberField("Saved Amount ($)");
 
-    private final FinancialGoalService financialGoalService;
-    private final SessionService sessionService;
-    private final UserService userService;
+    private final transient FinancialGoalService financialGoalService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
 
     /**
      * Constructs a new FinancialGoalView and initializes the components and layout.
@@ -282,16 +282,16 @@ public class FinancialGoalView extends VerticalLayout {
         Dialog editDialog = new Dialog();
         editDialog.setWidth("400px");
 
-        TextField descriptionField = new TextField("Goal Description");
-        descriptionField.setValue(goal.getDescription());
-        descriptionField.setReadOnly(false);
+        TextField editDescriptionField = new TextField("Goal Description");
+        editDescriptionField.setValue(goal.getDescription());
+        editDescriptionField.setReadOnly(false);
 
-        NumberField targetAmountField = new NumberField("Target Amount ($)");
-        targetAmountField.setValue(goal.getTargetAmount().doubleValue());
-        targetAmountField.setReadOnly(false);
+        NumberField editTargetAmountField = new NumberField("Target Amount ($)");
+        editTargetAmountField.setValue(goal.getTargetAmount().doubleValue());
+        editTargetAmountField.setReadOnly(false);
 
-        NumberField savedAmountField = new NumberField("Saved Amount ($)");
-        savedAmountField.setValue(goal.getSavedAmount().doubleValue());
+        NumberField editSavedAmountField = new NumberField("Saved Amount ($)");
+        editSavedAmountField.setValue(goal.getSavedAmount().doubleValue());
 
         Button saveButton = new Button("Save", VaadinIcon.CHECK.create());
         saveButton.getStyle().set("background-color", "#007bff")
@@ -303,15 +303,15 @@ public class FinancialGoalView extends VerticalLayout {
                 .set("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.1)");
 
         saveButton.addClickListener(event -> {
-            String newDescription = descriptionField.getValue();
+            String newDescription = editDescriptionField.getValue();
 
-            if (savedAmountField.isEmpty() || targetAmountField.isEmpty()) {
+            if (editSavedAmountField.isEmpty() || editTargetAmountField.isEmpty()) {
                 Notification.show("Invalid input(s). Ensure all fields are correctly filled.", 3000,
                         Notification.Position.TOP_CENTER);
                 return;
             }
-            BigDecimal newTargetAmount = BigDecimal.valueOf(targetAmountField.getValue());
-            BigDecimal newSavedAmount = BigDecimal.valueOf(savedAmountField.getValue());
+            BigDecimal newTargetAmount = BigDecimal.valueOf(editTargetAmountField.getValue());
+            BigDecimal newSavedAmount = BigDecimal.valueOf(editSavedAmountField.getValue());
 
             if (newDescription.isEmpty() || newTargetAmount.compareTo(BigDecimal.ZERO) <= 0
                     || newSavedAmount.compareTo(newTargetAmount) > 0 || newSavedAmount.compareTo(BigDecimal.ZERO) < 0) {
@@ -342,7 +342,7 @@ public class FinancialGoalView extends VerticalLayout {
 
         cancelButton.addClickListener(event -> editDialog.close());
 
-        VerticalLayout dialogLayout = new VerticalLayout(descriptionField, targetAmountField, savedAmountField,
+        VerticalLayout dialogLayout = new VerticalLayout(editDescriptionField, editTargetAmountField, editSavedAmountField,
                 new HorizontalLayout(saveButton, cancelButton));
         dialogLayout.setPadding(true);
         dialogLayout.setSpacing(true);

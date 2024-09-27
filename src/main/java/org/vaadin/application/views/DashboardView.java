@@ -66,9 +66,9 @@ import org.vaadin.application.service.IncomeService;
 @Route(value = "dashboard", layout = MainLayout.class)
 public class DashboardView extends VerticalLayout {
 
-    private final ExpenseService expenseService;
-    private final IncomeService incomeService;
-    private final ExpenseCategoryService expenseCategoryService;
+    private final transient ExpenseService expenseService;
+    private final transient IncomeService incomeService;
+    private final transient ExpenseCategoryService expenseCategoryService;
 
     /**
      * Constructs a new DashboardView and initializes the components and layout.
