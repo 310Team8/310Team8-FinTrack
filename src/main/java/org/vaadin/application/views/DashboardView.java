@@ -2,19 +2,14 @@ package org.vaadin.application.views;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.renderer.TextRenderer;
-import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.hibernate.annotations.Fetch;
 import org.vaadin.application.MainLayout;
 import org.vaadin.application.model.Expense;
 import org.vaadin.application.model.ExpenseCategory;
