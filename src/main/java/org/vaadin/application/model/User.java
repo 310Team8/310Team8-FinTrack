@@ -6,7 +6,8 @@ import java.util.Set;
 
 /**
  * Entity representing a user.
- * A user has a unique name and password, and is associated with multiple budgets, expenses, 
+ * A user has a unique name and password, and is associated with multiple
+ * budgets, expenses,
  * expense categories, financial goals, and incomes.
  */
 @Entity

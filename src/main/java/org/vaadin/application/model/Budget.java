@@ -52,8 +52,6 @@ public class Budget {
      */
     private BigDecimal currentAmount = BigDecimal.ZERO;
 
-
-
     // Getters and Setters
 
     /**
@@ -154,7 +152,6 @@ public class Budget {
     public BigDecimal getCurrentAmount() {
         return currentAmount;
     }
-    
 
     /**
      * Sets the current amount spent in the budget.

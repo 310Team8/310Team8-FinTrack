@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Rest controller for managing financial goal-related operations.
- * This controller provides endpoints to get financial goals by user ID, 
+ * This controller provides endpoints to get financial goals by user ID,
  * add a new financial goal, and delete an existing financial goal.
  */
 @RestController
@@ -41,7 +41,7 @@ public class FinancialGoalController {
         return financialGoalService.addFinancialGoal(financialGoal);
     }
 
-     /**
+    /**
      * Deletes a financial goal by its ID.
      *
      * @param id the ID of the financial goal to be deleted

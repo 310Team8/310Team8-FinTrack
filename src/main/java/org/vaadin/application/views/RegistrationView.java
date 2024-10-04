@@ -1,5 +1,7 @@
 package org.vaadin.application.views;
 
+import org.vaadin.application.service.UserService;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
@@ -8,23 +10,37 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.vaadin.application.service.UserService;
 
 /**
- * The RegistrationView class provides the user interface for the registration page of the application.
- * Users can enter a username and password to create a new account. If the registration is successful,
- * the user is redirected to the login page. Otherwise, error notifications are shown for invalid input or 
+ * The RegistrationView class provides the user interface for the registration
+ * page of the application.
+ * Users can enter a username and password to create a new account. If the
+ * registration is successful,
+ * the user is redirected to the login page. Otherwise, error notifications are
+ * shown for invalid input or
  * if the username is already taken.
  * 
- * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
- * the components vertically on the page. It uses Vaadin components like {@link com.vaadin.flow.component.textfield.TextField},
- * {@link com.vaadin.flow.component.textfield.PasswordField}, and {@link com.vaadin.flow.component.button.Button} to create 
- * an interactive registration form.</p>
+ * <p>
+ * This class extends
+ * {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
+ * the components vertically on the page. It uses Vaadin components like
+ * {@link com.vaadin.flow.component.textfield.TextField},
+ * {@link com.vaadin.flow.component.textfield.PasswordField}, and
+ * {@link com.vaadin.flow.component.button.Button} to create
+ * an interactive registration form.
+ * </p>
  * 
- * <p>The {@code @Route} annotation maps this view to the "register" URL path, allowing users to access it by navigating to 
- * "/register" in their browser.</p>
+ * <p>
+ * The {@code @Route} annotation maps this view to the "register" URL path,
+ * allowing users to access it by navigating to
+ * "/register" in their browser.
+ * </p>
  * 
- * <p>This class interacts with the {@link org.vaadin.application.service.UserService} to handle user registration logic.</p>
+ * <p>
+ * This class interacts with the
+ * {@link org.vaadin.application.service.UserService} to handle user
+ * registration logic.
+ * </p>
  * 
  * @see org.vaadin.application.service.UserService
  */
@@ -34,9 +50,11 @@ public class RegistrationView extends VerticalLayout {
     private final UserService userService;
 
     /**
-     * Constructs a new RegistrationView and initializes the registration form components and layout.
+     * Constructs a new RegistrationView and initializes the registration form
+     * components and layout.
      * 
-     * @param userService the service used to manage user registration and validation
+     * @param userService the service used to manage user registration and
+     *                    validation
      */
     public RegistrationView(UserService userService) {
         this.userService = userService;

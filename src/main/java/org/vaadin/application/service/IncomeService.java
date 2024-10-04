@@ -11,7 +11,8 @@ import java.util.List;
 
 /**
  * Service class for managing income-related operations.
- * This class interacts with the {@link IncomeRepository} to perform CRUD operations on {@link Income} entities.
+ * This class interacts with the {@link IncomeRepository} to perform CRUD
+ * operations on {@link Income} entities.
  */
 @Service
 public class IncomeService {
@@ -89,5 +90,23 @@ public class IncomeService {
     }
 
 
-
+    public BigDecimal getTotalIncomeAllMonths(Long userId) {
+        List<Income> incomes = getIncomesByUserId(userId);
+        BigDecimal totalIncome = new BigDecimal(0);
+        for (Income income : incomes) {
+            BigDecimal incomeOneOff = new BigDecimal(0);
+            switch (income.getPaymentFrequency()) {
+                case "Weekly":
+                incomeOneOff = income.getAmount().multiply(new BigDecimal(4));
+                break;
+                case "Biweekly":
+                incomeOneOff = income.getAmount().multiply(new BigDecimal(2));
+                break;
+                case "Monthly":
+                incomeOneOff = income.getAmount();
+            }
+            totalIncome = totalIncome.add(incomeOneOff);
+        }
+        return totalIncome;
+    }
 }

@@ -8,7 +8,7 @@ import jakarta.persistence.*;
  */
 @Entity
 public class Note {
-   /**
+    /**
      * The unique identifier for the note.
      */
     @Id

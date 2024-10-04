@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  * Service class for managing financial goal-related operations.
- * This class interacts with the {@link FinancialGoalRepository} to perform CRUD operations on {@link FinancialGoal} entities.
+ * This class interacts with the {@link FinancialGoalRepository} to perform CRUD
+ * operations on {@link FinancialGoal} entities.
  */
 @Service
 public class FinancialGoalService {

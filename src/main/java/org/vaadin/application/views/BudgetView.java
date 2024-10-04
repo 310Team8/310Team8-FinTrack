@@ -10,13 +10,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.vaadin.application.MainLayout;
-import org.vaadin.application.model.Budget;
-import org.vaadin.application.model.Expense;
-import org.vaadin.application.service.BudgetService;
-import org.vaadin.application.service.ExpenseService;
-import org.vaadin.application.service.SessionService;
-import org.vaadin.application.service.UserService;
 import com.vaadin.flow.component.notification.Notification;
 
 import java.math.BigDecimal;
@@ -25,23 +18,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.vaadin.application.MainLayout;
+import org.vaadin.application.model.Budget;
+import org.vaadin.application.model.Expense;
+import org.vaadin.application.service.BudgetService;
+import org.vaadin.application.service.ExpenseService;
+import org.vaadin.application.service.SessionService;
+import org.vaadin.application.service.UserService;
+
 /**
- * The BudgetView class represents the user interface for managing budgets within the application.
- * It provides functionality to add, display, and delete budgets. Each budget can have a name, target 
- * amount, and an associated icon. The class also displays the progress of expenses against the budget.
+ * The BudgetView class represents the user interface for managing budgets
+ * within the application.
+ * It provides functionality to add, display, and delete budgets. Each budget
+ * can have a name, target
+ * amount, and an associated icon. The class also displays the progress of
+ * expenses against the budget.
  * 
- * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize 
- * the components vertically on the page. The class uses various Vaadin components like {@link com.vaadin.flow.component.textfield.TextField},
- * {@link com.vaadin.flow.component.combobox.ComboBox}, {@link com.vaadin.flow.component.button.Button}, 
- * {@link com.vaadin.flow.component.progressbar.ProgressBar}, and others to create an interactive UI.</p>
+ * <p>
+ * This class extends
+ * {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
+ * the components vertically on the page. The class uses various Vaadin
+ * components like {@link com.vaadin.flow.component.textfield.TextField},
+ * {@link com.vaadin.flow.component.combobox.ComboBox},
+ * {@link com.vaadin.flow.component.button.Button},
+ * {@link com.vaadin.flow.component.progressbar.ProgressBar}, and others to
+ * create an interactive UI.
+ * </p>
  * 
- * <p>The {@code @Route} annotation maps this view to the "budget" URL path and associates it with the 
- * {@link org.vaadin.application.MainLayout}.</p>
+ * <p>
+ * The {@code @Route} annotation maps this view to the "budget" URL path and
+ * associates it with the
+ * {@link org.vaadin.application.MainLayout}.
+ * </p>
  * 
- * <p>The class relies on several services: {@link org.vaadin.application.service.BudgetService} for handling
- * budget data, {@link org.vaadin.application.service.ExpenseService} for retrieving expenses related to a budget,
- * {@link org.vaadin.application.service.SessionService} for getting the logged-in user ID, and
- * {@link org.vaadin.application.service.UserService} for retrieving user information.</p>
+ * <p>
+ * The class relies on several services:
+ * {@link org.vaadin.application.service.BudgetService} for handling
+ * budget data, {@link org.vaadin.application.service.ExpenseService} for
+ * retrieving expenses related to a budget,
+ * {@link org.vaadin.application.service.SessionService} for getting the
+ * logged-in user ID, and
+ * {@link org.vaadin.application.service.UserService} for retrieving user
+ * information.
+ * </p>
  * 
  * @see org.vaadin.application.service.BudgetService
  * @see org.vaadin.application.service.ExpenseService
@@ -51,10 +70,10 @@ import java.util.Map;
 @Route(value = "budget", layout = MainLayout.class)
 public class BudgetView extends VerticalLayout {
 
-    private final BudgetService budgetService;
-    private final ExpenseService expenseService;
-    private final SessionService sessionService;
-    private final UserService userService;
+    private final transient BudgetService budgetService;
+    private final transient ExpenseService expenseService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
 
     final TextField nameField = new TextField("Budget Name");
     final TextField amountField = new TextField("Target Amount ($)");
@@ -66,12 +85,14 @@ public class BudgetView extends VerticalLayout {
     /**
      * Constructs a new BudgetView and initializes the components and layout.
      * 
-     * @param budgetService the service used to manage budget data
+     * @param budgetService  the service used to manage budget data
      * @param expenseService the service used to retrieve expenses data
-     * @param sessionService the service used to manage session-related data, particularly the logged-in user
-     * @param userService the service used to manage user data
+     * @param sessionService the service used to manage session-related data,
+     *                       particularly the logged-in user
+     * @param userService    the service used to manage user data
      */
-    public BudgetView(BudgetService budgetService, ExpenseService expenseService, SessionService sessionService, UserService userService) {
+    public BudgetView(BudgetService budgetService, ExpenseService expenseService, SessionService sessionService,
+            UserService userService) {
         this.budgetService = budgetService;
         this.expenseService = expenseService;
         this.sessionService = sessionService;
@@ -129,8 +150,10 @@ public class BudgetView extends VerticalLayout {
     }
 
     /**
-     * Creates a visual card for the specified budget, showing its icon, name, target amount, 
-     * total expenses so far, and a progress bar indicating how much of the budget has been spent.
+     * Creates a visual card for the specified budget, showing its icon, name,
+     * target amount,
+     * total expenses so far, and a progress bar indicating how much of the budget
+     * has been spent.
      * 
      * @param budget the budget to create a card for
      * @return a Div containing the visual representation of the budget
@@ -164,7 +187,7 @@ public class BudgetView extends VerticalLayout {
 
         if (totalExpenses.compareTo(budget.getAmount()) > 0) {
             // Expenses exceed the budget
-            progressBar.setValue(1.0);  // Set to 100%
+            progressBar.setValue(1.0); // Set to 100%
             progressBar.getElement().setAttribute("theme", "error");
             Notification.show("Warning: Budget exceeded!", 3000, Notification.Position.TOP_CENTER);
         } else if (budget.getAmount().compareTo(BigDecimal.ZERO) > 0) {
@@ -197,10 +220,13 @@ public class BudgetView extends VerticalLayout {
     }
 
     /**
-     * Adds a new budget based on the user input, saves it to the database, and updates the UI 
+     * Adds a new budget based on the user input, saves it to the database, and
+     * updates the UI
      * to display the new budget.
      * 
-     * <p>If the user inputs invalid amounts, a notification will be displayed.</p>
+     * <p>
+     * If the user inputs invalid amounts, a notification will be displayed.
+     * </p>
      */
     void addBudget() {
         try {
@@ -229,7 +255,8 @@ public class BudgetView extends VerticalLayout {
     }
 
     /**
-     * Deletes the specified budget from the database and removes its visual representation 
+     * Deletes the specified budget from the database and removes its visual
+     * representation
      * from the UI.
      * 
      * @param budget the budget to be deleted

@@ -10,7 +10,7 @@ import org.vaadin.application.service.UserService;
 
 /**
  * Rest controller for managing user-related operations.
- * This controller provides endpoints for user registration, login, logout, 
+ * This controller provides endpoints for user registration, login, logout,
  * and retrieving user details by ID.
  */
 @RestController
@@ -45,8 +45,9 @@ public class UserController {
      *
      * @param name     the name of the user attempting to log in
      * @param password the password of the user attempting to log in
-     * @return a ResponseEntity containing a success message and HTTP status code if successful,
-     * or an error message and HTTP status code if authentication fails
+     * @return a ResponseEntity containing a success message and HTTP status code if
+     *         successful,
+     *         or an error message and HTTP status code if authentication fails
      */
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String name, @RequestParam String password) {
@@ -73,8 +74,9 @@ public class UserController {
      * Retrieves a user by their ID.
      *
      * @param id the ID of the user to retrieve
-     * @return a ResponseEntity containing the user object and HTTP status code if found,
-     * or an HTTP status code if the user is not found
+     * @return a ResponseEntity containing the user object and HTTP status code if
+     *         found,
+     *         or an HTTP status code if the user is not found
      */
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {

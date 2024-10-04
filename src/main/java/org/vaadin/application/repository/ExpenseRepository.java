@@ -11,7 +11,8 @@ import java.util.List;
 
 /**
  * Repository interface for managing {@link Expense} entities.
- * This interface extends {@link JpaRepository}, providing CRUD operations and custom queries.
+ * This interface extends {@link JpaRepository}, providing CRUD operations and
+ * custom queries.
  */
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
@@ -26,20 +27,21 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     /**
      * Calculates the total expenses for a user within a specific period.
      *
-     * @param userId the ID of the user whose total expenses are to be calculated
+     * @param userId    the ID of the user whose total expenses are to be calculated
      * @param startDate the start date of the period
-     * @param endDate the end date of the period
+     * @param endDate   the end date of the period
      * @return the total amount of expenses for the specified user within the period
      */
     @Query("SELECT SUM(e.amount) FROM Expense e WHERE e.user.id = :userId AND e.date BETWEEN :startDate AND :endDate")
-    BigDecimal findTotalExpensesForPeriod(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    BigDecimal findTotalExpensesForPeriod(@Param("userId") Long userId, @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate);
 
     /**
      * Finds a list of expenses for a user within a specific period.
      *
-     * @param userId the ID of the user whose expenses are to be retrieved
+     * @param userId    the ID of the user whose expenses are to be retrieved
      * @param startDate the start date of the period
-     * @param endDate the end date of the period
+     * @param endDate   the end date of the period
      * @return a list of expenses for the specified user within the period
      */
     List<Expense> findByUserIdAndDateBetween(Long userId, LocalDate startDate, LocalDate endDate);
@@ -51,4 +53,13 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
      * @return a list of expenses associated with the specified budget ID
      */
     List<Expense> findByBudgetId(Long budgetId);
+
+
+    /**
+     * Finds a list of all the types of budgets associated with a user's expenses
+     * @param userId
+     * @return
+     */
+    @Query("SELECT DISTINCT e.budget.name FROM Expense e WHERE e.user.id = :userId")
+    List<String> getDistinctBudgets(@Param("userId") Long userId);
 }

@@ -3,17 +3,19 @@ package org.vaadin.application.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMin;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Entity representing an expense.
- * An expense is associated with a user and may belong to an expense category. 
+ * An expense is associated with a user and may belong to an expense category.
  * It has a description, amount, and date.
  */
 @Entity
 @Table(name = "expense")
-public class Expense {
+public class Expense implements Serializable {
     /**
      * The unique identifier for the expense.
      */

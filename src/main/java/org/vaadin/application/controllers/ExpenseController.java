@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Rest controller for managing expense-related operations.
- * This controller provides endpoints to get expenses by user ID, 
+ * This controller provides endpoints to get expenses by user ID,
  * add a new expense, and delete an existing expense.
  */
 @RestController

@@ -1,4 +1,4 @@
-package org.vaadin.application.service;
+package org.vaadin.example.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
+import org.aspectj.lang.annotation.Before;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,13 +17,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.vaadin.application.model.Budget;
 import org.vaadin.application.repository.BudgetRepository;
+import org.vaadin.application.service.BudgetService;
 
 public class BudgetServiceTests {
 
-    @Mock 
+    @Mock
     private BudgetRepository budgetRepository;
 
-    @InjectMocks 
+    @InjectMocks
     private BudgetService budgetService;
 
     @BeforeEach
@@ -101,5 +103,5 @@ public class BudgetServiceTests {
         budgetService.deleteBudget(id);
         verify(budgetRepository, times(1)).deleteById(id);
     }
-    
+
 }

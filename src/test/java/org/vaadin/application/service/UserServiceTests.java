@@ -1,4 +1,4 @@
-package org.vaadin.application.service;
+package org.vaadin.example.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.vaadin.application.model.User;
 import org.vaadin.application.repository.UserRepository;
+import org.vaadin.application.service.UserService;
 
 public class UserServiceTests {
 

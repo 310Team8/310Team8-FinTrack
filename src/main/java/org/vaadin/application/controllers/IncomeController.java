@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Rest controller for managing income-related operations.
- * This controller provides endpoints to get incomes by user ID, 
+ * This controller provides endpoints to get incomes by user ID,
  * add a new income, and delete an existing income.
  */
 @RestController

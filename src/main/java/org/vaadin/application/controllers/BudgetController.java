@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  * Rest controller for managing budget-related operations.
- * This controller provides endpoints to get budgets by user ID, add a new budget, 
+ * This controller provides endpoints to get budgets by user ID, add a new
+ * budget,
  * and delete an existing budget.
  */
 @RestController

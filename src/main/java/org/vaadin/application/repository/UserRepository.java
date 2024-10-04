@@ -5,7 +5,8 @@ import org.vaadin.application.model.User;
 
 /**
  * Repository interface for managing {@link User} entities.
- * This interface extends {@link JpaRepository}, providing CRUD operations and custom queries.
+ * This interface extends {@link JpaRepository}, providing CRUD operations and
+ * custom queries.
  */
 public interface UserRepository extends JpaRepository<User, Long> {
 

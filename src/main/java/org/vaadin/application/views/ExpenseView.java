@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+
 import org.vaadin.application.MainLayout;
 import org.vaadin.application.model.Budget;
 import org.vaadin.application.model.Expense;
@@ -24,26 +25,46 @@ import org.vaadin.application.service.BudgetService;
 import org.vaadin.application.service.ExpenseService;
 import org.vaadin.application.service.SessionService;
 import org.vaadin.application.service.UserService;
+
 import com.vaadin.flow.component.combobox.ComboBox;
 
 /**
- * The ExpenseView class provides the user interface for managing expenses within the application.
- * Users can add, update, view, and delete expenses. The class also displays the total expenses 
- * for the current month and allows users to associate expenses with specific budgets.
+ * The ExpenseView class provides the user interface for managing expenses
+ * within the application.
+ * Users can add, update, view, and delete expenses. The class also displays the
+ * total expenses
+ * for the current month and allows users to associate expenses with specific
+ * budgets.
  * 
- * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
- * the components vertically on the page. It includes a {@link com.vaadin.flow.component.grid.Grid}
- * to display the list of expenses, {@link com.vaadin.flow.component.textfield.TextField} and 
- * {@link com.vaadin.flow.component.datepicker.DatePicker} for user input, and {@link com.vaadin.flow.component.combobox.ComboBox}
- * for selecting associated budgets.</p>
+ * <p>
+ * This class extends
+ * {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
+ * the components vertically on the page. It includes a
+ * {@link com.vaadin.flow.component.grid.Grid}
+ * to display the list of expenses,
+ * {@link com.vaadin.flow.component.textfield.TextField} and
+ * {@link com.vaadin.flow.component.datepicker.DatePicker} for user input, and
+ * {@link com.vaadin.flow.component.combobox.ComboBox}
+ * for selecting associated budgets.
+ * </p>
  * 
- * <p>The {@code @Route} annotation maps this view to the "expense" URL path and associates 
- * it with the {@link org.vaadin.application.MainLayout}.</p>
+ * <p>
+ * The {@code @Route} annotation maps this view to the "expense" URL path and
+ * associates
+ * it with the {@link org.vaadin.application.MainLayout}.
+ * </p>
  * 
- * <p>This class interacts with the following services: {@link org.vaadin.application.service.ExpenseService}
- * for managing expense data, {@link org.vaadin.application.service.BudgetService} for managing budget data,
- * {@link org.vaadin.application.service.SessionService} for managing session-related data, and
- * {@link org.vaadin.application.service.UserService} for retrieving user information.</p>
+ * <p>
+ * This class interacts with the following services:
+ * {@link org.vaadin.application.service.ExpenseService}
+ * for managing expense data,
+ * {@link org.vaadin.application.service.BudgetService} for managing budget
+ * data,
+ * {@link org.vaadin.application.service.SessionService} for managing
+ * session-related data, and
+ * {@link org.vaadin.application.service.UserService} for retrieving user
+ * information.
+ * </p>
  * 
  * @see org.vaadin.application.service.ExpenseService
  * @see org.vaadin.application.service.BudgetService
@@ -59,66 +80,68 @@ public class ExpenseView extends VerticalLayout {
     private final DatePicker datePicker = new DatePicker("Date");
     private final ComboBox<Budget> budgetComboBox = new ComboBox<>("Select Budget");
 
-    private final ExpenseService expenseService;
-    private final SessionService sessionService;
-    private final UserService userService;
-    private final BudgetService budgetService;
+    private final transient ExpenseService expenseService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
+    private final transient BudgetService budgetService;
 
     private H2 totalExpensesValue;
     private Div totalExpensesCard;
     private Expense selectedExpense;
 
-     /**
+    /**
      * Constructs a new ExpenseView and initializes the components and layout.
      * 
      * @param expenseService the service used to manage expense data
-     * @param sessionService the service used to manage session-related data, particularly the logged-in user
-     * @param userService the service used to manage user data
-     * @param budgetService the service used to manage budget data
+     * @param sessionService the service used to manage session-related data,
+     *                       particularly the logged-in user
+     * @param userService    the service used to manage user data
+     * @param budgetService  the service used to manage budget data
      */
-    public ExpenseView(ExpenseService expenseService, SessionService sessionService, UserService userService, BudgetService budgetService) {
+    public ExpenseView(ExpenseService expenseService, SessionService sessionService, UserService userService,
+            BudgetService budgetService) {
         this.expenseService = expenseService;
         this.sessionService = sessionService;
         this.userService = userService;
         this.budgetService = budgetService;
-    
-        System.out.println("ExpenseView constructor called");
-    
+
         configureGrid();
         configureForm();
-    
+
         Button addButton = new Button("Add/Update Expense", event -> addOrUpdateExpense());
         Button deleteButton = new Button("Delete Expense", event -> deleteExpense());
-    
-        HorizontalLayout formLayout = new HorizontalLayout(descriptionField, amountField, datePicker, budgetComboBox, addButton, deleteButton);
+
+        HorizontalLayout formLayout = new HorizontalLayout(descriptionField, amountField, datePicker, budgetComboBox,
+                addButton, deleteButton);
         formLayout.setWidthFull();
         formLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.END);
-    
+
         totalExpensesValue = new H2("$ 0.00");
-        totalExpensesCard = createDashboardCard("Total Expenses for this Month", totalExpensesValue);
+        totalExpensesCard = createDashboardCard("Total Expenses", totalExpensesValue);
     
         H1 logo = new H1("Expenses");
-    
+
         VerticalLayout mainLayout = new VerticalLayout();
         mainLayout.add(logo, totalExpensesCard, formLayout, grid);
         mainLayout.setSpacing(false);
-    
+
         add(mainLayout);
-    
+
         listBudgets();
         listExpenses();
         updateTotalExpenses();
     }
-    
+
     /**
-     * Configures the grid to display the list of expenses, including the description, amount, 
-     * date, and associated budget. Adds an "Actions" column with an edit button for each expense.
+     * Configures the grid to display the list of expenses, including the
+     * description, amount,
+     * date, and associated budget. Adds an "Actions" column with an edit button for
+     * each expense.
      */
 
     private void configureGrid() {
         grid.setColumns("description", "amount", "date");
 
-        
         grid.addColumn(expense -> {
             Budget budget = expense.getBudget();
             return budget != null ? budget.getName() : "No Budget";
@@ -132,7 +155,8 @@ public class ExpenseView extends VerticalLayout {
     }
 
     /**
-     * Configures the form fields for inputting expense data, including placeholders for 
+     * Configures the form fields for inputting expense data, including placeholders
+     * for
      * description, amount, and date.
      */
     private void configureForm() {
@@ -142,7 +166,8 @@ public class ExpenseView extends VerticalLayout {
     }
 
     /**
-     * Fetches and lists the budgets available to the logged-in user in the ComboBox.
+     * Fetches and lists the budgets available to the logged-in user in the
+     * ComboBox.
      */
     private void listBudgets() {
         Long userId = sessionService.getLoggedInUserId();
@@ -160,12 +185,16 @@ public class ExpenseView extends VerticalLayout {
         List<Expense> expenses = expenseService.getExpensesByUserId(userId);
         grid.setItems(expenses);
     }
-   
+
     /**
-     * Adds a new expense or updates an existing one based on the user input, 
-     * saves it to the database, and updates the grid to display the new or updated expense.
+     * Adds a new expense or updates an existing one based on the user input,
+     * saves it to the database, and updates the grid to display the new or updated
+     * expense.
      * 
-     * <p>If the user inputs invalid data or leaves required fields empty, a notification is displayed.</p>
+     * <p>
+     * If the user inputs invalid data or leaves required fields empty, a
+     * notification is displayed.
+     * </p>
      */
     private void addOrUpdateExpense() {
         String description = descriptionField.getValue();
@@ -187,11 +216,12 @@ public class ExpenseView extends VerticalLayout {
     }
 
     /**
-     * Adds a new expense to the database and updates the associated budget's current amount.
+     * Adds a new expense to the database and updates the associated budget's
+     * current amount.
      * 
-     * @param description the description of the expense
-     * @param amount the amount of the expense
-     * @param date the date of the expense
+     * @param description    the description of the expense
+     * @param amount         the amount of the expense
+     * @param date           the date of the expense
      * @param selectedBudget the budget associated with the expense
      */
     private void addExpense(String description, BigDecimal amount, LocalDate date, Budget selectedBudget) {
@@ -216,16 +246,18 @@ public class ExpenseView extends VerticalLayout {
     }
 
     /**
-     * Updates the details of an existing expense in the database and updates the associated 
+     * Updates the details of an existing expense in the database and updates the
+     * associated
      * budget's current amount.
      * 
-     * @param expense the expense to be updated
-     * @param description the updated description of the expense
-     * @param amount the updated amount of the expense
-     * @param date the updated date of the expense
+     * @param expense        the expense to be updated
+     * @param description    the updated description of the expense
+     * @param amount         the updated amount of the expense
+     * @param date           the updated date of the expense
      * @param selectedBudget the updated budget associated with the expense
      */
-    private void updateExpense(Expense expense, String description, BigDecimal amount, LocalDate date, Budget selectedBudget) {
+    private void updateExpense(Expense expense, String description, BigDecimal amount, LocalDate date,
+            Budget selectedBudget) {
         expense.setDescription(description);
         expense.setAmount(amount);
         expense.setDate(date != null ? java.sql.Date.valueOf(date) : null);
@@ -236,7 +268,7 @@ public class ExpenseView extends VerticalLayout {
 
         if (selectedBudget != null) {
             selectedBudget.setCurrentAmount(selectedBudget.getCurrentAmount().add(amount));
-            budgetService.addBudget(selectedBudget); 
+            budgetService.addBudget(selectedBudget);
         }
 
         listExpenses();
@@ -260,19 +292,23 @@ public class ExpenseView extends VerticalLayout {
     }
 
     /**
-     * Deletes the selected expense from the database and updates the associated budget's 
-     * current amount. If no expense is selected, a notification is displayed prompting the user to select one.
+     * Deletes the selected expense from the database and updates the associated
+     * budget's
+     * current amount. If no expense is selected, a notification is displayed
+     * prompting the user to select one.
      */
     private void deleteExpense() {
-        Expense selectedExpense = grid.asSingleSelect().getValue();
-        if (selectedExpense != null) {
-            Budget associatedBudget = selectedExpense.getBudget();
+        Expense selectedExpenseToDelete = grid.asSingleSelect().getValue();
+        if (selectedExpenseToDelete != null) {
+            Budget associatedBudget = selectedExpenseToDelete.getBudget();
             if (associatedBudget != null) {
-                associatedBudget.setCurrentAmount(associatedBudget.getCurrentAmount().subtract(selectedExpense.getAmount()));
+                associatedBudget
+                        .setCurrentAmount(
+                                associatedBudget.getCurrentAmount().subtract(selectedExpenseToDelete.getAmount()));
                 budgetService.addBudget(associatedBudget);
             }
 
-            expenseService.deleteExpense(selectedExpense.getId());
+            expenseService.deleteExpense(selectedExpenseToDelete.getId());
             Notification.show("Expense deleted successfully");
             listExpenses();
             updateTotalExpenses();
@@ -293,11 +329,13 @@ public class ExpenseView extends VerticalLayout {
     }
 
     /**
-     * Creates a dashboard card to display a specific title and value, used here to show 
+     * Creates a dashboard card to display a specific title and value, used here to
+     * show
      * total expenses for the current month.
      * 
-     * @param title the title of the dashboard card
-     * @param valueComponent the value component to be displayed in the dashboard card
+     * @param title          the title of the dashboard card
+     * @param valueComponent the value component to be displayed in the dashboard
+     *                       card
      * @return a Div containing the visual representation of the dashboard card
      */
     private Div createDashboardCard(String title, H2 valueComponent) {
@@ -314,15 +352,15 @@ public class ExpenseView extends VerticalLayout {
     }
 
     /**
-     * Updates the total expenses displayed on the dashboard by calculating the sum 
+     * Updates the total expenses displayed on the dashboard by calculating the sum
      * of all expenses for the currently logged-in user.
      */
     private void updateTotalExpenses() {
         Long userId = sessionService.getLoggedInUserId();
         List<Expense> expenses = expenseService.getExpensesByUserId(userId);
         BigDecimal totalExpenses = expenses.stream()
-                                           .map(Expense::getAmount)
-                                           .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(Expense::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         totalExpensesValue.setText("$ " + totalExpenses.toString());
     }

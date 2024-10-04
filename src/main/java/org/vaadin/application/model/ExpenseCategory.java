@@ -6,12 +6,13 @@ import java.util.Set;
 
 /**
  * Entity representing an expense category.
- * An expense category is associated with a user and can contain multiple expenses.
+ * An expense category is associated with a user and can contain multiple
+ * expenses.
  */
 @Entity
 @Table(name = "expense_category")
 public class ExpenseCategory {
-   /**
+    /**
      * The unique identifier for the expense category.
      */
     @Id

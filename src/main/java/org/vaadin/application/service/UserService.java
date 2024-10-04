@@ -8,7 +8,8 @@ import org.vaadin.application.repository.UserRepository;
 
 /**
  * Service class for managing user-related operations.
- * This class provides methods for user registration, login, and retrieval of user details.
+ * This class provides methods for user registration, login, and retrieval of
+ * user details.
  */
 @Service
 public class UserService {
@@ -20,7 +21,8 @@ public class UserService {
      * Registers a new user with a hashed password.
      *
      * @param name          the name of the user to register
-     * @param plainPassword the plain text password of the user to be hashed and stored
+     * @param plainPassword the plain text password of the user to be hashed and
+     *                      stored
      * @return the newly registered user object
      */
     public User registerUser(String name, String plainPassword) {
@@ -32,11 +34,13 @@ public class UserService {
     }
 
     /**
-     * Authenticates a user by checking the provided plain password against the stored hashed password.
+     * Authenticates a user by checking the provided plain password against the
+     * stored hashed password.
      *
      * @param name          the name of the user attempting to log in
      * @param plainPassword the plain text password of the user attempting to log in
-     * @return the authenticated user object if the credentials are valid, or null if invalid
+     * @return the authenticated user object if the credentials are valid, or null
+     *         if invalid
      */
     public User loginUser(String name, String plainPassword) {
         User user = userRepository.findByName(name);

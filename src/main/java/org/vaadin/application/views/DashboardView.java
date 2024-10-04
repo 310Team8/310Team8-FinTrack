@@ -46,9 +46,11 @@ import org.vaadin.application.service.IncomeService;
  * <p>
  * This class relies on several services:
  * {@link org.vaadin.application.service.ExpenseService}
- * for retrieving expense data, {@link org.vaadin.application.service.IncomeService}
+ * for retrieving expense data,
+ * {@link org.vaadin.application.service.IncomeService}
  * for retrieving income data,
- * and {@link org.vaadin.application.service.ExpenseCategoryService} for retrieving
+ * and {@link org.vaadin.application.service.ExpenseCategoryService} for
+ * retrieving
  * the user's expense categories.
  * </p>
  * 
@@ -59,9 +61,9 @@ import org.vaadin.application.service.IncomeService;
 @Route(value = "dashboard", layout = MainLayout.class)
 public class DashboardView extends VerticalLayout {
 
-    private final ExpenseService expenseService;
-    private final IncomeService incomeService;
-    private final ExpenseCategoryService expenseCategoryService;
+    private final transient ExpenseService expenseService;
+    private final transient IncomeService incomeService;
+    private final transient ExpenseCategoryService expenseCategoryService;
 
     /**
      * Constructs a new DashboardView and initializes the components and layout.
@@ -113,16 +115,12 @@ public class DashboardView extends VerticalLayout {
         HorizontalLayout categoryAndExpenseLayout = new HorizontalLayout(categoryLayout, expenseLayout);
         categoryAndExpenseLayout.addClassName("category-expense-layout");
 
-    
-         // Create the income list
-         VerticalLayout incomeLayout = createIncomeList(currentUserId);
-         incomeLayout.addClassName("income-full-row");
- 
-         // Add all components to the main layout
-         add(dashboardTitle, statsLayout, categoryAndExpenseLayout, incomeLayout);
+        // Create the income list
+        VerticalLayout incomeLayout = createIncomeList(currentUserId);
+        incomeLayout.addClassName("income-full-row");
 
-
-        
+        // Add all components to the main layout
+        add(dashboardTitle, statsLayout, categoryAndExpenseLayout, incomeLayout);
 
         // Additional dashboard components and features can be added here
     }

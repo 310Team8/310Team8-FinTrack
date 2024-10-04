@@ -7,7 +7,8 @@ import java.util.List;
 
 /**
  * Repository interface for managing {@link Note} entities.
- * This interface extends {@link JpaRepository}, providing CRUD operations and custom queries.
+ * This interface extends {@link JpaRepository}, providing CRUD operations and
+ * custom queries.
  */
 public interface NoteRepository extends JpaRepository<Note, Long> {
 
