@@ -10,7 +10,8 @@ import java.util.List;
 
 /**
  * Service class for managing budget-related operations.
- * This class interacts with the {@link BudgetRepository} to perform CRUD operations on {@link Budget} entities.
+ * This class interacts with the {@link BudgetRepository} to perform CRUD
+ * operations on {@link Budget} entities.
  */
 @Service
 public class BudgetService {
@@ -61,7 +62,7 @@ public class BudgetService {
      * Increases the current amount of a budget.
      *
      * @param budgetId the ID of the budget to update
-     * @param amount the amount to add to the current amount
+     * @param amount   the amount to add to the current amount
      */
     public void increaseCurrentAmount(Long budgetId, BigDecimal amount) {
         Budget budget = findBudgetById(budgetId);
@@ -75,7 +76,7 @@ public class BudgetService {
      * Decreases the current amount of a budget.
      *
      * @param budgetId the ID of the budget to update
-     * @param amount the amount to subtract from the current amount
+     * @param amount   the amount to subtract from the current amount
      */
     public void decreaseCurrentAmount(Long budgetId, BigDecimal amount) {
         Budget budget = findBudgetById(budgetId);

@@ -7,12 +7,13 @@ import java.math.BigDecimal;
 
 /**
  * Entity representing a financial goal.
- * A financial goal is associated with a user and has a description and a target amount.
+ * A financial goal is associated with a user and has a description and a target
+ * amount.
  */
 @Entity
 @Table(name = "financial_goal")
 public class FinancialGoal {
-   /**
+    /**
      * The unique identifier for the financial goal.
      */
     @Id
@@ -120,7 +121,7 @@ public class FinancialGoal {
         this.user = user;
     }
 
-     /**
+    /**
      * Gets the saved amount for achieving the financial goal.
      *
      * @return the amountSaved associated with the goal.
@@ -130,7 +131,7 @@ public class FinancialGoal {
         return amountSaved;
     }
 
-     /**
+    /**
      * Sets the saved amount for achieving the financial goal.
      *
      * @param amountSaved the saved amount to set

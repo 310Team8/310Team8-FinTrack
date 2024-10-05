@@ -2,19 +2,14 @@ package org.vaadin.application.views;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.renderer.TextRenderer;
-import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.hibernate.annotations.Fetch;
 import org.vaadin.application.MainLayout;
 import org.vaadin.application.model.Expense;
 import org.vaadin.application.model.ExpenseCategory;
@@ -51,9 +46,11 @@ import org.vaadin.application.service.IncomeService;
  * <p>
  * This class relies on several services:
  * {@link org.vaadin.application.service.ExpenseService}
- * for retrieving expense data, {@link org.vaadin.application.service.IncomeService}
+ * for retrieving expense data,
+ * {@link org.vaadin.application.service.IncomeService}
  * for retrieving income data,
- * and {@link org.vaadin.application.service.ExpenseCategoryService} for retrieving
+ * and {@link org.vaadin.application.service.ExpenseCategoryService} for
+ * retrieving
  * the user's expense categories.
  * </p>
  * 
@@ -64,9 +61,9 @@ import org.vaadin.application.service.IncomeService;
 @Route(value = "dashboard", layout = MainLayout.class)
 public class DashboardView extends VerticalLayout {
 
-    private final ExpenseService expenseService;
-    private final IncomeService incomeService;
-    private final ExpenseCategoryService expenseCategoryService;
+    private final transient ExpenseService expenseService;
+    private final transient IncomeService incomeService;
+    private final transient ExpenseCategoryService expenseCategoryService;
 
     /**
      * Constructs a new DashboardView and initializes the components and layout.
@@ -118,16 +115,12 @@ public class DashboardView extends VerticalLayout {
         HorizontalLayout categoryAndExpenseLayout = new HorizontalLayout(categoryLayout, expenseLayout);
         categoryAndExpenseLayout.addClassName("category-expense-layout");
 
-    
-         // Create the income list
-         VerticalLayout incomeLayout = createIncomeList(currentUserId);
-         incomeLayout.addClassName("income-full-row");
- 
-         // Add all components to the main layout
-         add(dashboardTitle, statsLayout, categoryAndExpenseLayout, incomeLayout);
+        // Create the income list
+        VerticalLayout incomeLayout = createIncomeList(currentUserId);
+        incomeLayout.addClassName("income-full-row");
 
-
-        
+        // Add all components to the main layout
+        add(dashboardTitle, statsLayout, categoryAndExpenseLayout, incomeLayout);
 
         // Additional dashboard components and features can be added here
     }

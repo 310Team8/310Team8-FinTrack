@@ -3,16 +3,19 @@ package org.vaadin.application.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMin;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Entity representing an income.
- * An income record is associated with a user and includes details such as the source, amount, date, and payment frequency.
+ * An income record is associated with a user and includes details such as the
+ * source, amount, date, and payment frequency.
  */
 @Entity
 @Table(name = "income")
-public class Income {
+public class Income implements Serializable {
     /**
      * The unique identifier for the income.
      */

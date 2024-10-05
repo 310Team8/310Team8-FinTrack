@@ -27,22 +27,40 @@ import org.vaadin.application.service.SessionService;
 import org.vaadin.application.service.UserService;
 
 /**
- * The FinancialGoalView class provides the user interface for managing financial goals within the application.
- * Users can add, view, update, and delete financial goals. The class also displays the user's financial goals
+ * The FinancialGoalView class provides the user interface for managing
+ * financial goals within the application.
+ * Users can add, view, update, and delete financial goals. The class also
+ * displays the user's financial goals
  * in a visually appealing card layout.
  * 
- * <p>This class extends {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
- * the components vertically on the page. It uses a {@link com.vaadin.flow.component.orderedlayout.FlexLayout}
- * to display financial goals in a flexible, responsive layout, and various Vaadin components like 
- * {@link com.vaadin.flow.component.textfield.TextField}, {@link com.vaadin.flow.component.textfield.NumberField},
- * and {@link com.vaadin.flow.component.progressbar.ProgressBar} to create an interactive user interface.</p>
+ * <p>
+ * This class extends
+ * {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
+ * the components vertically on the page. It uses a
+ * {@link com.vaadin.flow.component.orderedlayout.FlexLayout}
+ * to display financial goals in a flexible, responsive layout, and various
+ * Vaadin components like
+ * {@link com.vaadin.flow.component.textfield.TextField},
+ * {@link com.vaadin.flow.component.textfield.NumberField},
+ * and {@link com.vaadin.flow.component.progressbar.ProgressBar} to create an
+ * interactive user interface.
+ * </p>
  * 
- * <p>The {@code @Route} annotation maps this view to the "goal" URL path and associates 
- * it with the {@link org.vaadin.application.MainLayout}.</p>
+ * <p>
+ * The {@code @Route} annotation maps this view to the "goal" URL path and
+ * associates
+ * it with the {@link org.vaadin.application.MainLayout}.
+ * </p>
  * 
- * <p>This class interacts with the following services: {@link org.vaadin.application.service.FinancialGoalService}
- * for managing financial goal data, {@link org.vaadin.application.service.SessionService} for managing session-related data,
- * and {@link org.vaadin.application.service.UserService} for retrieving user information.</p>
+ * <p>
+ * This class interacts with the following services:
+ * {@link org.vaadin.application.service.FinancialGoalService}
+ * for managing financial goal data,
+ * {@link org.vaadin.application.service.SessionService} for managing
+ * session-related data,
+ * and {@link org.vaadin.application.service.UserService} for retrieving user
+ * information.
+ * </p>
  * 
  * @see org.vaadin.application.service.FinancialGoalService
  * @see org.vaadin.application.service.SessionService
@@ -57,18 +75,20 @@ public class FinancialGoalView extends VerticalLayout {
     private final NumberField targetAmountField = new NumberField("Target Amount ($)");
     private final NumberField savedAmountField = new NumberField("Saved Amount ($)");
 
-    private final FinancialGoalService financialGoalService;
-    private final SessionService sessionService;
-    private final UserService userService;
+    private final transient FinancialGoalService financialGoalService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
 
     /**
      * Constructs a new FinancialGoalView and initializes the components and layout.
      * 
      * @param financialGoalService the service used to manage financial goal data
-     * @param sessionService the service used to manage session-related data, particularly the logged-in user
-     * @param userService the service used to manage user data
+     * @param sessionService       the service used to manage session-related data,
+     *                             particularly the logged-in user
+     * @param userService          the service used to manage user data
      */
-    public FinancialGoalView(FinancialGoalService financialGoalService, SessionService sessionService, UserService userService) {
+    public FinancialGoalView(FinancialGoalService financialGoalService, SessionService sessionService,
+            UserService userService) {
         this.financialGoalService = financialGoalService;
         this.sessionService = sessionService;
         this.userService = userService;
@@ -79,7 +99,8 @@ public class FinancialGoalView extends VerticalLayout {
     }
 
     /**
-     * Configures the layout of the financial goals section, ensuring a responsive design with
+     * Configures the layout of the financial goals section, ensuring a responsive
+     * design with
      * flexible wrapping and centered content.
      */
     private void configureLayout() {
@@ -90,7 +111,8 @@ public class FinancialGoalView extends VerticalLayout {
     }
 
     /**
-     * Creates the main layout for the view, including the title, form for adding financial goals,
+     * Creates the main layout for the view, including the title, form for adding
+     * financial goals,
      * and the container for displaying the list of goals.
      */
     private void createLayout() {
@@ -134,7 +156,8 @@ public class FinancialGoalView extends VerticalLayout {
 
         addGoalButton.addClickListener(event -> addGoal());
 
-        HorizontalLayout formLayout = new HorizontalLayout(descriptionField, targetAmountField, savedAmountField, addGoalButton);
+        HorizontalLayout formLayout = new HorizontalLayout(descriptionField, targetAmountField, savedAmountField,
+                addGoalButton);
         formLayout.setWidthFull();
         formLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         formLayout.setAlignItems(Alignment.CENTER);
@@ -147,7 +170,8 @@ public class FinancialGoalView extends VerticalLayout {
     }
 
     /**
-     * Fetches and lists the financial goals for the currently logged-in user in the goal layout.
+     * Fetches and lists the financial goals for the currently logged-in user in the
+     * goal layout.
      * If no goals are found, a notification is displayed.
      */
     private void listGoals() {
@@ -166,8 +190,10 @@ public class FinancialGoalView extends VerticalLayout {
     }
 
     /**
-     * Creates a visual card for a given financial goal, displaying its description, target amount,
-     * saved amount, and progress towards the target. The card also includes buttons for editing and deleting the goal.
+     * Creates a visual card for a given financial goal, displaying its description,
+     * target amount,
+     * saved amount, and progress towards the target. The card also includes buttons
+     * for editing and deleting the goal.
      * 
      * @param goal the financial goal to create a card for
      * @return a VerticalLayout representing the goal card
@@ -179,31 +205,31 @@ public class FinancialGoalView extends VerticalLayout {
                 .set("border-radius", "8px")
                 .set("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
                 .set("background-color", "#ffffff");
-    
+
         Icon goalIcon = getGoalIcon(goal);
         goalIcon.setSize("24px");
         goalIcon.getStyle().set("color", "#007bff");
-    
+
         Span description = new Span(goal.getDescription());
         description.getStyle().set("font-weight", "500")
                 .set("font-size", "1.1em")
                 .set("color", "#333")
-                .set("white-space", "normal") 
-                .set("overflow", "hidden") 
-                .set("text-overflow", "ellipsis") 
+                .set("white-space", "normal")
+                .set("overflow", "hidden")
+                .set("text-overflow", "ellipsis")
                 .set("width", "calc(100% - 40px)")
                 .set("word-break", "break-word");
-    
+
         Span targetAmount = new Span("Target: $" + goal.getTargetAmount());
         targetAmount.getStyle().set("color", "#666")
                 .set("font-weight", "400")
                 .set("font-size", "1em");
-    
+
         Span savedAmount = new Span("Saved: $" + goal.getSavedAmount());
         savedAmount.getStyle().set("color", "#666")
                 .set("font-weight", "400")
                 .set("font-size", "1em");
-    
+
         ProgressBar progressBar = new ProgressBar();
         BigDecimal progress = goal.getSavedAmount().divide(goal.getTargetAmount(), RoundingMode.HALF_UP);
         progressBar.setValue(progress.doubleValue());
@@ -211,7 +237,7 @@ public class FinancialGoalView extends VerticalLayout {
         progressBar.getStyle().set("margin-top", "10px")
                 .set("border-radius", "4px")
                 .set("background-color", "#e0e0e0");
-    
+
         Button deleteButton = new Button("Delete", VaadinIcon.TRASH.create());
         deleteButton.getStyle().set("background-color", "#dc3545")
                 .set("color", "#ffffff")
@@ -220,13 +246,13 @@ public class FinancialGoalView extends VerticalLayout {
                 .set("font-weight", "500")
                 .set("border", "none")
                 .set("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.1)");
-    
+
         deleteButton.addClickListener(event -> {
             financialGoalService.deleteFinancialGoal(goal.getId());
             Notification.show("Goal deleted successfully", 3000, Notification.Position.TOP_CENTER);
             listGoals();
         });
-    
+
         Button editButton = new Button("Edit", VaadinIcon.EDIT.create());
         editButton.getStyle().set("background-color", "#28a745")
                 .set("color", "#ffffff")
@@ -235,18 +261,18 @@ public class FinancialGoalView extends VerticalLayout {
                 .set("font-weight", "500")
                 .set("border", "none")
                 .set("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.1)");
-    
+
         editButton.addClickListener(event -> showEditDialog(goal));
-    
+
         HorizontalLayout topLayout = new HorizontalLayout(goalIcon, description);
         topLayout.setAlignItems(Alignment.CENTER);
         topLayout.setJustifyContentMode(JustifyContentMode.START); // Change to START to wrap text correctly
         topLayout.setWidth("100%");
-    
+
         cardLayout.add(topLayout, targetAmount, savedAmount, progressBar, editButton, deleteButton);
         return cardLayout;
     }
-    
+
     /**
      * Displays a dialog allowing the user to edit an existing financial goal.
      * 
@@ -255,18 +281,18 @@ public class FinancialGoalView extends VerticalLayout {
     private void showEditDialog(FinancialGoal goal) {
         Dialog editDialog = new Dialog();
         editDialog.setWidth("400px");
-    
-        TextField descriptionField = new TextField("Goal Description");
-        descriptionField.setValue(goal.getDescription());
-        descriptionField.setReadOnly(false); 
-    
-        NumberField targetAmountField = new NumberField("Target Amount ($)");
-        targetAmountField.setValue(goal.getTargetAmount().doubleValue());
-        targetAmountField.setReadOnly(false);
-    
-        NumberField savedAmountField = new NumberField("Saved Amount ($)");
-        savedAmountField.setValue(goal.getSavedAmount().doubleValue());
-    
+
+        TextField editDescriptionField = new TextField("Goal Description");
+        editDescriptionField.setValue(goal.getDescription());
+        editDescriptionField.setReadOnly(false);
+
+        NumberField editTargetAmountField = new NumberField("Target Amount ($)");
+        editTargetAmountField.setValue(goal.getTargetAmount().doubleValue());
+        editTargetAmountField.setReadOnly(false);
+
+        NumberField editSavedAmountField = new NumberField("Saved Amount ($)");
+        editSavedAmountField.setValue(goal.getSavedAmount().doubleValue());
+
         Button saveButton = new Button("Save", VaadinIcon.CHECK.create());
         saveButton.getStyle().set("background-color", "#007bff")
                 .set("color", "#ffffff")
@@ -275,33 +301,36 @@ public class FinancialGoalView extends VerticalLayout {
                 .set("font-weight", "500")
                 .set("border", "none")
                 .set("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.1)");
-    
-        saveButton.addClickListener(event -> {
-            String newDescription = descriptionField.getValue();
 
-            if(savedAmountField.isEmpty() || targetAmountField.isEmpty()){
-                Notification.show("Invalid input(s). Ensure all fields are correctly filled.", 3000, Notification.Position.TOP_CENTER);
+        saveButton.addClickListener(event -> {
+            String newDescription = editDescriptionField.getValue();
+
+            if (editSavedAmountField.isEmpty() || editTargetAmountField.isEmpty()) {
+                Notification.show("Invalid input(s). Ensure all fields are correctly filled.", 3000,
+                        Notification.Position.TOP_CENTER);
                 return;
             }
-            BigDecimal newTargetAmount = BigDecimal.valueOf(targetAmountField.getValue());
-            BigDecimal newSavedAmount = BigDecimal.valueOf(savedAmountField.getValue());
-    
-            if (newDescription.isEmpty() || newTargetAmount.compareTo(BigDecimal.ZERO) <= 0 || newSavedAmount.compareTo(newTargetAmount) > 0 || newSavedAmount.compareTo(BigDecimal.ZERO) < 0) {
-                Notification.show("Invalid input(s). Ensure all fields are correctly filled.", 3000, Notification.Position.TOP_CENTER);
+            BigDecimal newTargetAmount = BigDecimal.valueOf(editTargetAmountField.getValue());
+            BigDecimal newSavedAmount = BigDecimal.valueOf(editSavedAmountField.getValue());
+
+            if (newDescription.isEmpty() || newTargetAmount.compareTo(BigDecimal.ZERO) <= 0
+                    || newSavedAmount.compareTo(newTargetAmount) > 0 || newSavedAmount.compareTo(BigDecimal.ZERO) < 0) {
+                Notification.show("Invalid input(s). Ensure all fields are correctly filled.", 3000,
+                        Notification.Position.TOP_CENTER);
                 return;
             }
-    
+
             goal.setDescription(newDescription);
             goal.setTargetAmount(newTargetAmount);
             goal.setSavedAmount(newSavedAmount);
-    
+
             financialGoalService.updateFinancialGoal(goal);
-    
+
             Notification.show("Goal updated successfully", 3000, Notification.Position.TOP_CENTER);
             listGoals();
             editDialog.close();
         });
-    
+
         Button cancelButton = new Button("Cancel", VaadinIcon.CLOSE.create());
         cancelButton.getStyle().set("background-color", "#dc3545")
                 .set("color", "#ffffff")
@@ -310,19 +339,21 @@ public class FinancialGoalView extends VerticalLayout {
                 .set("font-weight", "500")
                 .set("border", "none")
                 .set("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.1)");
-    
+
         cancelButton.addClickListener(event -> editDialog.close());
-    
-        VerticalLayout dialogLayout = new VerticalLayout(descriptionField, targetAmountField, savedAmountField, new HorizontalLayout(saveButton, cancelButton));
+
+        VerticalLayout dialogLayout = new VerticalLayout(editDescriptionField, editTargetAmountField, editSavedAmountField,
+                new HorizontalLayout(saveButton, cancelButton));
         dialogLayout.setPadding(true);
         dialogLayout.setSpacing(true);
-    
+
         editDialog.add(dialogLayout);
         editDialog.open();
     }
 
     /**
-     * Retrieves the appropriate icon for a financial goal. Currently, it always returns a coin pile icon.
+     * Retrieves the appropriate icon for a financial goal. Currently, it always
+     * returns a coin pile icon.
      * 
      * @param goal the financial goal for which to get an icon
      * @return the icon representing the financial goal
@@ -332,22 +363,31 @@ public class FinancialGoalView extends VerticalLayout {
     }
 
     /**
-     * Adds a new financial goal based on the user input, saves it to the database, and updates the goal layout to display the new goal.
-     * Validates the input to ensure the description is not empty, the target amount is positive, 
+     * Adds a new financial goal based on the user input, saves it to the database,
+     * and updates the goal layout to display the new goal.
+     * Validates the input to ensure the description is not empty, the target amount
+     * is positive,
      * and the saved amount is not greater than the target amount.
      */
     private void addGoal() {
         String description = descriptionField.getValue();
-        BigDecimal targetAmount = targetAmountField.getValue() != null ? BigDecimal.valueOf(targetAmountField.getValue()) : BigDecimal.ZERO;
-        BigDecimal savedAmount = savedAmountField.getValue() != null ? BigDecimal.valueOf(savedAmountField.getValue()) : BigDecimal.ZERO;
+        BigDecimal targetAmount = targetAmountField.getValue() != null
+                ? BigDecimal.valueOf(targetAmountField.getValue())
+                : BigDecimal.ZERO;
+        BigDecimal savedAmount = savedAmountField.getValue() != null ? BigDecimal.valueOf(savedAmountField.getValue())
+                : BigDecimal.ZERO;
 
-        if (description.isEmpty() || targetAmount.compareTo(BigDecimal.ZERO) <= 0 || savedAmount.compareTo(BigDecimal.ZERO) < 0 || targetAmountField.isEmpty() || savedAmountField.isEmpty()) {
-            Notification.show("Please enter a valid goal description, target amount and saved amount", 3000, Notification.Position.TOP_CENTER);
+        if (description.isEmpty() || targetAmount.compareTo(BigDecimal.ZERO) <= 0
+                || savedAmount.compareTo(BigDecimal.ZERO) < 0 || targetAmountField.isEmpty()
+                || savedAmountField.isEmpty()) {
+            Notification.show("Please enter a valid goal description, target amount and saved amount", 3000,
+                    Notification.Position.TOP_CENTER);
             return;
         }
 
         if (savedAmount.compareTo(targetAmount) > 0) {
-            Notification.show("Saved amount cannot be greater than target amount.", 3000, Notification.Position.TOP_CENTER);
+            Notification.show("Saved amount cannot be greater than target amount.", 3000,
+                    Notification.Position.TOP_CENTER);
             return;
         }
 

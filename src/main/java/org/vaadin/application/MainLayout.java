@@ -1,6 +1,5 @@
 package org.vaadin.application;
 
-
 import org.vaadin.application.views.AssetView;
 import org.vaadin.application.views.BudgetView;
 import org.vaadin.application.views.DashboardView;
@@ -24,18 +23,29 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.server.VaadinSession;
 
 /**
- * The MainLayout class serves as the primary layout for the application, providing a common
- * structure that includes a header and a navigation drawer. The header contains the application logo 
- * and buttons for navigating between different views, as well as a logout button. The drawer contains 
- * links for managing various aspects of the application, such as budgets, expenses, income, goals, 
+ * The MainLayout class serves as the primary layout for the application,
+ * providing a common
+ * structure that includes a header and a navigation drawer. The header contains
+ * the application logo
+ * and buttons for navigating between different views, as well as a logout
+ * button. The drawer contains
+ * links for managing various aspects of the application, such as budgets,
+ * expenses, income, goals,
  * and categories.
  *
- * <p>This class extends {@link com.vaadin.flow.component.applayout.AppLayout}, which provides a 
- * pre-configured layout with a navigation bar and a drawer.</p>
+ * <p>
+ * This class extends {@link com.vaadin.flow.component.applayout.AppLayout},
+ * which provides a
+ * pre-configured layout with a navigation bar and a drawer.
+ * </p>
  *
- * <p>The class implements {@link com.vaadin.flow.router.BeforeEnterObserver} to check the user's 
- * authentication status before entering certain views. If the user is not logged in, they are 
- * redirected to the login view.</p>
+ * <p>
+ * The class implements {@link com.vaadin.flow.router.BeforeEnterObserver} to
+ * check the user's
+ * authentication status before entering certain views. If the user is not
+ * logged in, they are
+ * redirected to the login view.
+ * </p>
  *
  * @see com.vaadin.flow.component.applayout.AppLayout
  * @see com.vaadin.flow.router.BeforeEnterObserver
@@ -59,22 +69,16 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         H1 logo = new H1("FinTrack");
         logo.addClassNames("text-l", "m-m");
 
-
         Button logoutButton = new Button("Sign Out", event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
             getUI().ifPresent(ui -> ui.navigate(""));
         });
 
-
-
-
        HorizontalLayout header = new HorizontalLayout(logo, logoutButton);
        header.expand(logo);
        header.setWidthFull();
        header.setAlignItems(Alignment.CENTER);
-
-
        addToNavbar(header);
    }
 
@@ -92,7 +96,6 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
        RouterLink categoryLink = new RouterLink("Manage Categories", ExpenseCategoryView.class);
        RouterLink assetLink = new RouterLink("Manage Assets", AssetView.class);
        RouterLink invoiceLink = new RouterLink("Manage Invoices", InvoiceView.class);
-
 
        VerticalLayout drawerLayout = new VerticalLayout(
            dashboardLink,
@@ -122,9 +125,7 @@ public void beforeEnter(BeforeEnterEvent event) {
        return;
    }
 
-
    Long userId = (Long) VaadinSession.getCurrent().getAttribute("userId");
-
 
    if (userId == null) {
        event.forwardTo(LoginView.class); // Forward to the login view

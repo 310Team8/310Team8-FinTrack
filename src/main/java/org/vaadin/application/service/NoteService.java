@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  * Service class for managing note-related operations.
- * This class interacts with the {@link NoteRepository} to perform CRUD operations on {@link Note} entities.
+ * This class interacts with the {@link NoteRepository} to perform CRUD
+ * operations on {@link Note} entities.
  */
 @Service
 public class NoteService {

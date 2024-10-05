@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  * Service class for managing expense category-related operations.
- * This class interacts with the {@link ExpenseCategoryRepository} to perform CRUD operations on {@link ExpenseCategory} entities.
+ * This class interacts with the {@link ExpenseCategoryRepository} to perform
+ * CRUD operations on {@link ExpenseCategory} entities.
  */
 @Service
 public class ExpenseCategoryService {

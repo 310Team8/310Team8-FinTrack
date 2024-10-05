@@ -37,21 +37,19 @@ public class AssetView extends VerticalLayout {
     private final ComboBox<String> categoryField = new ComboBox<>("Category");
     private final NumberField interestRateField = new NumberField("Interest Rate (%)");
 
-    private final AssetService assetService;
-    private final SessionService sessionService;
-    private final UserService userService;
+    private final transient AssetService assetService;
+    private final transient SessionService sessionService;
+    private final transient UserService userService;
 
     private H2 totalAssetsValue;
     private H2 totalChangeValue;
-    private Div totalAssetsCard;
-    private Div totalChangeCard;
 
     /**
      * Constructs an AssetView instance.
      * 
-     * @param assetService the service for managing assets
+     * @param assetService   the service for managing assets
      * @param sessionService the service for managing user sessions
-     * @param userService the service for managing user information
+     * @param userService    the service for managing user information
      */
     public AssetView(AssetService assetService, SessionService sessionService, UserService userService) {
         this.assetService = assetService;
@@ -65,9 +63,13 @@ public class AssetView extends VerticalLayout {
     }
 
     /**
-     * Configures the layout of the view, including the form fields, buttons, and asset list display.
+     * Configures the layout of the view, including the form fields, buttons, and
+     * asset list display.
      */
     private void configureLayout() {
+        Div totalChangeCard;
+        Div totalAssetsCard;
+
         assetLayout.setWidthFull();
         assetLayout.setFlexWrap(FlexWrap.WRAP);
         assetLayout.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
@@ -94,13 +96,12 @@ public class AssetView extends VerticalLayout {
 
         addButton.addClickListener(event -> addAsset());
 
-        HorizontalLayout formLayout = new HorizontalLayout(nameField, valueField, categoryField, interestRateField, addButton);
+        HorizontalLayout formLayout = new HorizontalLayout(nameField, valueField, categoryField, interestRateField,
+                addButton);
         formLayout.setWidthFull();
         formLayout.setJustifyContentMode(FlexLayout.JustifyContentMode.CENTER);
         formLayout.setAlignItems(Alignment.CENTER);
         formLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.END);
-
-        
 
         // Initialize the total assets card
         totalAssetsValue = new H2("$ 0.00");
@@ -126,15 +127,16 @@ public class AssetView extends VerticalLayout {
     }
 
     /**
-     * Configures the form fields for adding a new asset, setting their placeholders and styles.
+     * Configures the form fields for adding a new asset, setting their placeholders
+     * and styles.
      */
     private void configureFormFields() {
         nameField.setPlaceholder("Enter asset name...");
         nameField.getStyle().set("width", "200px");
-        
+
         valueField.setPlaceholder("Enter value...");
         valueField.getStyle().set("width", "150px");
-        
+
         categoryField.setItems("Vehicles", "Property", "Stocks", "Savings", "Equipment", "Jewellery", "Artworks");
         categoryField.setPlaceholder("Select category...");
         categoryField.getStyle().set("width", "150px");
@@ -144,7 +146,8 @@ public class AssetView extends VerticalLayout {
     }
 
     /**
-     * Lists the assets for the logged-in user and displays them in the asset layout.
+     * Lists the assets for the logged-in user and displays them in the asset
+     * layout.
      * If no assets are found, a notification is displayed.
      */
     private void listAssets() {
@@ -222,7 +225,6 @@ public class AssetView extends VerticalLayout {
         return cardLayout;
     }
 
-
     /**
      * Shows a dialog for editing an existing asset.
      * 
@@ -232,18 +234,18 @@ public class AssetView extends VerticalLayout {
         Dialog editDialog = new Dialog();
         editDialog.setWidth("400px");
 
-        TextField nameField = new TextField("Asset Name");
-        nameField.setValue(asset.getName());
+        TextField editNameField = new TextField("Asset Name");
+        editNameField.setValue(asset.getName());
 
-        NumberField valueField = new NumberField("Value ($)");
-        valueField.setValue(asset.getValue().doubleValue());
+        NumberField editValueField = new NumberField("Value ($)");
+        editValueField.setValue(asset.getValue().doubleValue());
 
-        ComboBox<String> categoryField = new ComboBox<>("Category");
-        categoryField.setItems("Vehicles", "Property", "Stocks", "Savings", "Equipment", "Jewellery", "Artworks");
-        categoryField.setValue(asset.getCategory());
+        ComboBox<String> editCategoryField = new ComboBox<>("Category");
+        editCategoryField.setItems("Vehicles", "Property", "Stocks", "Savings", "Equipment", "Jewellery", "Artworks");
+        editCategoryField.setValue(asset.getCategory());
 
-        NumberField interestRateField = new NumberField("Interest Rate (%)");
-        interestRateField.setValue(asset.getInterestRate() != null ? asset.getInterestRate().doubleValue() : 0);
+        NumberField editInterestRateField = new NumberField("Interest Rate (%)");
+        editInterestRateField.setValue(asset.getInterestRate() != null ? asset.getInterestRate().doubleValue() : 0);
 
         Button saveButton = new Button("Save", VaadinIcon.CHECK.create());
         saveButton.getStyle().set("background-color", "#007bff")
@@ -255,21 +257,23 @@ public class AssetView extends VerticalLayout {
                 .set("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.1)");
 
         saveButton.addClickListener(event -> {
-            if(nameField.isEmpty() || valueField.isEmpty() || categoryField.isEmpty() || interestRateField.isEmpty()){
+            if (editNameField.isEmpty() || editValueField.isEmpty() || editCategoryField.isEmpty()
+                    || editInterestRateField.isEmpty()) {
                 Notification.show("Please enter all fields", 3000, Notification.Position.TOP_CENTER);
                 return;
             }
 
-            if(BigDecimal.valueOf(valueField.getValue()).compareTo(BigDecimal.ZERO) <= 0 || BigDecimal.valueOf(interestRateField.getValue()).compareTo(BigDecimal.ZERO) <= 0 ){
+            if (BigDecimal.valueOf(editValueField.getValue()).compareTo(BigDecimal.ZERO) <= 0
+                    || BigDecimal.valueOf(editInterestRateField.getValue()).compareTo(BigDecimal.ZERO) <= 0) {
                 Notification.show("Please enter valid input values", 3000, Notification.Position.TOP_CENTER);
                 return;
             }
             Asset updatedAsset = new Asset();
             updatedAsset.setId(asset.getId());
-            updatedAsset.setName(nameField.getValue());
-            updatedAsset.setValue(BigDecimal.valueOf(valueField.getValue()));
-            updatedAsset.setCategory(categoryField.getValue());
-            updatedAsset.setInterestRate(BigDecimal.valueOf(interestRateField.getValue()));
+            updatedAsset.setName(editNameField.getValue());
+            updatedAsset.setValue(BigDecimal.valueOf(editValueField.getValue()));
+            updatedAsset.setCategory(editCategoryField.getValue());
+            updatedAsset.setInterestRate(BigDecimal.valueOf(editInterestRateField.getValue()));
 
             assetService.updateAsset(updatedAsset);
             Notification.show("Asset updated successfully", 3000, Notification.Position.TOP_CENTER);
@@ -290,7 +294,9 @@ public class AssetView extends VerticalLayout {
 
         cancelButton.addClickListener(event -> editDialog.close());
 
-        VerticalLayout dialogLayout = new VerticalLayout(nameField, valueField, categoryField, interestRateField, new HorizontalLayout(saveButton, cancelButton));
+        VerticalLayout dialogLayout = new VerticalLayout(editNameField, editValueField, editCategoryField,
+                editInterestRateField,
+                new HorizontalLayout(saveButton, cancelButton));
         dialogLayout.setSizeUndefined();
         dialogLayout.setPadding(true);
         dialogLayout.setSpacing(true);
@@ -309,26 +315,25 @@ public class AssetView extends VerticalLayout {
             Double valueText = valueField.getValue();
             String category = categoryField.getValue();
             Double interestRateText = interestRateField.getValue();
-    
             // Validate that fields are not empty
             if (name.isEmpty() || valueText == null || category.isEmpty()) {
                 Notification.show("Please fill in all fields", 3000, Notification.Position.TOP_CENTER);
                 return;
             }
-    
+
             BigDecimal value = BigDecimal.valueOf(valueText);
             BigDecimal interestRate = (interestRateText != null) ? BigDecimal.valueOf(interestRateText) : null;
-    
+
             Asset asset = new Asset();
             asset.setName(name);
             asset.setValue(value);
             asset.setCategory(category);
             asset.setInterestRate(interestRate);
             asset.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
-    
+
             assetService.addAsset(asset);
             Notification.show("Asset added successfully", 3000, Notification.Position.TOP_CENTER);
-            
+
             clearForm();
             listAssets();
             updateTotalAssets();
@@ -337,7 +342,6 @@ public class AssetView extends VerticalLayout {
             Notification.show("Please enter a valid value", 3000, Notification.Position.TOP_CENTER);
         }
     }
-    
     /**
      * Clears the form fields after adding or editing an asset.
      */
@@ -349,20 +353,22 @@ public class AssetView extends VerticalLayout {
     }
 
     /**
-     * Updates the total value of the user's assets and displays it in the total assets card.
+     * Updates the total value of the user's assets and displays it in the total
+     * assets card.
      */
     private void updateTotalAssets() {
         Long userId = sessionService.getLoggedInUserId();
         List<Asset> assets = assetService.getAssetsByUserId(userId);
         BigDecimal totalAssets = assets.stream()
-            .map(Asset::getValue)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(Asset::getValue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         totalAssetsValue.setText("$ " + totalAssets.toString());
     }
 
-     /**
-     * Updates the total change in the value of the user's assets over the past year and 
+    /**
+     * Updates the total change in the value of the user's assets over the past year
+     * and
      * displays it in the total change card.
      */
     private void updateTotalChangeInAssets() {
@@ -374,7 +380,7 @@ public class AssetView extends VerticalLayout {
         String color = totalChange.compareTo(BigDecimal.ZERO) >= 0 ? "green" : "red";
         totalChangeValue.setText(changeText);
         totalChangeValue.getStyle().set("color", color);
-    }   
+    }
 
     /**
      * Creates a dashboard card with a title and a value.
@@ -385,21 +391,21 @@ public class AssetView extends VerticalLayout {
      */
     private Div createDashboardCard(String title, H2 value) {
         Div card = new Div();
-        card.setWidthFull(); 
+        card.setWidthFull();
         card.getStyle().set("border", "1px solid #e0e0e0")
                 .set("border-radius", "8px")
                 .set("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
                 .set("background-color", "#ffffff")
                 .set("padding", "16px")
                 .set("text-align", "center");
-    
+
         H2 cardTitle = new H2(title);
         cardTitle.getStyle().set("color", "#333").set("font-weight", "600").set("margin", "0");
-    
+
         Div content = new Div();
         content.add(cardTitle, value);
         content.setSizeUndefined();
-    
+
         card.add(content);
         return card;
     }
@@ -430,7 +436,5 @@ public class AssetView extends VerticalLayout {
                 return VaadinIcon.MONEY.create();
         }
     }
-    
-}
 
-        
+}

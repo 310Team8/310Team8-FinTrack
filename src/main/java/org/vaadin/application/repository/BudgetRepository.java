@@ -1,4 +1,3 @@
-
 package org.vaadin.application.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +7,8 @@ import java.util.List;
 
 /**
  * Repository interface for managing {@link Budget} entities.
- * This interface extends {@link JpaRepository}, providing CRUD operations and custom queries.
+ * This interface extends {@link JpaRepository}, providing CRUD operations and
+ * custom queries.
  */
 public interface BudgetRepository extends JpaRepository<Budget, Long> {
 

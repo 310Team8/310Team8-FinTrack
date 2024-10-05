@@ -8,13 +8,15 @@ import org.vaadin.application.model.Asset;
 import org.vaadin.application.repository.AssetRepository;
 
 /**
- * Service class for managing asset-related operations. This class interacts with the {@link
+ * Service class for managing asset-related operations. This class interacts
+ * with the {@link
  * AssetRepository} to perform CRUD operations on {@link Asset} entities.
  */
 @Service
 public class AssetService {
 
-  @Autowired private AssetRepository assetRepository;
+  @Autowired
+  private AssetRepository assetRepository;
 
   /**
    * Retrieves a list of assets associated with a specific user ID.
@@ -56,7 +58,8 @@ public class AssetService {
   }
 
   /**
-   * Calculates the total value of the user's assets from the previous year. This method is not yet
+   * Calculates the total value of the user's assets from the previous year. This
+   * method is not yet
    * implemented.
    *
    * @param userId the ID of the user whose total assets are to be calculated
@@ -69,9 +72,11 @@ public class AssetService {
   }
 
   /**
-   * Calculates the current total value of the user's assets. This method is not yet implemented.
+   * Calculates the current total value of the user's assets. This method is not
+   * yet implemented.
    *
-   * @param userId the ID of the user whose current total assets are to be calculated
+   * @param userId the ID of the user whose current total assets are to be
+   *               calculated
    * @return the current total value of the user's assets
    * @throws UnsupportedOperationException if the method is not yet implemented
    */
@@ -81,12 +86,14 @@ public class AssetService {
   }
 
   /**
-   * Updates an existing asset with new information. If the asset exists, its details will be
+   * Updates an existing asset with new information. If the asset exists, its
+   * details will be
    * updated and saved.
    *
    * @param updatedAsset the asset object containing the updated information
-   * @return the updated asset if the asset was found and updated, or {@code null} if the asset does
-   *     not exist
+   * @return the updated asset if the asset was found and updated, or {@code null}
+   *         if the asset does
+   *         not exist
    */
   public Asset updateAsset(Asset updatedAsset) {
     // Find the existing asset by ID

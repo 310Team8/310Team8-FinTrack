@@ -30,7 +30,8 @@ public class SessionService {
     }
 
     /**
-     * Logs out the current user by invalidating the session and closing the Vaadin session.
+     * Logs out the current user by invalidating the session and closing the Vaadin
+     * session.
      */
     public void logout() {
         VaadinSession.getCurrent().getSession().invalidate();
