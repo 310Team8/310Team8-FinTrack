@@ -30,25 +30,6 @@ public class InvoiceService {
     }
 
     /**
-     * Retrieves all invoices.
-     *
-     * @return a list of all invoices
-     */
-    public List<Invoice> getAllInvoices() {
-        return invoiceRepository.findAll();
-    }
-
-    /**
-     * Retrieves an invoice by its ID.
-     *
-     * @param id the ID of the invoice to be retrieved
-     * @return an Optional containing the found invoice, or empty if not found
-     */
-    public Optional<Invoice> getInvoiceById(UUID id) {
-        return invoiceRepository.findById(id);
-    }
-
-    /**
      * Adds a new invoice to the repository.
      *
      * @param invoice the invoice object to be added
@@ -95,35 +76,6 @@ public class InvoiceService {
     public void deleteInvoice(UUID id) {
         if (invoiceRepository.existsById(id)) {
             invoiceRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Invoice not found with ID: " + id);
-        }
-    }
-
-    /**
-     * Retrieves all invoices that are marked as overdue (i.e., past their due date).
-     *
-     * @return a list of overdue invoices
-     */
-    public List<Invoice> getOverdueInvoices() {
-        return invoiceRepository.findAll().stream()
-                .filter(invoice -> "Overdue".equalsIgnoreCase(invoice.getStatus()))
-                .toList();
-    }
-
-    /**
-     * Marks an invoice as paid by updating its status.
-     *
-     * @param id the ID of the invoice to be marked as paid
-     * @return the updated invoice object with status set to "Paid"
-     */
-    public Invoice markAsPaid(UUID id) {
-        Optional<Invoice> existingInvoiceOpt = invoiceRepository.findById(id);
-
-        if (existingInvoiceOpt.isPresent()) {
-            Invoice existingInvoice = existingInvoiceOpt.get();
-            existingInvoice.setStatus("Paid");
-            return invoiceRepository.save(existingInvoice);
         } else {
             throw new RuntimeException("Invoice not found with ID: " + id);
         }
