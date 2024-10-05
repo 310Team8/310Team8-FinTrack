@@ -9,6 +9,7 @@ import org.vaadin.application.views.FinancialGoalView;
 import org.vaadin.application.views.IncomeView;
 import org.vaadin.application.views.InvoiceView;
 import org.vaadin.application.views.LoginView;
+import org.vaadin.application.views.NetCashflowForecastView;
 import org.vaadin.application.views.RegistrationView;
 
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -52,85 +53,86 @@ import com.vaadin.flow.server.VaadinSession;
  */
 
 public class MainLayout extends AppLayout implements BeforeEnterObserver {
+  /**
+   * Constructs a new MainLayout and initializes the header and drawer components.
+   */
+  public MainLayout() {
+    createHeader();
+    createDrawer();
+  }
 
-    /**
-     * Constructs a new MainLayout and initializes the header and drawer components.
-     */
-   public MainLayout() {
-       createHeader();
-       createDrawer();
-   }
+  /**
+   * Creates the header of the application, which includes the logo, navigation
+   * buttons,
+   * and a logout button. The header is added to the navigation bar.
+   */
+  private void createHeader() {
+    H1 logo = new H1("FinTrack");
+    logo.addClassNames("text-l", "m-m");
 
-   /**
-     * Creates the header of the application, which includes the logo, navigation buttons,
-     * and a logout button. The header is added to the navigation bar.
-     */
-   private void createHeader() {
-        H1 logo = new H1("FinTrack");
-        logo.addClassNames("text-l", "m-m");
+    Button logoutButton = new Button("Sign Out", event -> {
+      VaadinSession.getCurrent().getSession().invalidate();
+      VaadinSession.getCurrent().close();
+      getUI().ifPresent(ui -> ui.navigate(""));
+    });
 
-        Button logoutButton = new Button("Sign Out", event -> {
-            VaadinSession.getCurrent().getSession().invalidate();
-            VaadinSession.getCurrent().close();
-            getUI().ifPresent(ui -> ui.navigate(""));
-        });
+    HorizontalLayout header = new HorizontalLayout(logo, logoutButton);
+    header.expand(logo);
+    header.setWidthFull();
+    header.setAlignItems(Alignment.CENTER);
 
-       HorizontalLayout header = new HorizontalLayout(logo, logoutButton);
-       header.expand(logo);
-       header.setWidthFull();
-       header.setAlignItems(Alignment.CENTER);
-       addToNavbar(header);
-   }
+    addToNavbar(header);
+  }
 
-   /**
-     * Creates the drawer of the application, which contains links to various management views 
-     * (Dashboard, Budgets, Expenses, Income, Goals, and Categories). The drawer is added to the 
-     * application's main layout.
-     */
-   private void createDrawer() {
-       RouterLink dashboardLink = new RouterLink("Dashboard", DashboardView.class);
-       RouterLink budgetLink = new RouterLink("Manage Budgets", BudgetView.class);
-       RouterLink expenseLink = new RouterLink("Manage Expenses", ExpenseView.class);
-       RouterLink incomeLink = new RouterLink("Manage Income", IncomeView.class);
-       RouterLink goalLink = new RouterLink("Manage Goals", FinancialGoalView.class);
-       RouterLink categoryLink = new RouterLink("Manage Categories", ExpenseCategoryView.class);
-       RouterLink assetLink = new RouterLink("Manage Assets", AssetView.class);
-       RouterLink invoiceLink = new RouterLink("Manage Invoices", InvoiceView.class);
+  /**
+   * Creates the drawer of the application, which contains links to various
+   * management views
+   * (Dashboard, Budgets, Expenses, Income, Goals, and Categories). The drawer is
+   * added to the
+   * application's main layout.
+   */
+  private void createDrawer() {
+    RouterLink dashboardLink = new RouterLink("Dashboard", DashboardView.class);
+    RouterLink budgetLink = new RouterLink("Manage Budgets", BudgetView.class);
+    RouterLink expenseLink = new RouterLink("Manage Expenses", ExpenseView.class);
+    RouterLink incomeLink = new RouterLink("Manage Income", IncomeView.class);
+    RouterLink goalLink = new RouterLink("Manage Goals", FinancialGoalView.class);
+    RouterLink categoryLink = new RouterLink("Manage Categories", ExpenseCategoryView.class);
+    RouterLink assetLink = new RouterLink("Manage Assets", AssetView.class);
+    RouterLink cashflowLink = new RouterLink("View Cashflow Forecast", NetCashflowForecastView.class);
+    RouterLink invoiceLink = new RouterLink("Manage Invoices", InvoiceView.class);
 
-       VerticalLayout drawerLayout = new VerticalLayout(
-           dashboardLink,
-           budgetLink,
-           expenseLink,
-           incomeLink,
-           goalLink,
-           categoryLink,
-           assetLink,
-           invoiceLink
-       );
-      
-       drawerLayout.setAlignItems(Alignment.STRETCH);
-       addToDrawer(drawerLayout);
-   }
+    VerticalLayout drawerLayout = new VerticalLayout(
+        dashboardLink,
+        budgetLink,
+        expenseLink,
+        incomeLink,
+        goalLink,
+        categoryLink,
+        assetLink,
+        cashflowLink,
+        invoiceLink
+    );
 
-   /**
-     * Before entering any view, this method checks if the user is logged in by verifying the presence 
-     * of a user ID in the session. If the user is not logged in and attempts to access a secured view,
-     * they are redirected to the login view.
-     *
-     * @param event the event triggered before entering the view
-     */
-   @Override
-public void beforeEnter(BeforeEnterEvent event) {
-   if (event.getNavigationTarget().equals(LoginView.class) || event.getNavigationTarget().equals(RegistrationView.class)) {
-       return;
-   }
+    drawerLayout.setAlignItems(Alignment.STRETCH);
+    addToDrawer(drawerLayout);
+  }
 
-   Long userId = (Long) VaadinSession.getCurrent().getAttribute("userId");
+  /**
+   * Before entering any view, this method checks if the user is logged in by
+   * verifying the presence
+   * of a user ID in the session. If the user is not logged in and attempts to
+   * access a secured view,
+   * they are redirected to the login view.
+   *
+   * @param event the event triggered before entering the view
+   */
+  @Override
+  public void beforeEnter(BeforeEnterEvent event) {
+    if (event.getNavigationTarget().equals(LoginView.class)
+        || event.getNavigationTarget().equals(RegistrationView.class)) {
+      return;
+    }
 
-   if (userId == null) {
-       event.forwardTo(LoginView.class); // Forward to the login view
-   }
-}
-
-
+    Long userId = (Long) VaadinSession.getCurrent().getAttribute("userId");
 }

@@ -26,7 +26,6 @@ import org.vaadin.application.MainLayout;
 import org.vaadin.application.service.ExpenseService;
 import org.vaadin.application.service.IncomeService;
 import org.vaadin.application.service.SessionService;
-import org.vaadin.application.service.UserService;
 
 @Route(value = "netCashflowForecast", layout = MainLayout.class)
 public class NetCashflowForecastView extends VerticalLayout {
@@ -78,6 +77,7 @@ public class NetCashflowForecastView extends VerticalLayout {
         new ComboBox<>(
             "Select Number of Previous Months for Expense Prediction", Arrays.asList(3, 6, 12));
         monthsComboBox.setValue(previousMonths);
+        monthsComboBox.setWidth("40%");
         monthsComboBox.addValueChangeListener(e -> {
           previousMonths = e.getValue();
           updateExpenseChart();
