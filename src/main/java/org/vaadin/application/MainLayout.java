@@ -135,4 +135,9 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
     }
 
     Long userId = (Long) VaadinSession.getCurrent().getAttribute("userId");
+
+    if (userId == null) {
+      event.forwardTo(LoginView.class); // Forward to the login view
+    }
+  }
 }
