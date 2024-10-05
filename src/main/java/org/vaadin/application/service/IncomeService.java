@@ -90,6 +90,12 @@ public class IncomeService {
     }
 
 
+    /**
+     * Calculates the total income for all months for a specific user.
+     *
+     * @param userId the ID of the user whose total income is to be calculated
+     * @return the total amount of income for the user in all months
+     */
     public BigDecimal getTotalIncomeAllMonths(Long userId) {
         List<Income> incomes = getIncomesByUserId(userId);
         BigDecimal totalIncome = new BigDecimal(0);

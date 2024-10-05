@@ -24,6 +24,42 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The InvoiceView class provides the user interface for managing invoices
+ * within the application.
+ * Users can add, update, view, and delete invoices.
+ * and allows users to fill out invoice details like recipient and amount payable.
+ *
+ * <p>
+ * This class extends
+ * {@link com.vaadin.flow.component.orderedlayout.VerticalLayout} to organize
+ * the components vertically on the page. It includes a
+ * {@link com.vaadin.flow.component.grid.Grid}
+ * to display the list of invoices,
+ * {@link com.vaadin.flow.component.textfield.TextField} for user input, and
+ * {@link com.vaadin.flow.component.button.Button} for form actions.
+ * </p>
+ *
+ * <p>
+ * The {@code @Route} annotation maps this view to the "invoice" URL path and
+ * associates it with the {@link org.vaadin.application.MainLayout}.
+ * </p>
+ *
+ * <p>
+ * This class interacts with the following services:
+ * {@link org.vaadin.application.service.InvoiceService}
+ * for managing invoice data,
+ * {@link org.vaadin.application.service.SessionService} for managing
+ * session-related data, and
+ * {@link org.vaadin.application.service.UserService} for retrieving user
+ * information.
+ * </p>
+ * 
+ * @see org.vaadin.application.service.ExpenseService
+ * @see org.vaadin.application.service.BudgetService
+ * @see org.vaadin.application.service.SessionService
+ * @see org.vaadin.application.service.UserService
+ */
 @Route(value = "invoice", layout = MainLayout.class)
 public class InvoiceView extends VerticalLayout {
 
@@ -34,6 +70,13 @@ public class InvoiceView extends VerticalLayout {
     private Invoice selectedInvoice = null; // To track the selected invoice
     private UUID selectedInvoiceId = null;
 
+    /**
+     * Constructor that initializes the InvoiceView and its components.
+     * 
+     * @param invoiceService  Service to manage invoice data.
+     * @param sessionService  Service to manage session and user information.
+     * @param userService     Service to manage user data.
+     */
     @Autowired
     public InvoiceView(InvoiceService invoiceService, SessionService sessionService, UserService userService) {
         this.invoiceService = invoiceService;
@@ -157,6 +200,9 @@ public class InvoiceView extends VerticalLayout {
         add(logo, formLayout, invoiceGrid);
     }
 
+    /**
+     * Loads the invoices of the currently logged-in user and displays them in the grid.
+     */
     private void loadInvoices() {
         Long userId = sessionService.getLoggedInUserId();
         List<Invoice> invoices = invoiceService.getInvoicesByUserId(userId); // Assuming user ID 1 for now
