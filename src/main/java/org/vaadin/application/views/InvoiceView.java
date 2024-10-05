@@ -5,6 +5,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -37,6 +38,8 @@ public class InvoiceView extends VerticalLayout {
         this.invoiceService = invoiceService;
         this.sessionService = sessionService;
         this.userService = userService;
+
+        H1 logo = new H1("Invoices");
 
         // Create form fields
         TextField recipientName = new TextField("Recipient Name");
@@ -150,7 +153,7 @@ public class InvoiceView extends VerticalLayout {
         });
 
         // Add the form layout and the grid to the main layout
-        add(formLayout, invoiceGrid);
+        add(logo, formLayout, invoiceGrid);
     }
 
     private void loadInvoices() {
