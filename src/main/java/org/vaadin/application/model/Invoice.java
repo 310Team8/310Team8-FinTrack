@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMin;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -49,14 +49,14 @@ public class Invoice {
      * Cannot be null.
      */
     @NotNull
-    private LocalDate issueDate;
+    private Date issueDate;
 
     /**
      * The due date of the invoice.
      * Cannot be null.
      */
     @NotNull
-    private LocalDate dueDate;
+    private Date dueDate;
 
     /**
      * The description or purpose of the invoice.
@@ -109,19 +109,19 @@ public class Invoice {
         this.amount = amount;
     }
 
-    public LocalDate getIssueDate() {
+    public Date getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(LocalDate issueDate) {
+    public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
     }
 
-    public LocalDate getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 

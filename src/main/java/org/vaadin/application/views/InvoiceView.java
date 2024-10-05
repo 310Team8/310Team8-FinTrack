@@ -20,6 +20,7 @@ import org.vaadin.application.service.SessionService;
 import org.vaadin.application.service.UserService;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,8 +75,8 @@ public class InvoiceView extends VerticalLayout {
                 newInvoice.setInvoiceNumber("1");
                 newInvoice.setRecipientName(name);
                 newInvoice.setAmount(amount);
-                newInvoice.setIssueDate(issue);
-                newInvoice.setDueDate(due);
+                newInvoice.setIssueDate(java.sql.Date.valueOf(issue));
+                newInvoice.setDueDate(java.sql.Date.valueOf(due));
                 newInvoice.setDescription(desc);
                 newInvoice.setStatus(stat);
                 newInvoice.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
@@ -86,8 +87,8 @@ public class InvoiceView extends VerticalLayout {
                 // Update existing invoice
                 selectedInvoice.setRecipientName(name);
                 selectedInvoice.setAmount(amount);
-                selectedInvoice.setIssueDate(issue);
-                selectedInvoice.setDueDate(due);
+                selectedInvoice.setIssueDate(java.sql.Date.valueOf(issue));
+                selectedInvoice.setDueDate(java.sql.Date.valueOf(due));
                 selectedInvoice.setDescription(desc);
                 selectedInvoice.setStatus(stat);
                 invoiceService.updateInvoice(selectedInvoiceId, selectedInvoice);
@@ -136,8 +137,8 @@ public class InvoiceView extends VerticalLayout {
             if (selectedInvoice != null) {
                 recipientName.setValue(selectedInvoice.getRecipientName());
                 amountPayable.setValue(selectedInvoice.getAmount());
-                issueDate.setValue(selectedInvoice.getIssueDate());
-                dueDate.setValue(selectedInvoice.getDueDate());
+                issueDate.setValue(selectedInvoice.getIssueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                dueDate.setValue(selectedInvoice.getDueDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                 description.setValue(selectedInvoice.getDescription());
                 status.setValue(selectedInvoice.getStatus());
                 this.selectedInvoiceId = selectedInvoice.getId();
