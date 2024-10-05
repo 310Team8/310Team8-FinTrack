@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.DecimalMin;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 /**
  * Entity representing an invoice.
@@ -18,15 +19,8 @@ public class Invoice {
      * The unique identifier for the invoice.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    /**
-     * The unique number of the invoice.
-     * Cannot be null.
-     */
-    @NotNull
-    private String invoiceNumber;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     /**
      * The name of the recipient for the invoice.
@@ -76,20 +70,12 @@ public class Invoice {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getInvoiceNumber() {
-        return invoiceNumber;
-    }
-
-    public void setInvoiceNumber(String invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
     }
 
     public String getRecipientName() {

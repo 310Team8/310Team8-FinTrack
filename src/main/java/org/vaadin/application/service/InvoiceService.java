@@ -2,6 +2,7 @@ package org.vaadin.application.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class InvoiceService {
      * @param id the ID of the invoice to be retrieved
      * @return an Optional containing the found invoice, or empty if not found
      */
-    public Optional<Invoice> getInvoiceById(Long id) {
+    public Optional<Invoice> getInvoiceById(UUID id) {
         return invoiceRepository.findById(id);
     }
 
@@ -64,14 +65,14 @@ public class InvoiceService {
      * @param updatedInvoice the updated invoice object with new details
      * @return the updated invoice object, or throws an exception if not found
      */
-    public Invoice updateInvoice(Long invoiceId, Invoice updatedInvoice) {
+    public Invoice updateInvoice(UUID invoiceId, Invoice updatedInvoice) {
+
         Optional<Invoice> existingInvoiceOpt = invoiceRepository.findById(invoiceId);
 
         if (existingInvoiceOpt.isPresent()) {
             Invoice existingInvoice = existingInvoiceOpt.get();
 
             // Update the existing invoice with the new values
-            existingInvoice.setInvoiceNumber(updatedInvoice.getInvoiceNumber());
             existingInvoice.setRecipientName(updatedInvoice.getRecipientName());
             existingInvoice.setAmount(updatedInvoice.getAmount());
             existingInvoice.setIssueDate(updatedInvoice.getIssueDate());
@@ -91,7 +92,7 @@ public class InvoiceService {
      *
      * @param id the ID of the invoice to be deleted
      */
-    public void deleteInvoice(Long id) {
+    public void deleteInvoice(UUID id) {
         if (invoiceRepository.existsById(id)) {
             invoiceRepository.deleteById(id);
         } else {
@@ -116,7 +117,7 @@ public class InvoiceService {
      * @param id the ID of the invoice to be marked as paid
      * @return the updated invoice object with status set to "Paid"
      */
-    public Invoice markAsPaid(Long id) {
+    public Invoice markAsPaid(UUID id) {
         Optional<Invoice> existingInvoiceOpt = invoiceRepository.findById(id);
 
         if (existingInvoiceOpt.isPresent()) {

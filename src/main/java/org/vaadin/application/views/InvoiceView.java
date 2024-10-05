@@ -20,6 +20,7 @@ import org.vaadin.application.service.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Route(value = "invoice", layout = MainLayout.class)
 public class InvoiceView extends VerticalLayout {
@@ -28,6 +29,8 @@ public class InvoiceView extends VerticalLayout {
     private SessionService sessionService;
     private UserService userService;
     private Grid<Invoice> invoiceGrid = new Grid<>(Invoice.class);
+    private Invoice selectedInvoice = null; // To track the selected invoice
+    private UUID selectedInvoiceId = null;
 
     @Autowired
     public InvoiceView(InvoiceService invoiceService, SessionService sessionService, UserService userService) {
@@ -38,7 +41,6 @@ public class InvoiceView extends VerticalLayout {
         // Create form fields
         TextField recipientName = new TextField("Recipient Name");
         NumberField amountPayable = new NumberField("Amount Payable");
-        TextField invoiceNumber = new TextField("Invoice Number");
         DatePicker issueDate = new DatePicker("Issue Date");
         DatePicker dueDate = new DatePicker("Due Date");
         TextArea description = new TextArea("Description");
@@ -48,63 +50,91 @@ public class InvoiceView extends VerticalLayout {
 
         loadInvoices();
 
-        // Create a button to save the invoice
+        // Create a button to save or update the invoice
         Button saveButton = new Button("Save", event -> {
             String name = recipientName.getValue();
             Double amount = amountPayable.getValue();
-            String number = invoiceNumber.getValue();
             LocalDate issue = issueDate.getValue();
             LocalDate due = dueDate.getValue();
             String desc = description.getValue();
             String stat = status.getValue();
 
             // Check if fields are filled
-            if (name.isEmpty() || amount == null || number.isEmpty() || issue == null || due == null) {
+            if (name.isEmpty() || amount == null || issue == null || due == null) {
                 Notification.show("Please fill in all required fields.");
                 return;
             }
 
-            // Save the invoice using the service
-            Invoice newInvoice = new Invoice();
-            newInvoice.setRecipientName(name);
-            newInvoice.setAmount(amount);
-            newInvoice.setInvoiceNumber(number);
-            newInvoice.setIssueDate(issue);
-            newInvoice.setDueDate(due);
-            newInvoice.setDescription(desc);
-            newInvoice.setStatus(stat);
-            newInvoice.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
-            invoiceService.addInvoice(newInvoice);
-            loadInvoices(); // Reload invoices after saving
+            if (selectedInvoice == null) {
+                // Create new invoice
+                Invoice newInvoice = new Invoice();
+                newInvoice.setRecipientName(name);
+                newInvoice.setAmount(amount);
+                newInvoice.setIssueDate(issue);
+                newInvoice.setDueDate(due);
+                newInvoice.setDescription(desc);
+                newInvoice.setStatus(stat);
+                newInvoice.setUser(userService.findUserById(sessionService.getLoggedInUserId()));
 
-            // Clear form fields after saving
+                invoiceService.addInvoice(newInvoice);
+                Notification.show("Invoice saved for: " + name + ", Amount: " + amount);
+            } else {
+                // Update existing invoice
+                selectedInvoice.setRecipientName(name);
+                selectedInvoice.setAmount(amount);
+                selectedInvoice.setIssueDate(issue);
+                selectedInvoice.setDueDate(due);
+                selectedInvoice.setDescription(desc);
+                selectedInvoice.setStatus(stat);
+                invoiceService.updateInvoice(selectedInvoiceId, selectedInvoice);
+                Notification.show("Invoice updated for: " + name + ", Amount: " + amount);
+            }
+
+            loadInvoices(); // Reload invoices after saving or updating
+
+            // Clear form fields and reset selectedInvoice
             recipientName.clear();
             amountPayable.clear();
-            invoiceNumber.clear();
             issueDate.clear();
             dueDate.clear();
             description.clear();
             status.setValue("Pending");
-
-            // Show a confirmation notification
-            Notification.show("Invoice saved for: " + name + ", Amount: " + amount);
+            selectedInvoice = null;
         });
 
         // Create a form layout and add fields to it
         FormLayout formLayout = new FormLayout();
-        formLayout.add(recipientName, amountPayable, invoiceNumber, issueDate, dueDate, description, status, saveButton);
+        formLayout.add(recipientName, amountPayable, issueDate, dueDate, description, status, saveButton);
 
         // Configure the invoice grid
-        invoiceGrid.setColumns("invoiceNumber", "recipientName", "amount", "issueDate", "dueDate", "status");
-        invoiceGrid.getColumnByKey("invoiceNumber").setHeader("Invoice Number");
+        invoiceGrid.setColumns( "recipientName", "amount", "issueDate", "dueDate", "status");
         invoiceGrid.getColumnByKey("recipientName").setHeader("Recipient Name");
         invoiceGrid.getColumnByKey("amount").setHeader("Amount Payable");
         invoiceGrid.getColumnByKey("issueDate").setHeader("Issue Date");
         invoiceGrid.getColumnByKey("dueDate").setHeader("Due Date");
         invoiceGrid.getColumnByKey("status").setHeader("Status");
 
-        // Load existing invoices when the view is created
-        loadInvoices();
+        // Add listener for row selection
+        invoiceGrid.asSingleSelect().addValueChangeListener(event -> {
+            selectedInvoice = event.getValue();
+            if (selectedInvoice != null) {
+                recipientName.setValue(selectedInvoice.getRecipientName());
+                amountPayable.setValue(selectedInvoice.getAmount());
+                issueDate.setValue(selectedInvoice.getIssueDate());
+                dueDate.setValue(selectedInvoice.getDueDate());
+                description.setValue(selectedInvoice.getDescription());
+                status.setValue(selectedInvoice.getStatus());
+                this.selectedInvoiceId = selectedInvoice.getId();
+            } else {
+                // Clear the form when nothing is selected
+                recipientName.clear();
+                amountPayable.clear();
+                issueDate.clear();
+                dueDate.clear();
+                description.clear();
+                status.setValue("Pending");
+            }
+        });
 
         // Add the form layout and the grid to the main layout
         add(formLayout, invoiceGrid);
