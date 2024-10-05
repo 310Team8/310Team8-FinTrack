@@ -68,6 +68,7 @@ public class InvoiceView extends VerticalLayout {
             if (selectedInvoice == null) {
                 // Create new invoice
                 Invoice newInvoice = new Invoice();
+                newInvoice.setInvoiceNumber("1");
                 newInvoice.setRecipientName(name);
                 newInvoice.setAmount(amount);
                 newInvoice.setIssueDate(issue);
@@ -102,9 +103,21 @@ public class InvoiceView extends VerticalLayout {
             selectedInvoice = null;
         });
 
+        // Create a button to delete the selected invoice
+        Button deleteButton = new Button("Delete", event -> {
+            if (selectedInvoice != null) {
+                invoiceService.deleteInvoice(selectedInvoice.getId());
+                Notification.show("Invoice deleted for: " + selectedInvoice.getRecipientName());
+                loadInvoices(); // Reload invoices after deleting
+                selectedInvoice = null;
+            } else {
+                Notification.show("Please select an invoice to delete.");
+            }
+        });
+
         // Create a form layout and add fields to it
         FormLayout formLayout = new FormLayout();
-        formLayout.add(recipientName, amountPayable, issueDate, dueDate, description, status, saveButton);
+        formLayout.add(recipientName, amountPayable, issueDate, dueDate, description, status, saveButton, deleteButton);
 
         // Configure the invoice grid
         invoiceGrid.setColumns( "recipientName", "amount", "issueDate", "dueDate", "status");

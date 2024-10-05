@@ -9,7 +9,7 @@ import java.util.UUID;
 
 /**
  * Entity representing an invoice.
- * An invoice has a recipient name, an amount payable, and additional details like invoice number, issue date, etc.
+ * An invoice has a recipient name, an amount payable, and additional details like issue date, etc.
  */
 @Entity
 @Table(name = "invoice")
@@ -21,6 +21,13 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    /**
+     * The unique number of the invoice.
+     * Cannot be null.
+     */
+    @NotNull
+    private String invoiceNumber;
 
     /**
      * The name of the recipient for the invoice.
@@ -76,6 +83,14 @@ public class Invoice {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
     }
 
     public String getRecipientName() {
