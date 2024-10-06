@@ -7,6 +7,7 @@ import org.vaadin.application.views.ExpenseCategoryView;
 import org.vaadin.application.views.ExpenseView;
 import org.vaadin.application.views.FinancialGoalView;
 import org.vaadin.application.views.IncomeView;
+import org.vaadin.application.views.InvoiceView;
 import org.vaadin.application.views.LoginView;
 import org.vaadin.application.views.NetCashflowForecastView;
 import org.vaadin.application.views.RegistrationView;
@@ -52,7 +53,6 @@ import com.vaadin.flow.server.VaadinSession;
  */
 
 public class MainLayout extends AppLayout implements BeforeEnterObserver {
-
   /**
    * Constructs a new MainLayout and initializes the header and drawer components.
    */
@@ -100,6 +100,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
     RouterLink categoryLink = new RouterLink("Manage Categories", ExpenseCategoryView.class);
     RouterLink assetLink = new RouterLink("Manage Assets", AssetView.class);
     RouterLink cashflowLink = new RouterLink("View Cashflow Forecast", NetCashflowForecastView.class);
+    RouterLink invoiceLink = new RouterLink("Manage Invoices", InvoiceView.class);
 
     VerticalLayout drawerLayout = new VerticalLayout(
         dashboardLink,
@@ -109,7 +110,9 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         goalLink,
         categoryLink,
         assetLink,
-        cashflowLink);
+        cashflowLink,
+        invoiceLink
+    );
 
     drawerLayout.setAlignItems(Alignment.STRETCH);
     addToDrawer(drawerLayout);
@@ -137,5 +140,4 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
       event.forwardTo(LoginView.class); // Forward to the login view
     }
   }
-
 }

@@ -72,7 +72,6 @@ public class ExpenseService {
     public BigDecimal getTotalExpensesForCurrentMonth(Long userId) {
         LocalDate startOfMonth = LocalDate.now().withDayOfMonth(1);
         LocalDate endOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
-
         return expenseRepository.findTotalExpensesForPeriod(userId, startOfMonth, endOfMonth);
     }
 

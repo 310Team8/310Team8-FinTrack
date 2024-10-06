@@ -315,7 +315,6 @@ public class AssetView extends VerticalLayout {
             Double valueText = valueField.getValue();
             String category = categoryField.getValue();
             Double interestRateText = interestRateField.getValue();
-
             // Validate that fields are not empty
             if (name.isEmpty() || valueText == null || category.isEmpty()) {
                 Notification.show("Please fill in all fields", 3000, Notification.Position.TOP_CENTER);
@@ -343,7 +342,6 @@ public class AssetView extends VerticalLayout {
             Notification.show("Please enter a valid value", 3000, Notification.Position.TOP_CENTER);
         }
     }
-
     /**
      * Clears the form fields after adding or editing an asset.
      */
