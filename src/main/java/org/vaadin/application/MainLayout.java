@@ -11,6 +11,7 @@ import org.vaadin.application.views.InvoiceView;
 import org.vaadin.application.views.LoginView;
 import org.vaadin.application.views.NetCashflowForecastView;
 import org.vaadin.application.views.RegistrationView;
+import org.vaadin.application.views.BusinessProfileView;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.H1;
@@ -101,6 +102,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
     RouterLink assetLink = new RouterLink("Manage Assets", AssetView.class);
     RouterLink cashflowLink = new RouterLink("View Cashflow Forecast", NetCashflowForecastView.class);
     RouterLink invoiceLink = new RouterLink("Manage Invoices", InvoiceView.class);
+    RouterLink businessProfileLink = new RouterLink("Business Profile", BusinessProfileView.class);
 
     VerticalLayout drawerLayout = new VerticalLayout(
         dashboardLink,
@@ -111,7 +113,8 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         categoryLink,
         assetLink,
         cashflowLink,
-        invoiceLink
+        invoiceLink,
+        businessProfileLink
     );
 
     drawerLayout.setAlignItems(Alignment.STRETCH);
