@@ -334,7 +334,7 @@ public class DashboardView extends VerticalLayout {
         for (Income income : incomes) {
             java.sql.Date utilDate = (java.sql.Date) income.getDate();
             LocalDate date = utilDate.toLocalDate();
-            while (date.isBefore(LocalDate.now())) {
+            while (date.isBefore(LocalDate.now().withDayOfMonth(1).plusMonths(1))) {
                 recordsQueue.add(
                         new TransactionRecord(date, income.getAmount(), income.getSource(), "Income"));
 
@@ -364,8 +364,10 @@ public class DashboardView extends VerticalLayout {
         for (Expense expense : expenses) {
             java.sql.Date utilDate = (java.sql.Date) expense.getDate();
             LocalDate date = utilDate.toLocalDate();
-            recordsQueue.add(
+            if (date.isBefore(LocalDate.now().withDayOfMonth(1).plusMonths(1))) {
+                recordsQueue.add(
                     new TransactionRecord(date, expense.getAmount(), expense.getDescription(), "Expense"));
+            }
         }
 
         try {
