@@ -1,4 +1,4 @@
-package org.vaadin.example.service;
+package org.vaadin.application.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

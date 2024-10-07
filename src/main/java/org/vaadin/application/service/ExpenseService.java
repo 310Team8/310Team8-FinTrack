@@ -76,6 +76,20 @@ public class ExpenseService {
     }
 
     /**
+     * Calculates the total expenses for the desired previous months for a specific user
+     * 
+     * @param userId the ID of the user whose total expenses are to be calculated
+     * @param previousMonths the number of previous months that expenses should be retrieved for not including the current month      
+     * @return
+     */
+    public BigDecimal getTotalExpensesForPreviousMonths(Long userId, int previousMonths){
+        LocalDate startOfMonth = LocalDate.now().withDayOfMonth(1).minusMonths(previousMonths);
+        LocalDate endOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
+
+        return expenseRepository.findTotalExpensesForPeriod(userId, startOfMonth, endOfMonth);
+    }
+
+    /**
      * Retrieves a list of expenses associated with a specific budget ID.
      *
      * @param budgetId the ID of the budget whose expenses are to be retrieved

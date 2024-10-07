@@ -34,14 +34,17 @@ vaadin-text-field.bordered::part(input-field) {
   color: #fff;
 }
 
-.dashboard-view{
+.dashboard-view {
   background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
   background-size: cover;
   background-position: center;
   height: 100vh;
-  padding: 20px; /* Optional: add some padding to the content inside the dashboard */
-  box-sizing: border-box; /* Ensure padding is included in the element's width and height */
+  padding: 20px;
+  /* Optional: add some padding to the content inside the dashboard */
+  box-sizing: border-box;
+  /* Ensure padding is included in the element's width and height */
 }
+
 .dashboard-stats {
   width: 100%;
   justify-content: space-between;
@@ -92,6 +95,7 @@ vaadin-text-field.bordered::part(input-field) {
   margin-bottom: 10px;
   color: #333;
 }
+
 .expense-item {
   display: flex;
   justify-content: space-between;
@@ -138,12 +142,14 @@ vaadin-text-field.bordered::part(input-field) {
 .expense-list-box vaadin-list-box::part(item):last-child {
   border-bottom: none;
 }
+
 /* Style for the amount part (right-aligned, red color) */
 .expense-amount {
   color: red;
   text-align: right;
   font-weight: bold;
 }
+
 /* Style for the description part (left-aligned) */
 .expense-description {
   flex: 1;
@@ -155,14 +161,18 @@ vaadin-text-field.bordered::part(input-field) {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 20px; /* Space between the two lists */
+  gap: 20px;
+  /* Space between the two lists */
   margin-bottom: 25px;
 }
 
 /* Ensure both category and expense layouts take up equal space */
-.category-layout, .expense-layout {
-  width: 48%; /* Adjust as needed */
-  box-sizing: border-box; /* Ensures padding and border are included in the width */
+.category-layout,
+.expense-layout {
+  width: 48%;
+  /* Adjust as needed */
+  box-sizing: border-box;
+  /* Ensures padding and border are included in the width */
 }
 
 .category-title {
@@ -170,6 +180,7 @@ vaadin-text-field.bordered::part(input-field) {
   margin-bottom: 10px;
   color: #333;
 }
+
 .category-item {
   display: flex;
   justify-content: space-between;
@@ -223,6 +234,7 @@ vaadin-text-field.bordered::part(input-field) {
   margin-bottom: 10px;
   color: #333;
 }
+
 .income-item {
   display: flex;
   justify-content: space-between;
@@ -269,12 +281,14 @@ vaadin-text-field.bordered::part(input-field) {
 .income-list-box vaadin-list-box::part(item):last-child {
   border-bottom: none;
 }
+
 /* Style for the amount part (right-aligned, red color) */
 .income-amount {
   color: rgb(0, 172, 20);
   text-align: right;
   font-weight: bold;
 }
+
 /* Style for the description part (left-aligned) */
 .income-description {
   flex: 1;
@@ -285,34 +299,41 @@ vaadin-text-field.bordered::part(input-field) {
 
 
 .login-view {
-  background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e); /* Example gradient colors */
+  background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+  /* Example gradient colors */
   background-size: cover;
   background-position: center;
   height: 100vh;
 }
 
 .register-view {
-  background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e); /* Example gradient colors */
+  background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+  /* Example gradient colors */
   background-size: cover;
   background-position: center;
   height: 100vh;
 }
 
 .overlay-box {
-  background-color: rgba(255, 255, 255, 0.567); /* Semi-transparent white */
+  background-color: rgba(255, 255, 255, 0.567);
+  /* Semi-transparent white */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-  max-width: 400px; /* Adjust this value as needed */
+  max-width: 400px;
+  /* Adjust this value as needed */
   width: 100%;
 }
 
 .logo {
-  font-family: 'Arial', sans-serif; /* You can change this to any font you prefer */
+  font-family: 'Arial', sans-serif;
+  /* You can change this to any font you prefer */
   font-size: 2.5em;
-  color: rgb(0, 0, 0); /* White color to stand out against the gradient background */
+  color: rgb(0, 0, 0);
+  /* White color to stand out against the gradient background */
   text-align: center;
-  margin-bottom: 20px; /* Space between the logo and the rest of the form */
+  margin-bottom: 20px;
+  /* Space between the logo and the rest of the form */
 }
 
 /* General styling for the form and layout */
@@ -334,6 +355,21 @@ vaadin-text-field.bordered::part(input-field) {
   flex-direction: column;
   justify-content: space-between;
 }
+
+.dashboard-header {
+  width: 100%;
+}
+
+.pdf-button {
+  background-color: white;
+  color: #007bff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  margin-left: auto;
+}
+
+
 
 .card-title {
   font-size: 18px;
@@ -414,7 +450,8 @@ textarea::placeholder {
   gap: 20px;
   justify-items: center;
   padding: 20px;
-  width: 100%; /* Ensure the container spans the full width */
+  width: 100%;
+  /* Ensure the container spans the full width */
 }
 
 .budget-card {
@@ -457,8 +494,10 @@ input {
 
 /* Progress Bar Styling */
 vaadin-progress-bar {
-  --vaadin-progress-value-color: #4caf50; /* Green progress bar */
-  --vaadin-progress-background-color: #e0e0e0; /* Light grey background */
+  --vaadin-progress-value-color: #4caf50;
+  /* Green progress bar */
+  --vaadin-progress-background-color: #e0e0e0;
+  /* Light grey background */
   height: 8px;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -520,8 +559,10 @@ vaadin-progress-bar {
     flex-direction: column;
   }
 
-  .category-layout, .expense-layout {
-    width: 100%; /* Full width on small screens */
+  .category-layout,
+  .expense-layout {
+    width: 100%;
+    /* Full width on small screens */
   }
 
 
