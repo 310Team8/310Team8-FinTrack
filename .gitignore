@@ -54,3 +54,4 @@ index.html
 
 # Dotenv
 .env
+src/main/resources/static/summary.pdf
