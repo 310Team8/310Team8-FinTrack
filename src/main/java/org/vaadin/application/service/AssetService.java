@@ -58,31 +58,17 @@ public class AssetService {
   }
 
   /**
-   * Calculates the total value of the user's assets from the previous year. This
-   * method is not yet
-   * implemented.
-   *
-   * @param userId the ID of the user whose total assets are to be calculated
-   * @return the total value of the user's assets from the previous year
-   * @throws UnsupportedOperationException if the method is not yet implemented
-   */
-  public BigDecimal getTotalAssetsLastYear(Long userId) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getTotalAssetsLastYear'");
-  }
-
-  /**
-   * Calculates the current total value of the user's assets. This method is not
-   * yet implemented.
+   * Calculates the current total value of the user's assets.
    *
    * @param userId the ID of the user whose current total assets are to be
    *               calculated
    * @return the current total value of the user's assets
-   * @throws UnsupportedOperationException if the method is not yet implemented
    */
   public BigDecimal getTotalAssetsCurrent(Long userId) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getTotalAssetsCurrent'");
+    List<Asset> assets = getAssetsByUserId(userId);
+    return assets.stream()
+        .map(Asset::getValue)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
   /**
