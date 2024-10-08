@@ -58,8 +58,6 @@
 
 ![Alt](https://repobeats.axiom.co/api/embed/1ab332dbfcc40cb69c256641d05a9e80090a5b3e.svg "Repobeats analytics image")
 
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
-
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project 🚀
@@ -70,19 +68,13 @@ This project has been deployed to Render, a free hosting service that provides a
 
 Make sure to contact us at <a href="#contacts">Contacts</a> for the database variables to store in your environment variables.
 
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
-
 ### What does this project do? 🤔
 
 FinTrack empowers users to efficiently manage their financial activities. It enables users to create and maintain personal or business financial profiles, categorize and monitor expenses, set and adhere to budgets, and forecast both income and asset values. Additionally, FinTrack offers goal-setting and tracking features, allowing users to achieve their financial objectives with ease.
 
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
-
 ### Why is this project useful? 🌟
 
 FinTrack is useful because it provides a centralized platform for managing and optimizing financial resources, making it easier for individuals and businesses to track their financial health. By offering features such as expense categorization, budget monitoring, and income forecasting, it helps users make informed financial decisions, avoid overspending, and achieve their financial goals. The data visualization tools further enhance the user experience by presenting complex financial data in an easy-to-understand format, making financial management more accessible and efficient.
-
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
 
 ### Tech Stack Used 💻
 
@@ -90,8 +82,6 @@ FinTrack is useful because it provides a centralized platform for managing and o
 - [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F.svg?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 - [![CSS](https://img.shields.io/badge/CSS-1572B6.svg?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - [![Java](https://img.shields.io/badge/Java-007396.svg?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/)
-
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
 
 <!-- GETTING STARTED -->
 
@@ -147,13 +137,9 @@ To set up Maven:
    Alternatively, you can open Application.java in your IDE (such as IntelliJ IDEA or VS Code) and press the "Run" button to start the application.
    Once the application is running, your web browser should open automatically. If not, open a new browser window and type http://localhost:8080 to access the application.
 
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
-
 ## Versions📝
 
 [Fintrack v1.0.0](https://github.com/310Team8/FinTrack/releases/tag/v1.0.0)
-
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
 
 <!-- CONTRIBUTING -->
 
@@ -168,8 +154,6 @@ If you have a suggestion that would make this better, please read more at [Contr
 ## License📜
 
 Distributed under the MIT License. Read more at [MIT License](./LICENSE) for more information.
-
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
 
 <!-- CONTACTSE -->
 
@@ -194,8 +178,6 @@ If you have any inquiries related to this project or face any issues contact us 
 - [Troy Mackenzie-Smee](https://github.com/tmacsmee) Email: tmac847@aucklanduni.ac.nz
 - [Venxia Niu](https://github.com/vniu740) Email: vniu740@aucklanduni.ac.nz
 
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
-
 <!-- ACKNOWLEDGMENTS -->
 
 ## Acknowledgments
@@ -204,5 +186,3 @@ If you have any inquiries related to this project or face any issues contact us 
 - [Repository Insight Template](https://repobeats.axiom.co/)
 - [README Template](https://github.com/othneildrew/Best-README-Template?tab=readme-ov-file)
 - [Image Shields](https://shields.io)
-
-<p align="right">(<a href="#readme-top">back to top⬆️</a>)</p>
