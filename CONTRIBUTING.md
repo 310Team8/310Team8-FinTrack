@@ -26,6 +26,23 @@ By participating in this project, you agree to abide by the [Code of Conduct](./
 ## License 
 By contributing, you agree that your contributions will be licensed under its [MIT License](./LICENSE). 
 
+## Our Custom Labels
+- backend
+  - Purpose: Indicates that the issue or pull request involves backend development, such as server-side logic, database interactions, or APIs.
+  - Example: Issue - "Create RESTful API for user authentication."
+- design
+  - Purpose: Marks issues or pull requests focused on the design elements that are not directly functional, such as wireframes, UI mockups, or architectural diagrams.
+  - Example: Issue - "Update wireframes to reflect new navigation flow."
+- feature
+  - Purpose: Used for issues or pull requests that involve the development or modification of features or components in the application.
+  - Example: Issue - "Add search functionality to the dashboard."
+- frontend
+  - Purpose: Specifies that the issue or pull request deals with frontend development, such as UI implementation, styling, or client-side logic.
+  - Example: Issue - "Fix button alignment on the settings page."
+- refactor
+  - Purpose: Indicates that the issue or pull request involves restructuring existing code to improve readability, maintainability, or performance without changing its external behavior.
+  - Example: Issue - "Refactor the user authentication service to enhance code clarity and reduce duplication."
+ 
 ## How to File a Bug Report
 To file a bug report, please follow these steps:
 1. **Search for existing issues**: Before creating a new issue, please check if it already exists.
