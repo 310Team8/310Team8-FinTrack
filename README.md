@@ -11,6 +11,7 @@
 <br />
 <div align="center">
   <h3 align="center">💰FinTrack📊</h3>
+  <h3>v1.5.3</h3>
 
   <p align="center">
     Budgeting and Financial Management Tool
@@ -139,7 +140,8 @@ To set up Maven:
 
 ## Versions📝
 
-[Fintrack v1.0.0](https://github.com/310Team8/FinTrack/releases/tag/v1.0.0)
+- [Fintrack v1.0.0](https://github.com/310Team8/FinTrack/releases/tag/v1.0.0)
+- [Fintrack v1.5.3](https://github.com/310Team8/FinTrack/releases/tag/v1.5.3) (Latest)
 
 <!-- CONTRIBUTING -->
 
@@ -155,7 +157,7 @@ If you have a suggestion that would make this better, please read more at [Contr
 
 Distributed under the MIT License. Read more at [MIT License](./LICENSE) for more information.
 
-<!-- CONTACTSE -->
+<!-- CONTACTS -->
 
 ## Contacts📞
 
